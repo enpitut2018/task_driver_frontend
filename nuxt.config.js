@@ -34,6 +34,11 @@ module.exports = {
         })
       }
     }
+  },
+  watchers: {
+    webpack: {
+      poll: true
+    }
   }
 }
 
