@@ -37,7 +37,7 @@ module.exports = {
   },
   watchers: {
     webpack: {
-      poll: true
+      poll: 500
     }
   }
 }
