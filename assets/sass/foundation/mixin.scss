@@ -1,0 +1,7 @@
+@mixin tag($color: $white, $backgroundColor: #555) {
+	background-color: $backgroundColor;
+	color: $color;
+	margin: 0 2px;
+	padding: 2px 5px;
+	border-radius: 5px;
+}
