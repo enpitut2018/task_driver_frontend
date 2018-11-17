@@ -15,6 +15,9 @@ module.exports = {
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/earlyaccess/notosansjp.css' },
     ]
   },
+  css: [
+    '~/static/stylesheets/style.css'
+  ],
   /*
   ** Customize the progress bar color
   */
