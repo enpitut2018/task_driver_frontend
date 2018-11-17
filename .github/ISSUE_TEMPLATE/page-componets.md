@@ -5,12 +5,12 @@ labels:
 
 ---
 
-# Page definition
-| name | template | description |
+# ページ定義
+| 名前 | テンプレート | 説明 |
 | :--- | :--- | :--- |
-| hoge.vue | fuga.vue | for hogefuga |
+| `hoge.vue` | `fuga.vue` | for hogefuga |
 
-# child components
-| name | description |
-| :--- | :--- |
-| hoge.vue | fuga |
+# 子コンポーネント
+
+* a
+* b

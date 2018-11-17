@@ -5,12 +5,12 @@ labels:
 
 ---
 
-# Component definition
-| name | description |
+# コンポーネント定義
+| 名前 | 説明 |
 | :--- | :--- |
 | hoge.vue | for hogehoge |
 
-# child components
-| name | description |
-| :--- | :--- |
-| hoge.vue | for hogehoge |
+# 子コンポーネント
+
+* a
+* b
