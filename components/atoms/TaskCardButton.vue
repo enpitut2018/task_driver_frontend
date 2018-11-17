@@ -17,5 +17,3 @@
 		border: none;
 	}
 </style>
-
-<script></script>
