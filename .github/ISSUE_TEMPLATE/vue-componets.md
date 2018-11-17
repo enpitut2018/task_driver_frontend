@@ -5,6 +5,12 @@ labels:
 
 ---
 
+# Component definition
+| name | description |
+| :--- | :--- |
+| hoge.vue | for hogehoge |
+
+# child components
 | name | description |
 | :--- | :--- |
 | hoge.vue | for hogehoge |

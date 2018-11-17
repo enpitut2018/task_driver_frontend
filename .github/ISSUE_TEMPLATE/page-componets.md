@@ -5,6 +5,12 @@ labels:
 
 ---
 
+# Page definition
 | name | template | description |
 | :--- | :--- | :--- |
 | hoge.vue | fuga.vue | for hogefuga |
+
+# child components
+| name | description |
+| :--- | :--- |
+| hoge.vue | fuga |
