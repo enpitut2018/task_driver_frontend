@@ -2,7 +2,7 @@
 	<div class="card">
 		<a href="#">
 			<div class="cardHeader">
-				<h3>hogehoge<span class="stars">★</span></h3>
+				<h3>hoge<span class="stars">★</span></h3>
 			</div>
 		</a>
 		<div class="cardBody">
@@ -26,6 +26,7 @@
 			text-decoration: none;
 		}
 		.cardHeader {
+			@include HoverLine();
 			font-size: 18px;
 			margin: 8px 0;
 			.stars {

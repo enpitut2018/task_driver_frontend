@@ -5,3 +5,41 @@
 	padding: 2px 5px;
 	border-radius: 5px;
 }
+
+@mixin buttonReflect($BGColor, $fontColor) {
+	background-color: $BGColor;
+	color: $fontColor;
+	border: 1px solid $BGColor;
+	&:hover {
+		background-color: $fontColor;
+		color: $BGColor;
+	}
+}
+
+@mixin HoverFlash($activeOpacity: 1, $inactiveOpacity: .7) {
+	opacity: $inactiveOpacity;
+	&:hover {
+		opacity: $activeOpacity;
+	}
+}
+
+@mixin HoverChangeColor($activeColor, $inactiveColor) {
+	color: $inactiveColor;
+	&:hover {
+		color: $activeColor;
+	}
+}
+
+@mixin HoverChangeBGColor($activeColor, $inactiveColor) {
+	background-color: $inactiveColor;
+	&:hover {
+		background-color: $activeColor;
+	}
+}
+
+@mixin HoverLine($activeValue: none, $inactiveValue: underline) {
+	text-decoration: $inactiveValue;
+	&:hover {
+		text-decoration: $activeValue;
+	}
+}

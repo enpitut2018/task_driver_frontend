@@ -4,16 +4,15 @@
 
 <style lang="scss" scoped>
 	.tag {
+		// @include buttonReflect($tagColor, $white);
 		color: $white;
 		background-color: $tagColor;
+		// @include HoverFlash(.7, 1);
 		margin: 2px;
-		padding: 2px 7px;
+		padding: 2px 8px;
 		border-radius: 5px;
 		font-size: 75%;
 		font-weight: 400;
-		text-decoration: none;
-	}
-	a {
-		text-decoration: none;
+		@include HoverLine(underline, none);
 	}
 </style>
