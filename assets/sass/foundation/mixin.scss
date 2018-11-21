@@ -16,6 +16,17 @@
 	}
 }
 
+@mixin buttonReflectWithBorder($BGColor, $fontColor) {
+	background-color: $BGColor;
+	color: $fontColor;
+	border: 1px solid $fontColor;
+	&:hover {
+		background-color: $fontColor;
+		color: $BGColor;
+		border-color: $fontColor;
+	}
+}
+
 @mixin HoverFlash($activeOpacity: 1, $inactiveOpacity: .7) {
 	opacity: $inactiveOpacity;
 	&:hover {

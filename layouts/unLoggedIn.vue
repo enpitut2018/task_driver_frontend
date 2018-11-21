@@ -17,7 +17,8 @@
 </style>
 
 <script>
-    import HeaderUnLoggedIn from '~/components/organisms/HeaderUnLoggedIn.vue'
+    import HeaderUnLoggedIn from '~/components/molecules/HeaderUnLoggedIn.vue'
+    
     export default {
         components: {
             HeaderUnLoggedIn

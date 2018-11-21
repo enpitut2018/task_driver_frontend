@@ -5,8 +5,8 @@
 		</div>
 		<nav class="headerNav">
 			<ul>
-                <li><a href="#"><button>ログイン</button></a></li>
-                <li><a href="#"><button>ユーザ登録</button></a></li>
+                <li><a href="#"><button class="loginButton">ログイン</button></a></li>
+                <li><a href="#"><button class="registerButton">ユーザ登録</button></a></li>
 			</ul>
 		</nav>
 	</header>
@@ -14,13 +14,18 @@
 
 <style lang="scss" scoped>
 	button {
-		@include buttonReflect($startButtonColor, $white);
 		font-weight: 500;
 		font-size: 14px;
 		letter-spacing: .1em;
 		padding: 8px 20px;
 		border-radius: 6px;
 		border: none;
+    	&.loginButton {
+        	@include buttonReflectWithBorder($red, $white);
+    	}
+    	&.registerButton {
+        	@include buttonReflectWithBorder($startButtonColor, $white);
+    	}
 	}
 	header {
 		background-color: $red;
