@@ -19,6 +19,9 @@
   },
   "dependencies": {
     "dotenv": "^6.1.0",
+    "@nuxtjs/apollo": "^4.0.0-rc2.3",
+    "@nuxtjs/auth": "^4.5.3",
+    "@nuxtjs/axios": "^5.3.6",
     "nuxt": "^2.0.0"
   },
   "devDependencies": {

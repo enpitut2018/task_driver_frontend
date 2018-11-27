@@ -1,6 +1,6 @@
 <template>
   <div>
-    <HeaderUnLoggedIn/>
+    <HeaderUnauthenticated/>
     <article>
       <div class="container">
         <nuxt/>
@@ -17,11 +17,11 @@
 </style>
 
 <script>
-    import HeaderUnLoggedIn from '~/components/molecules/HeaderUnLoggedIn.vue'
+    import HeaderUnauthenticated from '~/components/molecules/HeaderUnauthenticated.vue'
     
     export default {
         components: {
-            HeaderUnLoggedIn
+            HeaderUnauthenticated
         }
     }
 </script>
