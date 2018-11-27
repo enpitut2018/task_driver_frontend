@@ -7,7 +7,6 @@
 <script>
 
 export default {
-    layout: 'unLoggedIn'
+    layout: 'unauthenticated'
 }
 </script>
-

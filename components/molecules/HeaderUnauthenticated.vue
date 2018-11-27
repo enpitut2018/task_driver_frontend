@@ -5,7 +5,7 @@
 		</div>
 		<nav class="headerNav">
 			<ul>
-                <li><a href="#"><button class="loginButton">ログイン</button></a></li>
+                <li><button class="loginButton" @click="authenticate">ログイン</button></li>
                 <li><a href="#"><button class="registerButton">ユーザ登録</button></a></li>
 			</ul>
 		</nav>
@@ -56,3 +56,25 @@
 		}
 	}
 </style>
+
+<script>
+export default {
+  methods: {
+  	async authenticate () {
+  		try {
+  			await this.$auth.loginWith('local', {
+  				data: {
+  					user: {
+  						email: 's1611442@u.tsukuba.ac.jp',
+  						password: 'password'
+  					}
+  				}
+  			});
+  			this.$router.push('/home');
+  		} catch (e) {
+  			this.error = true;
+  		}
+  	}
+  },
+};
+</script>
