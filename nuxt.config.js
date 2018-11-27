@@ -34,6 +34,7 @@ module.exports = {
     ]],
     '@nuxtjs/axios',
     '@nuxtjs/auth',
+    '@nuxtjs/dotenv',
   ],
   axios: {
     baseURL: 'http://localhost:3001/v1'
