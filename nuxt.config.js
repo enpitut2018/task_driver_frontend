@@ -32,7 +32,23 @@ module.exports = {
       '@/assets/sass/foundation/mixin.scss',
       '@/assets/sass/global.scss',
     ]],
+    '@nuxtjs/axios',
+    '@nuxtjs/auth',
   ],
+  axios: {
+    baseURL: 'http://localhost:3001/v1'
+  },
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: '/users/sign_in', method: 'post' },
+          logout: { url: '/users/sign_out', method: 'delete' },
+          user: { url: '/users/current' }
+        }
+      }
+    }
+  },
 
   /*
   ** Build configuration
