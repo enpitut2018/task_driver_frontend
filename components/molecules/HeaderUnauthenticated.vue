@@ -70,6 +70,7 @@ export default {
   					}
   				}
   			});
+  			await this.$apolloHelpers.onLogin(this.$auth.getToken('local'));
   			this.$router.push('/home');
   		} catch (e) {
   			this.error = true;
