@@ -1,12 +1,8 @@
 <template>
-  <div class="hoge">
+  <div>
     hogehoge
   </div>
 </template>
 
 <script>
-
-export default {
-}
 </script>
-

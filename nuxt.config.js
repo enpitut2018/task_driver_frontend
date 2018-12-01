@@ -34,10 +34,14 @@ module.exports = {
     ]],
     '@nuxtjs/axios',
     '@nuxtjs/auth',
+    '@nuxtjs/dotenv',
+    '@nuxtjs/apollo',
   ],
+
   axios: {
     baseURL: 'http://localhost:3001/v1'
   },
+
   auth: {
     strategies: {
       local: {
@@ -48,6 +52,22 @@ module.exports = {
         }
       }
     }
+  },
+
+  apollo: {
+    errorHandler (error) {
+      console.log('%cError', 'background: red; color: white; padding: 2px 4px; border-radius: 3px; font-weight: bold;', error.message)
+    },
+    authenticationType: '', // 'Bearer Bearer...' の形式になってしまうのを防ぐ
+    clientConfigs: {
+      default: {
+        httpEndpoint: 'http://localhost:3001/v1/',
+        httpLinkOptions: {
+          fetchOptions: { mode: 'cors' },
+        },
+      },
+      // default: '~/apollo/client-configs/default.js',
+    },
   },
 
   /*

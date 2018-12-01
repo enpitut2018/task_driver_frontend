@@ -65,11 +65,12 @@ export default {
   			await this.$auth.loginWith('local', {
   				data: {
   					user: {
-  						email: 's1611442@u.tsukuba.ac.jp',
-  						password: 'password'
+  						email: process.env.EMAIL,
+  						password: process.env.PASSWORD
   					}
   				}
   			});
+  			await this.$apolloHelpers.onLogin(this.$auth.getToken('local'));
   			this.$router.push('/home');
   		} catch (e) {
   			this.error = true;
