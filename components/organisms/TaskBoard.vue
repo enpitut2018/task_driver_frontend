@@ -2,7 +2,7 @@
 	<section class="board">
 		<h2 class="boardHead">TODO<span class="taskCount">1</span></h2>
 		<div class="cards">
-			<TaskCard/>
+			<task-card></task-card>
 		</div>
 	</section>
 </template>
@@ -41,6 +41,6 @@
 	export default {
 		components: {
 			TaskCard
-		}
+		},
 	}
 </script>
