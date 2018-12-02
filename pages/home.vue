@@ -32,16 +32,6 @@
       },
     },
 
-    methods: {
-      async logout() {
-        try {
-          await this.$auth.logout();
-        } catch (e) {
-          this.error = true;
-        }
-      },
-    },
-
     computed: {
       userInfo () {
         return this.$auth.user

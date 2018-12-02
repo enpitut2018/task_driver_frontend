@@ -46,12 +46,16 @@ module.exports = {
     strategies: {
       local: {
         endpoints: {
-          login: { url: 'sign_in', method: 'post' },
-          logout: { url: 'sign_out', method: 'delete' },
-          user: { url: 'user' }
-        }
-      }
-    }
+          login: { url: '/sign_in', method: 'post' },
+          logout: { url: '/sign_out', method: 'delete' },
+          user: { url: '/user' }
+        },
+      },
+    },
+    redirect: {
+      home: '/home',
+      logout: '/unauthenticated',
+    },
   },
 
   apollo: {
