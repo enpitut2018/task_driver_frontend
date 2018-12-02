@@ -46,9 +46,9 @@ module.exports = {
     strategies: {
       local: {
         endpoints: {
-          login: { url: '/users/sign_in', method: 'post' },
-          logout: { url: '/users/sign_out', method: 'delete' },
-          user: { url: '/users/current' }
+          login: { url: 'sign_in', method: 'post' },
+          logout: { url: 'sign_out', method: 'delete' },
+          user: { url: 'current' }
         }
       }
     }
