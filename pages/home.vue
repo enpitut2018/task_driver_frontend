@@ -3,12 +3,14 @@
     <div v-if="isAuthenticated">
       <h1>Hi, {{ user.email }}!</h1>
       id: {{ user.id }}, name: {{ user.username }}
+      you're the member of this system since {{ joinedDate }}
     </div>
   </div>
 </template>
 
 <script>
   import gql from 'graphql-tag'
+  import moment from '~/plugins/moment'
 
   export default {
     data: () => ({
@@ -47,6 +49,10 @@
       isAuthenticated () {
         return this.$auth.loggedIn
       },
+      joinedDate () {
+        let dateRes = this.user.created_at
+        return moment(dateRes, "YYYY-MM-DD HH:mm:ss Z").format("YYYY年M月D日H時m分")
+      }
     },
   };
 </script>
