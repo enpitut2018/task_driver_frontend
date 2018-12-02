@@ -9,7 +9,6 @@
 					<ul>
 						<li><a href="#">プライバシーポリシー</a></li>
 						<li><a href="#">利用規約</a></li>
-						<li><a href="#">ホーム</a></li>
 					</ul>
 				</nav>
 			</section>
