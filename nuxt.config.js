@@ -48,7 +48,7 @@ module.exports = {
         endpoints: {
           login: { url: 'sign_in', method: 'post' },
           logout: { url: 'sign_out', method: 'delete' },
-          user: { url: 'current' }
+          user: { url: 'user' }
         }
       }
     }
