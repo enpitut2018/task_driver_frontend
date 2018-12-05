@@ -1,8 +1,8 @@
 <template>
   <div>
     <div v-if="isAuthenticated">
-      <h1>Hi, {{ user.email }}!</h1>
-      id: {{ user.id }}, name: {{ user.username }}
+      <h1>Hi, {{ me.email }}!</h1>
+      id: {{ me.id }}, name: {{ me.username }}
       you're the member of this system since {{ joinedDate }}
     </div>
   </div>
@@ -13,15 +13,19 @@
   import moment from '~/plugins/moment'
 
   export default {
+    middleware: [
+      'auth',
+    ],
+
     data: () => ({
-      user: {}
+      me: {}
     }),
 
     apollo: {
-      user: {
+      me: {
         query: gql`
         query {
-          user {
+          me {
             created_at
             email
             id
@@ -50,7 +54,7 @@
         return this.$auth.loggedIn
       },
       joinedDate () {
-        let dateRes = this.user.created_at
+        let dateRes = this.me.created_at
         return moment(dateRes, "YYYY-MM-DD HH:mm:ss Z").format("YYYY年M月D日H時m分")
       }
     },
