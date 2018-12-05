@@ -1,55 +1,102 @@
 <template>
 	<div class="card">
-		<a href="#">
-			<div class="cardHeader">
-				<h3>hoge<span class="stars">★</span></h3>
+		<h1>ログイン</h1>
+		<form @submit.prevent="authenticate">
+			<div class="formContent">
+				<span>メールアドレス</span>
+				<input type="text" v-model="user.email"/>
 			</div>
-		</a>
-		<div class="cardBody">
-			<div class="tags">
-				<Tag/>
+			<div class="formContent">
+				<span>パスワード</span>
+				<input type="password" v-model="user.password"/>
 			</div>
+			<button class="loginButton" type="submit">ログイン</button>
+		</form>
+		<div class="passwordResetLink">
+			<a href="#">パスワードをお忘れの方はこちら &gt;</a>
 		</div>
-		<Button/>
 	</div>
 </template>
 
 <style lang="scss" scoped>
 	.card {
-		margin: 16px 12px;
-		padding: 12px 30px 18px 30px;
+		width: 30vw;
+		margin: 90px auto;
+		padding: 50px 60px;
 		border-radius: 3px;
 		border: 1px solid $borderColor;
 		background-color: $cardBackgroundColor;
-		a {
-			color: $textColor;
-			text-decoration: none;
+		h1 {
+			width: 100%;
+			letter-spacing: .1em;
+			text-align: center;
 		}
-		.cardHeader {
-			@include HoverLine();
-			font-size: 18px;
-			margin: 8px 0;
-			.stars {
-				font-size: 60%;
-				margin-left: 5px;
-				color: $starColor;
+		form {
+			padding: 15px 0 45px 0;
+			border-bottom: 1px solid #bbb;
+			.formContent {
+				margin: 20px auto;
+				width: 85%;
+				span {
+					font-weight: 400;
+					font-size: 80%;
+				}
+				input {
+					width: 100%;
+					box-sizing: border-box;
+					height: 40px;
+					margin: 10px 0;
+					font-size: 16px;
+					border: none;
+					border: 1px solid #bbb;
+					border-radius: 3px;
+					padding: 4px 8px;
+					display: block;
+				}
+			}
+			.loginButton {
+				background-color: $startButtonColor;
+				width: 70%;
+				height: 40px;
+				margin: auto;
+				border-radius: 5px;
+				font-size: 15px;
+				font-weight: 600;
+				letter-spacing: .2em;
+				color: $white;
+				padding: 5px 0;
+				display: block;
+				@include buttonReflect($startButtonColor, $white);
 			}
 		}
-		.tags {
-			width: 100%;
-			margin: 8px 0;
-			display: inline-flex;
-			justify-content: flex-end;
+		.passwordResetLink {
+			margin: 30px 0 0 0;
+			text-align: center;
+			a {
+				@include HoverLine();
+				color: #777;
+			}
 		}
 	}
 </style>
 
 <script>
-
 	export default {
-		components: {
-			Tag,
-			Button
-		}
+		methods: {
+			async authenticate () {
+				this.$auth.loginWith('local', { data: this.loginInfo })
+				.then(() => this.$apolloHelpers.onLogin(this.$auth.getToken('local')));
+			},
+		},
+
+		data: () => ({
+			user: { 'email': '', 'password': '' }
+		}),
+
+		computed: {
+			loginInfo () {
+				return { 'user': this.user }
+			}
+		},
 	}
 </script>

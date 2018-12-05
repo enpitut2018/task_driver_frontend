@@ -6,7 +6,7 @@
 			</div>
 			<nav class="headerNav">
 				<ul>
-	                <li><button class="loginButton" @click="authenticate">ログイン</button></li>
+	                <li><a href="/login"><button class="loginButton">ログイン</button></a></li>
 	                <li><a href="#"><button class="registerButton">ユーザ登録</button></a></li>
 				</ul>
 			</nav>
@@ -63,26 +63,3 @@
 		}
 	}
 </style>
-
-<script>
-export default {
-  methods: {
-  	async authenticate () {
-  		try {
-  			await this.$auth.loginWith('local', {
-  				data: {
-  					user: {
-  						email: process.env.EMAIL,
-  						password: process.env.PASSWORD
-  					}
-  				}
-  			});
-  			await this.$apolloHelpers.onLogin(this.$auth.getToken('local'));
-  			this.$router.push('/home');
-  		} catch (e) {
-  			this.error = true;
-  		}
-  	}
-  },
-};
-</script>

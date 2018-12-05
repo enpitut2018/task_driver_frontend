@@ -65,7 +65,6 @@ export default {
     async logout() {
       try {
         await this.$auth.logout();
-        this.$router.push('/unauthenticated');
       } catch (e) {
         this.error = true;
       }
