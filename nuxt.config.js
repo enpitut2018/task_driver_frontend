@@ -39,7 +39,7 @@ module.exports = {
   ],
 
   axios: {
-    baseURL: 'http://localhost:3001/v1'
+    baseURL:  process.env.NODE_ENV == 'production' ? 'https://task-driver.sukiyaki.party/v1' : 'http://localhost:3001/v1'
   },
 
   auth: {
@@ -48,13 +48,14 @@ module.exports = {
         endpoints: {
           login: { url: '/sign_in', method: 'post' },
           logout: { url: '/sign_out', method: 'delete' },
-          user: { url: '/user' }
+          user: { url: '/user' },
         },
       },
     },
     redirect: {
       home: '/home',
       logout: '/unauthenticated',
+      // login: '/login'
     },
   },
 
