@@ -1,0 +1,50 @@
+digraph graph_name {
+  graph [
+    charset = "UTF-8",
+    bgcolor = "#FFFFFF",
+    rankdir = TB,
+    nodesep = 1.1,
+    ranksep = 1.05
+  ];
+
+  node [
+    shape = record,
+    fontname = "Migu 1M",
+    fontsize = 12,
+  ];
+
+  // node define
+  // common page
+  terms [label = "{/terms|利用規約ページ|{cmp|{}}|{templ|unauthenticated}}"];
+  privacy [label = "{/privacy|プライバシーポリシーページ|{cmp|{}}|{templ|unauthenticated}}"];
+
+
+  // before log in
+  index [label = "{/index|ランディングページ|{cmp|{}}|{templ|unauthenticated}}"];
+  unauthenticated [label = "{/unauthenticated|未認証ページ|{cmp|{}}|{templ|unauthenticated}}"];
+  login [label = "{/login|ログインページ|{cmp|{}}|{templ|unauthenticated}}"];
+  signup [label = "{/signup|ユーザー登録ページ|{cmp|{}}|{templ|unauthenticated}}"];
+  resetPassword [label = "{/resetPassword|パスワードリセットページ|{cmp|{}}|{templ|unauthenticated}}"];
+
+  // after logged in
+  home [label = "{/home|ログイン後ホーム|{cmp|{}}|{templ|default}}"];
+  user [label = "{/_userid|ユーザー詳細ページ|{cmp|{}}|{templ|default}}"];
+  groups [label = "{/_userid/groups|ユーザーのグループリスト|{cmp|{}}|{templ|default}}"];
+  tasks [label = "{/_userid/_groupid|タスクボード|{cmp|{}}|{templ|default}}"];
+  group_setting [label = "{/_userid/_groupid/settings|ボード設定ページ|{cmp|{}}|{templ|default}}"];
+  task_setting [label = "{/_userid/_groupid/_taskid/settings|タスク設定ページ|{cmp|{}}|{templ|default}}"];
+
+  // edge define
+  // before log in
+  index -> login [ label = "", weight = 1.0];
+  index -> signup [ label = "", weight = 1.0];
+  index -> resetPassword [ label = "", weight = 1.0];
+
+  // after logged in
+  login -> home [ label = "login", weight = 1.0];
+  // home -> user [ label = "", weight = 1.0];
+  user -> groups [ label = "", weight = 1.0];
+  groups -> tasks [ label = "", weight = 1.0];
+  tasks -> group_setting [ label = "", weight = 1.0];
+  tasks -> task_setting [ label = "", weight = 1.0];
+}

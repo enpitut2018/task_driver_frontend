@@ -6,7 +6,8 @@
 			</div>
 			<nav class="headerNav">
 				<ul>
-	                <li><button class="logoutButton" @click="logout">ログアウト</button></li>
+	                <li><a href="/login"><button class="loginButton">ログイン</button></a></li>
+	                <li><a href="#"><button class="registerButton">ユーザ登録</button></a></li>
 				</ul>
 			</nav>
 		</div>
@@ -47,10 +48,14 @@
 							letter-spacing: .1em;
 							padding: 8px 20px;
 							border-radius: 6px;
+							margin: 0 3px;
 							border: none;
-							&.logoutButton {
-								@include buttonReflectWithBorder($red, $white);
-							}
+					    	&.loginButton {
+					        	@include buttonReflectWithBorder($red, $white);
+					    	}
+					    	&.registerButton {
+					        	@include buttonReflectWithBorder($startButtonColor, $white);
+					    	}
 						}
 					}
 				}
@@ -58,17 +63,3 @@
 		}
 	}
 </style>
-
-<script>
-export default {
-  methods: {
-    async logout() {
-      try {
-        await this.$auth.logout();
-      } catch (e) {
-        this.error = true;
-      }
-    },
-  }
-};
-</script>
