@@ -66,7 +66,7 @@ module.exports = {
     authenticationType: '', // 'Bearer Bearer...' の形式になってしまうのを防ぐ
     clientConfigs: {
       default: {
-        httpEndpoint: 'http://localhost:3001/v1/',
+        httpEndpoint: process.env.NODE_ENV == 'production' ? 'https://task-driver.sukiyaki.party/v1' : 'http://localhost:3001/v1',
         httpLinkOptions: {
           fetchOptions: { mode: 'cors' },
         },
