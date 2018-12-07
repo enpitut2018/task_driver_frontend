@@ -17,7 +17,7 @@
 <script>
 import ModalWindow from '~/components/organisms/ModalWindow.vue'
 export default {
-  components: { moda },
+  components: { ModalWindow },
   data() {
     return {
       modal: false,
@@ -34,5 +34,3 @@ export default {
   }
 }
 </script>
-
-
