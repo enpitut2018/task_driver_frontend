@@ -1,8 +1,6 @@
 <template>
     <div>
     <Header/>
-    <ModalWindow/>
-    <ModalWindowButton/>
     <article>
      <div class="container">
         <nuxt/>
@@ -20,13 +18,9 @@
 
 <script>
     import Header from '~/components/molecules/Header.vue'
-    import ModalWindow from '~/components/organisms/ModalWindow.vue'
-    import ModalWindowButton from '~/components/atoms/ModalWindowButton.vue'
     export default {
         components: {
-            Header,
-            ModalWindow,
-            ModalWindowButton
+            Header
         }
     }
 </script>
