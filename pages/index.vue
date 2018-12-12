@@ -2,24 +2,24 @@
   <div class="modal-window">
     <p>ボタンを押すとモーダルウィンドウが開きます</p>
     <button @click="openModal">Open</button>
-
+    <TaskNewModal @close="closeModal" v-if="modal"/>
     <!-- コンポーネント MyModal -->
-    <ModalWindow @close="closeModal" v-if="modal">
+<!--    <ModalWindow @close="closeModal" v-if="modal">-->
       <!-- default スロットコンテンツ -->
-      <p>hogehoge</p>
-      <!-- /default -->
-      <!-- footer スロットコンテンツ -->
-      <!-- /footer -->
-    </ModalWindow>
+      <!--<p>hogehoge</p>-->
+      <!-- /default
+      <footer>
+      </footer>
+    </ModalWindow>-->
   </div>
 </template>
 
 <script>
-import ModalPage from '~/layouts/modal_page.vue'
-import ModalWindow from '~/components/organisms/ModalWindow.vue'
+
+import TaskNewModal from '~/components/organisms/TaskNewModal.vue'
 export default {
-  layout: ModalPage,
-  components: { ModalWindow },
+
+  components: { TaskNewModal },
   data() {
     return {
       modal: false,
@@ -31,6 +31,7 @@ export default {
       this.modal = true
     },
     closeModal() {
+      console.log('hoge')
       this.modal = false
     }
   }
