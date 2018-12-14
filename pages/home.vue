@@ -1,9 +1,8 @@
 <template>
     <div>
       <div v-if="isAuthenticated">
-        <TaskBoard :tasks= this.todo ></TaskBoard>
-        
-        <TaskBoard :tasks= this.doing ></TaskBoard>    
+        <TaskBoard :tasks= this.todo :status="TODO"></TaskBoard>
+        <!-- <TaskBoard :tasks= this.doing :status="DOING"></TaskBoard>     -->
       </div>
     </div>
 </template>
