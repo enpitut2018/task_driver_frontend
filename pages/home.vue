@@ -45,7 +45,7 @@
           // ($id: Int!)
           // Static parameters
           variables: {
-            id: 1
+            id: 79
           },
         },
       },
