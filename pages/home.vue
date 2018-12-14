@@ -2,6 +2,8 @@
     <div>
       <div v-if="isAuthenticated">
         <TaskBoard :tasks= this.todo ></TaskBoard>
+        
+        <TaskBoard :tasks= this.doing ></TaskBoard>    
       </div>
     </div>
 </template>
@@ -62,6 +64,35 @@
         },
 
         todo(){
+          var toString = Object.prototype.toString
+          const todos = []
+          // var todos = []
+          // var todos = this.user.filter(function(item, index){
+          //   if (item.name == "jiro") return true;
+          // });
+          // todos.push(this.user.groups);
+          // todos.push(toString.call(this.user.groups));
+          // todos.push((this.user.groups).length);
+          for (var i in this.user.groups) {
+            // todos.push(toString.call(this.user.groups[i].tasks));
+            // todos.push(this.user.groups[i].tasks);
+            // todos.push(toString.call(this.user.groups[i].tasks));
+            for (var n in this.user.groups[i].tasks){
+              var todo = {}
+              todo["group"] = this.user.groups[i].name
+              todo["name"] = this.user.groups[i].tasks[n].name
+              todo["id"] = this.user.groups[i].tasks[n].id
+
+              if (this.user.groups[i].tasks[n].status == 0){
+                todos.push(todo)
+                // todos.push(this.user.groups[i].tasks[n]);
+              }
+            }
+          }
+          return todos
+        },
+
+        doing(){
           var toString = Object.prototype.toString
           const todos = []
           // var todos = []

@@ -1,6 +1,7 @@
 <template>
 	<section class="board">
-		<h2 class="boardHead">TODO<span class="taskCount">{{tasks}}</span></h2>
+		<!-- <h2 class="boardHead">TODO<span class="taskCount"></span></h2> -->
+		<h2 class="boardHead">TODO</h2>
 		<div class="cards" v-for= "task in tasks" :key= "task.id">
 			<TaskCard v-bind:task="task" ></TaskCard>
 		</div>

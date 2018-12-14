@@ -2,7 +2,8 @@
 	<div class="card">
 		<a href="#">
 			<div class="cardHeader">
-				<h3>{{task.name}}<span class="stars">★</span></h3>
+				<h3>{{task.name}}</h3>
+				<!-- <h3>{{task.name}}<span class="stars">★</span></h3> -->
 			</div>
 		</a>
 		<div class="cardBody">
