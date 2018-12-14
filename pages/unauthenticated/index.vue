@@ -6,7 +6,7 @@
 				<h2>続かない人のためのTODOアプリ</h2>
 			</div>
 			<ul>
-				<li><a href="#"><button>ログイン</button></a></li>
+				<li><a href="/login"><button>ログイン</button></a></li>
 				<li><a href="#"><button>ユーザー登録</button></a></li>
 			</ul>
 		</div>
