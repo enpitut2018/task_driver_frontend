@@ -1,14 +1,12 @@
 <template>
   <div class="modal-window">
-  <!-- コンポーネント MyModal -->
-  <ModalWindow>
-    <!-- default スロットコンテンツ -->
+  <ModalWindow @onClickOverlay="$emit('close')">
     <TaskNewForm/>
     <TaskNewButton/>
-    <button @click="$emit('close')">Close</button>
-    <!-- /default -->
-    <!-- footer スロットコンテンツ -->
-    <!-- /footer -->
+    <!--<default>
+    < /default>
+    <footer>
+    </footer>-->
   </ModalWindow>
 </div>
 </template>
@@ -23,12 +21,6 @@
 			ModalWindow,
       TaskNewForm,
       TaskNewButton
-		},
-    methods:{
-      closeModal() {
-        this.$emit('close')
-      },
-      document.getElementById("overlay").onclick = closeModal()
-    }
+		}
 	}
 </script>

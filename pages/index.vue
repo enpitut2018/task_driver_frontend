@@ -31,7 +31,6 @@ export default {
       this.modal = true
     },
     closeModal() {
-      console.log('hoge')
       this.modal = false
     }
   }

@@ -1,12 +1,13 @@
 <template>
   <transition name="modal" appear>
-    <div class="modal modal-overlay" id="overlay">
+    <div class="modal modal-overlay" @click.self="$emit('onClickOverlay')">
       <div class="modal-window">
         <div class="modal-content">
           <slot/>
         </div>
         <footer class="modal-footer">
           <slot name="footer">
+            <button @click="$emit('onClickOverlay')">Close</button>
           </slot>
         </footer>
       </div>
