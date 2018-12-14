@@ -3,6 +3,7 @@
   <ModalWindow @onClickOverlay="$emit('close')">
     <TaskNewForm/>
     <TaskNewButton/>
+    <Timer/>
     <!--<default>
     < /default>
     <footer>
@@ -15,12 +16,14 @@
   import ModalWindow from '~/components/organisms/ModalWindow.vue'
   import TaskNewForm from '~/components/atoms/TaskNewForm.vue'
   import TaskNewButton from '~/components/atoms/TaskNewButton.vue'
+  import Timer from '~/components/molecules/Timer.vue'
 
 	export default {
 		components: {
 			ModalWindow,
       TaskNewForm,
-      TaskNewButton
+      TaskNewButton,
+      Timer
 		}
 	}
 </script>
