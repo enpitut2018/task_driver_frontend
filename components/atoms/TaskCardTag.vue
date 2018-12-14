@@ -1,5 +1,5 @@
 <template>
-	<span><a href="#" class="tag">hoge</a></span>
+	<span><a href="#" class="tag">{{group}}</a></span>
 </template>
 
 <style lang="scss" scoped>
@@ -16,3 +16,9 @@
 		@include HoverLine(underline, none);
 	}
 </style>
+
+<script>
+export default {
+	props: ['group']
+}
+</script>

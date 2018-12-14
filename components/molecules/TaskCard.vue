@@ -2,12 +2,13 @@
 	<div class="card">
 		<a href="#">
 			<div class="cardHeader">
-				<h3>hoge<span class="stars">★</span></h3>
+				<h3>{{task.name}}</h3>
+				<!-- <h3>{{task.name}}<span class="stars">★</span></h3> -->
 			</div>
 		</a>
 		<div class="cardBody">
 			<div class="tags">
-				<Tag/>
+				<Tag v-bind:group= "task.group" ></Tag>
 			</div>
 		</div>
 		<Button/>
@@ -52,6 +53,7 @@
 		components: {
 			Tag,
 			Button
-		}
+		},
+		props: ['task']
 	}
 </script>
