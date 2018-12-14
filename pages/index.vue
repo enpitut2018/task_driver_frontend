@@ -1,4 +1,5 @@
 <template>
+
   <div class="modal-window">
     <p>ボタンを押すとモーダルウィンドウが開きます</p>
     <button @click="openModal">Open</button>
@@ -15,6 +16,7 @@
 </template>
 
 <script>
+
 
 import TaskNewModal from '~/components/organisms/TaskNewModal.vue'
 export default {
