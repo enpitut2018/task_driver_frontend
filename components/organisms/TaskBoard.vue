@@ -1,8 +1,9 @@
 <template>
 	<section class="board">
-		<h2 class="boardHead">TODO<span class="taskCount">1</span></h2>
-		<div class="cards">
-			<task-card></task-card>
+		<!-- <h2 class="boardHead">TODO<span class="taskCount"></span></h2> -->
+		<h2 class="boardHead">TODO</h2>
+		<div class="cards" v-for= "task in tasks" :key= "task.id">
+			<TaskCard v-bind:task="task" ></TaskCard>
 		</div>
 	</section>
 </template>
@@ -37,10 +38,11 @@
 
 <script>
 	import TaskCard from '~/components/molecules/TaskCard.vue'
-
+	
 	export default {
 		components: {
 			TaskCard
 		},
+		props: ['tasks']
 	}
 </script>

@@ -1,5 +1,9 @@
 <template>
-	<span><a href="#" class="tag">{{group}}</a></span>
+	<div class="form">
+	<form>
+	  タスク名<input type="text">
+	</form>
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -16,9 +20,3 @@
 		@include HoverLine(underline, none);
 	}
 </style>
-
-<script>
-export default {
-	props: ['group']
-}
-</script>
