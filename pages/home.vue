@@ -1,5 +1,9 @@
 <template>
-    <div>
+    <div>  
+        <div class="modal-window">
+            <button @click="openModal">タスクの追加</button>
+            <TaskNewModal :sendData= this.sendData @close="closeModal" v-if="modal"/>
+        </div>
         <div v-if="isAuthenticated">
             <TaskBoard :tasks= this.todo ></TaskBoard>
             <!-- <TaskBoard :tasks= this.doing :status="DOING"></TaskBoard>         -->
@@ -11,6 +15,7 @@
     import gql from 'graphql-tag'
     import moment from '~/plugins/moment'
     import TaskBoard from '~/components/organisms/TaskBoard.vue'
+    import TaskNewModal from '~/components/organisms/TaskNewModal.vue'
 
     const getTasksQuery = gql`
                     query($id: ID!){
@@ -27,18 +32,32 @@
                             }
                         }
                     }`
+    
+    // const createTaskQuery = gql`
+    // `
 
     export default {
         middleware: [
             'auth',
         ],
         data: () => ({
-            task: {}
+            task: {},
+            modal: false,
+            message: '',
+            sendData: {
+                name: "",
+                deadline: "",
+                importance: "",
+                note: "",
+                parent_id: "",
+                status: 0
+            }
         }),
 
         components: 
         {
-            TaskBoard
+            TaskBoard,
+            TaskNewModal
         },
 
         mounted: function(){
@@ -55,7 +74,23 @@
 				console.log(err);
 			});
         },
+        methods: {
+            openModal() {
+                this.modal = true
+            },
+            closeModal() {
+            this.modal = false
+            },
 
+            addTask(){
+                this.sendData.name =  "",
+                this.sendData.deadline =  "",
+                this.sendData.importance =  "",
+                this.sendData.note =  "",
+                this.sendData.parent_id =  "",
+                this.sendData.status = 0
+            }
+        },
         computed: {
             userInfo () {
                 return this.$auth.user

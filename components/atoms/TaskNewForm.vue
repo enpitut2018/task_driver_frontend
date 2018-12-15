@@ -1,10 +1,34 @@
 <template>
-	<div class="form">
-	<form>
-	  タスク名<input type="text">
-	</form>
-  </div>
+	<div class="form-inline" id="chat">
+		<p>{{sendData}}</p>
+		<form v-on:submit.prevent="addTask">
+			タスク名:<input type="text" name="" v-model="sendData.name">
+			メモ:<textarea v-model="sendData.note" value=""></textarea>
+			<button type="submit" name="button" class="btn btn-primary col-sm-3">作成</button>
+		</form>
+	</div>
 </template>
+
+<script>
+export default {
+	props: ["sendData"],
+
+	methods: {
+		addTask(){
+				//Please Add Function 
+				
+				this.sendData.name =  "",
+				this.sendData.deadline =  "",
+				this.sendData.importance =  "",
+				this.sendData.note =  "",
+				this.sendData.parent_id =  "",
+				this.sendData.status = 1
+		}
+	}
+}
+</script>
+
+
 
 <style lang="scss" scoped>
 	.tag {
