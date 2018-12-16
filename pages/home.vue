@@ -28,6 +28,7 @@
                                     id
                                     name
                                     status
+                                    userId
                                 }
                             }
                         }
@@ -105,10 +106,11 @@
                 for (var i in this.task.groups) {
                     for (var n in this.task.groups[i].tasks){
                         var todo = {}
-                        todo["group"] = this.task.groups[i].name;
+                        todo["group_id"] = this.task.groups[i].id;
+                        todo["group_name"] = this.task.groups[i].name;
                         todo["name"] = this.task.groups[i].tasks[n].name;
                         todo["id"] = this.task.groups[i].tasks[n].id;
-                        
+                        todo["userId"] = this.task.groups[i].tasks[n].userId;
                         if (this.task.groups[i].tasks[n].status == 1){
                             todos.push(todo);
                         }
