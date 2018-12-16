@@ -5,8 +5,8 @@
             <TaskNewModal :sendData= this.sendData @close="closeModal" v-if="modal"/>
         </div>
         <div v-if="isAuthenticated">
-            <TaskBoard :tasks= this.todo ></TaskBoard>
-            <!-- <TaskBoard :tasks= this.doing :status="DOING"></TaskBoard>         -->
+            <TaskBoard :tasks= this.todo title="TODO"></TaskBoard>
+            <TaskBoard :tasks= this.doing title="DOING"></TaskBoard>
         </div>
     </div>
 </template>

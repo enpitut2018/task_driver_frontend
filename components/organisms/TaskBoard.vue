@@ -1,7 +1,7 @@
 <template>
 	<section class="board">
 		<!-- <h2 class="boardHead">TODO<span class="taskCount"></span></h2> -->
-		<h2 class="boardHead">TODO</h2>
+		<h2 class="boardHead">{{title}}</h2>
 		<div class="cards" v-for= "task in tasks" :key= "task.id">
 			<TaskCard v-bind:task="task" ></TaskCard>
 		</div>
@@ -43,6 +43,6 @@
 		components: {
 			TaskCard
 		},
-		props: ['tasks']
+		props: ['tasks', 'title']
 	}
 </script>
