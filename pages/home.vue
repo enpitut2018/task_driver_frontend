@@ -46,10 +46,11 @@
             message: '',
             sendData: {
                 name: "",
-                deadline: "",
+                deadline_date: "",
+                deadline_time: "",
                 importance: "",
                 note: "",
-                parent_id: "",
+                group_id: "",
                 status: 0
             }
         }),
@@ -78,17 +79,9 @@
             openModal() {
                 this.modal = true
             },
+
             closeModal() {
             this.modal = false
-            },
-
-            addTask(){
-                this.sendData.name =  "",
-                this.sendData.deadline =  "",
-                this.sendData.importance =  "",
-                this.sendData.note =  "",
-                this.sendData.parent_id =  "",
-                this.sendData.status = 0
             }
         },
         computed: {
