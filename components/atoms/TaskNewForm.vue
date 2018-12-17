@@ -14,7 +14,7 @@
 				<option value=1>☆</option>
 				<option value=2>☆☆</option>
 				<option value=3>☆☆☆</option>
-				<option value=4>☆☆☆☆☆</option>
+				<option value=4>☆☆☆☆</option>
 				<option value=5>☆☆☆☆☆</option>
 			</select>
 			<br>
@@ -41,22 +41,40 @@
 
 <script>
 import gql from 'graphql-tag'
+import moment from '~/plugins/moment'
+
+// const createTaskMutation = gql`
+// 	mutation ($name: String!, $deadline: String!, $importance: Int!, $note: String!, $status: Int!, $groupId: ID!, $userId: ID!) {
+// 		createTask(name: $name, deadline: $deadline, importance: $importance, note: $note, status: $status, groupId: $groupId, userId: $userId) {
+// 			task {
+// 				name
+// 				deadline
+// 				importance
+// 				note
+// 				status
+// 				groupId
+// 				userId
+// 			}
+// 			errors 
+// 		}
+// 	}`
 
 const createTaskMutation = gql`
-	mutation ($name: String!, $deadline: String!, $importance: Int!, $note: String!, $status: Int!, $groupId: ID!, $userId: ID!) {
-		createTask(name: $name, deadline: $deadline, importance: $importance, note: $note, status: $status, groupId: $groupId, userId: $userId) {
+mutation ($name: String!, $deadline: MomentToDatetimeType!, $importance: Int!, $note: String!, $groupId: ID!) {
+		createTask(name: $name, deadline: $deadline, importance: $importance, note: $note, groupId: $groupId) {
 			task {
 				name
 				deadline
 				importance
 				note
-				status
 				groupId
-				userId
 			}
 			errors 
 		}
-	}`
+}
+`
+
+
 
 export default {
 	middleware: [
@@ -71,13 +89,12 @@ export default {
 				mutation: createTaskMutation,
 				variables: {
 					name: this.sendData.name,
-					deadline: this.sendData.deadline_date  + " " + this.sendData.deadline_time + ":00",
+					deadline: this.sendData.deadline_date  + "T" + this.sendData.deadline_time + ":00",
 					// deadlineのフォーマット ->  "2018-12-12 14:51:02",
 					importance: Number(this.sendData.importance),
 					note: this.sendData.note,
-					groupId: Number(this.sendData.groupId),
-					status: Number(this.sendData.status),
-					userId: this.$auth.user.id
+					groupId: Number(this.sendData.groupId)
+					// status: Number(this.sendData.status),
 				},
 			}).then(res => {
 				console.log(res);
