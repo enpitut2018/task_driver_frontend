@@ -105,6 +105,15 @@
 		}
 	}
 	`
+	const deleteTaskMutation = gql`
+    mutation deleteTask($id: ID!){
+    	deleteTask(taskId: $id){
+			task{
+			id
+			}
+    	}
+	}
+	`
 
 	const getTaskQuery = gql`
 	query ($taskId: ID!) {
