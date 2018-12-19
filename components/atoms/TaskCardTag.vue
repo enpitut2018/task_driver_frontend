@@ -1,5 +1,5 @@
 <template>
-	<span><a href="#" class="tag">{{group}}</a></span>
+	<span><a v-bind:href="groupUrl" class="tag">{{group}}</a></span>
 </template>
 
 <style lang="scss" scoped>
@@ -19,6 +19,6 @@
 
 <script>
 export default {
-	props: ['group']
+	props: ['group', 'groupUrl']
 }
 </script>

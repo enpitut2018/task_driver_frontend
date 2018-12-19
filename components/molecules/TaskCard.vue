@@ -1,6 +1,6 @@
 <template>
 	<div class="card">
-		<a href="#">
+		<a v-bind:href="taskUrl">
 			<div class="cardHeader">
 				<h3>{{task.name}}</h3>
 				<!-- <h3>{{task.name}}<span class="stars">★</span></h3> -->
@@ -8,7 +8,7 @@
 		</a>
 		<div class="cardBody">
 			<div class="tags">
-				<Tag v-bind:group= "task.group" ></Tag>
+				<Tag v-bind:group= "task.group_name" :groupUrl = this.groupUrl ></Tag>
 			</div>
 		</div>
 		<Button/>
@@ -50,10 +50,20 @@
 	import Button from '~/components/atoms/TaskCardButton.vue'
 
 	export default {
+		
 		components: {
 			Tag,
 			Button
 		},
-		props: ['task']
+		props: ['task'],
+
+		computed: {
+            taskUrl () {
+                return "/" + this.task.userId + "/" + this.task.group_id + "/" + this.task.id
+			},
+			groupUrl(){
+				return "/" + this.task.userId + "/" + this.task.group_id
+			}
+		}
 	}
 </script>

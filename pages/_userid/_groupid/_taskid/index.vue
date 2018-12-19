@@ -124,7 +124,6 @@
 
 <script>
 	import gql from 'graphql-tag'
-
 	import ContributionList from '~/components/organisms/ContributionList.vue'
 	import TaskCardTag from '~/components/atoms/TaskCardTag.vue'
 
@@ -132,7 +131,7 @@
 	import createClapMutation from '~/apollo/queries/create_clap_mutation.gql'
 	import startContributionMutation from '~/apollo/queries/start_contribution_mutation.gql'
 	import finishContributionMutation from '~/apollo/queries/finish_contribution_mutation.gql'
-
+  
 	export default {
 		data() {
 			return {

@@ -1,12 +1,13 @@
 <template>
   <div class="modal-window">
+    <h1>{{sendData}}</h1>
   <ModalWindow @onClickOverlay="$emit('close')">
-    <TaskNewForm/>
+    <TaskNewForm :sendData = sendData></TaskNewForm>
     <TaskNewButton/>
-    <!--<default>
-    < /default>
+    <default>
+    </default>
     <footer>
-    </footer>-->
+    </footer>
   </ModalWindow>
 </div>
 </template>
@@ -21,6 +22,7 @@
 			ModalWindow,
       TaskNewForm,
       TaskNewButton
-		}
-	}
+    },
+      props: ['sendData']
+    }
 </script>
