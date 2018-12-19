@@ -52,6 +52,7 @@ module.exports = {
     skipwaiting: true,
     clientsClaim: true,
     swURL: '/sw.plugin.js',
+    swScope: '/',
     dev: true
   },
 
