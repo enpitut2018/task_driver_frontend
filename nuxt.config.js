@@ -44,7 +44,8 @@ module.exports = {
     name: 'Folivora',
     lang: 'ja',
     short_name: 'Foli',
-    description: 'ナマケモノ'
+    description: 'ナマケモノ',
+    start_url: '/'
   },
 
   workbox: {
