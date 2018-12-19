@@ -44,7 +44,13 @@ module.exports = {
     name: 'Folivora',
     lang: 'ja',
     short_name: 'Foli',
-    description: 'ナマケモノなあなたをコントロールします'
+    description: 'ナマケモノ'
+  },
+
+  workbox: {
+    skipwaiting: true,
+    clientsClaim: true,
+    swURL: '/plugins/sw.plugin.js'
   },
 
   axios: {
