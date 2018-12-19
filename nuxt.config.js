@@ -37,7 +37,15 @@ module.exports = {
     '@nuxtjs/auth',
     '@nuxtjs/dotenv',
     '@nuxtjs/apollo',
+    '@nuxtjs/pwa',
   ],
+
+  manifest: {
+    name: 'Folivora',
+    lang: 'ja',
+    short_name: 'Foli',
+    description: 'ナマケモノなあなたをコントロールします'
+  },
 
   axios: {
     baseURL:  process.env.NODE_ENV == 'production' ? 'https://task-driver.sukiyaki.party/v1' : 'http://localhost:3001/v1'
