@@ -1,5 +1,5 @@
 <template>
-	<button class="start">作成</button>
+	<button class="start" @click="$emit('send')" >作成</button>
 </template>
 
 <style lang="scss" scoped>

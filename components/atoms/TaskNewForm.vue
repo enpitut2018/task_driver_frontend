@@ -1,40 +1,43 @@
 <template>
-	<div class="form-inline" id="chat">
-		<p>{{sendData}}</p>
+	<div class="taskCreateform" id="task">
 		<form v-on:submit.prevent="addTask">
-			タスク名:<input type="text" name="" v-model="sendData.name">
-			<br>
-			メモ:<textarea v-model="sendData.note" value=""></textarea>
-			<br>
-			締め切り:<input type="date" v-model="sendData.deadline_date" >
-			<input type="time" v-model="sendData.deadline_time">
-			<br>
-			重要度:
-			<select v-model="sendData.importance">
-				<option value=1>☆</option>
-				<option value=2>☆☆</option>
-				<option value=3>☆☆☆</option>
-				<option value=4>☆☆☆☆</option>
-				<option value=5>☆☆☆☆☆</option>
-			</select>
-			<br>
+			<ul>
+				<div name="name">
+					<li><label>タスク名</label></li>
+					<li><input type="text" name="" v-model="sendData.name"></li>
+				</div>
 
-			進みぐあい:
-			<select v-model="sendData.status">
-				<option value=1>TODO(まだ)</option>
-				<option value=2>DOING(いまやっている)</option>
-				<option value=3>DONE(おわった)</option>
-			</select>
+				<div name="datetime">
+					<li><label>締め切り</label></li>
+						<li><input type="date" v-model="sendData.deadline_date" >
+						<input type="time" v-model="sendData.deadline_time"></li>
+				</div>
 
-			<!-- グループ　ユーザーが持っているグループを参照できるようにしたい: -->
-			<!-- 現在決め撃ち　-->
-			グループ:
-			<select v-model="sendData.groupId">
-				<option value=1>公務員試験</option>
-				<option value=2>国語の勉強</option>
-				<option value=3>英語の勉強</option>
-			</select>
-			<button type="submit" name="button" class="btn btn-primary col-sm-3">作成</button>
+				<div name="importance">
+					<li><label>重要度</label></li>
+						<li><select v-model="sendData.importance">
+							<option value=1>☆</option>
+							<option value=2>☆☆</option>
+							<option value=3>☆☆☆</option>
+							<option value=4>☆☆☆☆</option>
+							<option value=5>☆☆☆☆☆</option>
+						</select></li>
+				</div>
+
+				<div name="group">
+					<li><label>グループ</label></li>
+						<li><select v-model="sendData.groupId" >
+							<option v-for= "group in groups" :key= "group.id" :value="group.id">{{group.name}}</option>
+						</select></li>
+					
+				</div>
+
+				<div name="note">
+					<li><label>メモ</label></li>
+					<li><textarea v-model="sendData.note" value=""></textarea></li>
+				</div>
+			</ul>
+
 		</form>
 	</div>
 </template>
@@ -43,80 +46,45 @@
 import gql from 'graphql-tag'
 import moment from '~/plugins/moment'
 
-// const createTaskMutation = gql`
-// 	mutation ($name: String!, $deadline: String!, $importance: Int!, $note: String!, $status: Int!, $groupId: ID!, $userId: ID!) {
-// 		createTask(name: $name, deadline: $deadline, importance: $importance, note: $note, status: $status, groupId: $groupId, userId: $userId) {
-// 			task {
-// 				name
-// 				deadline
-// 				importance
-// 				note
-// 				status
-// 				groupId
-// 				userId
-// 			}
-// 			errors 
-// 		}
-// 	}`
-
-const createTaskMutation = gql`
-mutation ($name: String!, $deadline: MomentToDatetimeType!, $importance: Int!, $note: String!, $groupId: ID!) {
-		createTask(name: $name, deadline: $deadline, importance: $importance, note: $note, groupId: $groupId) {
-			task {
-				name
-				deadline
-				importance
-				note
-				groupId
-			}
-			errors 
-		}
-}
-`
-
-
-
 export default {
 	middleware: [
         'auth',
 	],
-
-	props: ["sendData"],
-	
-	methods: {
-		addTask(){
-			this.$apollo.mutate({
-				mutation: createTaskMutation,
-				variables: {
-					name: this.sendData.name,
-					deadline: this.sendData.deadline_date  + "T" + this.sendData.deadline_time + ":00",
-					// deadlineのフォーマット ->  "2018-12-12 14:51:02",
-					importance: Number(this.sendData.importance),
-					note: this.sendData.note,
-					groupId: Number(this.sendData.groupId)
-					// status: Number(this.sendData.status),
-				},
-			}).then(res => {
-				console.log(res);
-				// this.task.clap = res.data.createClap.task.clap;
-				
-				this.sendData.name =  "",
-                this.sendData.deadline_date = "",
-                this.sendData.deadline_time = "",
-				this.sendData.importance =  1,
-				this.sendData.note =  "",
-				this.sendData.group_id =  "",
-				this.sendData.status = 1 
-				
-			}).catch(err => {
-				console.log(err);
-			});
-		}
-	}
+	props: ["sendData", "groups"]
 }
 </script>
 
 <style lang="scss" scoped>
+	.input{
+		border:0;
+		padding:10px;
+		font-size:1.3em;
+		font-family:Arial, sans-serif;
+		color:#aaa;
+		border:solid 1px #ccc;
+		margin:0 0 20px;
+		width:300px;
+	}
+	ul li {
+		list-style: none;
+		label {
+			margin-right: 10px;
+			width:100px;
+			float: left;
+		}
+	}
+
+	ul {
+		width: 500px;
+		margin: 0 auto;
+	}
+
+	textarea {
+		resize: none;
+		width:300px;
+		height:200px;
+	}
+
 	.tag {
 		// @include buttonReflect($tagColor, $white);
 		color: $white;

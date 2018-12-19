@@ -2,12 +2,8 @@
   <div class="modal-window">
     <h1>{{sendData}}</h1>
   <ModalWindow @onClickOverlay="$emit('close')">
-    <TaskNewForm :sendData = sendData></TaskNewForm>
-    <TaskNewButton/>
-    <default>
-    </default>
-    <footer>
-    </footer>
+    <TaskNewForm :sendData = sendData :groups= groups></TaskNewForm>
+    <TaskNewButton @send="send"></TaskNewButton>
   </ModalWindow>
 </div>
 </template>
@@ -23,6 +19,11 @@
       TaskNewForm,
       TaskNewButton
     },
-      props: ['sendData']
+      props: ['sendData', 'groups'],
+      methods: {
+        send(){
+          this.$emit('send');
+        }
+      }
     }
 </script>
