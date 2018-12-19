@@ -1,0 +1,20 @@
+mutation ($taskId: ID!) {
+	startContribution(taskId: $taskId) {
+		contribution {
+			createdAt
+			finality
+			finishedAt
+			id
+			status
+			user {
+				id
+				username
+			}
+		}
+		task {
+			id
+			status
+		}
+		errors
+	}
+}

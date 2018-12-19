@@ -1,0 +1,37 @@
+query ($taskId: ID!) {
+	task(id: $taskId) {
+		clap
+		createdAt
+		deadline
+		finishTime
+		groupId
+		importance
+		name
+		note
+		priority
+		startTime
+		status
+		updatedAt
+		urgency
+		userId
+		group {
+			id
+			name
+			ancestorAndSelfGroups {
+				id
+				name
+			}
+		}
+		contributions {
+			createdAt
+			finality
+			finishedAt
+			id
+			status
+			user {
+				id
+				username
+			}
+		}
+	}
+}
