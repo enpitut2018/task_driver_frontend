@@ -1,0 +1,20 @@
+mutation ($contributionId: ID!, $finality: Boolean!) {
+  finishContribution(contributionId: $contributionId, finality: $finality) {
+    contribution {
+      createdAt
+      finality
+      finishedAt
+      id
+      status
+      user {
+        id
+        username
+      }
+    }
+    task {
+      id
+      status
+    }
+    errors
+  }
+}
