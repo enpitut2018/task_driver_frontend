@@ -1,5 +1,5 @@
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/http://localhost:3000/sw.plugin.js', {
+  navigator.serviceWorker.register('/sw.js', {
     scope: '/'
   }).then(function(registration) {
     window.$sw = registration
