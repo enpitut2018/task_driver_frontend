@@ -136,19 +136,7 @@
                     this.sendData.importance =  1,
                     this.sendData.note =  "",
                     this.sendData.group_id =  ""
-                     this.$apollo.query({
-                query: getTasksQuery,
-                variables: {
-                    id: this.$auth.user.id
-                },
-            }).then(res => {
-				// console.log(res);
-                this.task = res.data.user;
-                console.log(this.task);
-			}).catch(err => {
-				console.log(err);
-			});
-
+                    
                     // 親イベント発火
                 }).catch(err => {
                     console.log(err);

@@ -22,6 +22,7 @@
       props: ['sendData', 'groups'],
       methods: {
         send(){
+          this.$emit('close');
           this.$emit('send');
         }
       }
