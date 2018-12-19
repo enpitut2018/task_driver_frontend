@@ -51,8 +51,6 @@ module.exports = {
   workbox: {
     skipwaiting: true,
     clientsClaim: true,
-    swURL: 'http://localhost:3000/sw.plugin.js',
-    swScope: '/',
     dev: true
   },
 
