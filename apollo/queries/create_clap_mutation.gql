@@ -1,0 +1,10 @@
+mutation ($taskId: ID!) {
+	createClap(taskId: $taskId) {
+		task {
+			id
+			status
+			clap
+		}
+		errors 
+	}
+}
