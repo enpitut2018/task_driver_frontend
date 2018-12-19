@@ -1,12 +1,8 @@
-importScripts('/_nuxt/workbox.4c4f5ca6.js')
+importScripts('/_nuxt/workbox.dev.4c4f5ca6.js')
 
 
 
 workbox.precaching.precacheAndRoute([
-  {
-    "url": "/_nuxt/069b1a5a24bf792ea110.js",
-    "revision": "594759712fff3847a76a586eb082bcd8"
-  },
   {
     "url": "/_nuxt/2293ae8530fd9c6f15cc.js",
     "revision": "9eb1f9cc293d033dc769582f3df250b2"
@@ -40,6 +36,10 @@ workbox.precaching.precacheAndRoute([
     "revision": "2f149c73c84b51f4f5dba48c44913262"
   },
   {
+    "url": "/_nuxt/dd61310cc59743515c2a.js",
+    "revision": "c1edb0c7fd112e15b5e91ddaa5e91c0b"
+  },
+  {
     "url": "/_nuxt/e08c557d2e1b93d86933.js",
     "revision": "a0468d6029381b9aa6a12fdf9a56a14a"
   },
@@ -62,35 +62,6 @@ workbox.skipWaiting()
 workbox.routing.registerRoute(new RegExp('/_nuxt/.*'), workbox.strategies.cacheFirst({}), 'GET')
 
 workbox.routing.registerRoute(new RegExp('/.*'), workbox.strategies.networkFirst({}), 'GET')
-
-self.addEventListener('push', function(evt){
-  //通知送信時のmessage:の中身を取得(json形式)
-  var json = evt.data.json(); 
-  evt.waitUntil(
-      self.registration.showNotification('今だらだらしてた？',
-          {
-              body: json.body.name,
-              actions: [{
-                  action: "yes",
-                  title: "5分だけでもチャレンジ"
-              }, {
-                  action: "no",
-                  title: "やる気がでません"
-              }],
-              data: {
-                  target_url: json.body.target_url + json.body.id + "?timer=1"
-              },
-              vibrate: [200, 100, 200, 100, 200, 100, 200]
-          }
-      )
-  );
-}, false);
-
-self.addEventListener('notificationclick', function(event){
-  event.notification.close();
-  console.log("openwindow");
-  clients.openWindow(event.notification.data != null ? event.notification.data.target_url : '/');
-}, false);
 
 
 

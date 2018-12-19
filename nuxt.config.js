@@ -50,7 +50,8 @@ module.exports = {
   workbox: {
     skipwaiting: true,
     clientsClaim: true,
-    swURL: '/plugins/sw.plugin.js'
+    swURL: '/sw.plugin.js',
+    dev: true
   },
 
   axios: {
