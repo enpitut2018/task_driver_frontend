@@ -1,4 +1,9 @@
+const enviroment = process.env.NODE_ENV || 'development';
+const envSet = require(`env.${enviroment}.js`)
+
 module.exports = {
+  env: envSet,
+
   /*
   ** Headers of the page
   */

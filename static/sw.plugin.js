@@ -18,8 +18,9 @@ document.addEventListener('DOMContentLoaded', function(){
                       }
 
                       //未登録の場合
-                      console.log("subscription is OK!");                            
-                      fetch('https://task-driver.sukiyaki.party/endpoints/getVapidPublicKey').then(function(responce){
+                      console.log("subscription is OK!"); 
+                      console.log(process.env.apiBaseUrl);                           
+                      fetch('http://localhost:3001/endpoints/getVapidPublicKey', {method: 'GET', mode: 'cors', credentials: 'include'}).then(function(responce){
                           console.log("good");
                           return responce.json(); //VAPID(サーバ側で生成したもの)を取得
                       }).then(function(keyJson){
@@ -42,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function(){
               console.log("pushManager RegistrationID:", endpoint.split("/").slice(-1).join());
               publicKey = encodeBase64URL(subscription.getKey('p256dh')); //クライアント公開鍵
               console.log("publicKey:", publicKey);
-              const publicKey_pem = "-----BEGIN EC PUBLIC KEY-----\n" + publicKey + "\n-----END EC PUBLIC KEY-----\n"
+              const publicKey_pem = publicKey
               const authSecret = encodeBase64URL(subscription.getKey('auth')); //auth secret
               console.log("authSecret:", authSecret);
               let contentEncoding; //プッシュ通知のときに使用するContent-Encoding
@@ -55,10 +56,10 @@ document.addEventListener('DOMContentLoaded', function(){
               //以上の4つのパラメーターをDBに登録しておく
 
               //fetch APIを使用してサーバに送信
-              fetch('https://task-driver.sukiyaki.party/endpoints', {
+              fetch('http://localhost:3001/endpoints/register', {
                   credentials: 'include',
                   method: 'POST',
-                  headers: {'Content-Type': 'application/json; charset=UTF-8'},
+                  headers: {'Content-Type': 'application/json'},
                   body: JSON.stringify({
                       endpoint: endpoint,
                       publicKey: publicKey_pem,

@@ -22,7 +22,7 @@ import TaskNewModal from '~/components/organisms/TaskNewModal.vue'
 export default {
   head: {
     script: [
-      {src: '/sw.plugin.js'}
+      {src: 'sw.plugin.js'}
     ]
   },
   components: { TaskNewModal },
