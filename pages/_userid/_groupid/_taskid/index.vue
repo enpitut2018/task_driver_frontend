@@ -19,7 +19,7 @@
 					<span class="star" v-for="n in task.importance" :key="n">★</span>
 				</h1>
 				<div class="tags">
-					<TaskCardTag v-for="group in task.group.ancestorAndSelfGroups" :key="group.id" :group="group.name"/>
+					<TaskCardTag v-for="group in task.group.ancestorAndSelfGroups" :key="group.id" :group="group"/>
 				</div>
 			</div>
 

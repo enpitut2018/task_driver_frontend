@@ -20,6 +20,7 @@ query ($taskId: ID!) {
 			ancestorAndSelfGroups {
 				id
 				name
+				userId
 			}
 		}
 		contributions {
