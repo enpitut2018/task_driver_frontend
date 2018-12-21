@@ -1,7 +1,9 @@
 <template>
 	<div>
+		<div class="five-minutes">
+           <FiveMinutesModal :taskname= task.name @close="closeModal" ref="minute" v-if="modal"/>
+        </div>
 		<div class="taskCard">
-
 			<div class="taskHead">
 				<h1>
 					{{task.name}}
@@ -126,6 +128,7 @@
 	import gql from 'graphql-tag'
 	import ContributionList from '~/components/organisms/ContributionList.vue'
 	import TaskCardTag from '~/components/atoms/TaskCardTag.vue'
+	import FiveMinutesModal from '~/components/organisms/FiveMinutesModal.vue'
 
 	import getTaskQuery from '~/apollo/queries/get_task_query.gql'
 	import createClapMutation from '~/apollo/queries/create_clap_mutation.gql'
@@ -135,6 +138,7 @@
 	export default {
 		data() {
 			return {
+				modal: false,
 				userid: this.$route.params.userid,
 				groupid: this.$route.params.groupid,
 				taskid: this.$route.params.taskid,
@@ -151,9 +155,17 @@
 		components: {
 			ContributionList,
 			TaskCardTag,
+			FiveMinutesModal
 		},
 
 		methods: {
+			openModal() {
+                this.modal = true
+            },
+
+            closeModal() {
+                this.modal = false
+            },
 			clap_countup () {
 				this.$apollo.mutate({
 					mutation: createClapMutation,
@@ -216,6 +228,11 @@
 			}).then(res => {
 				console.log(res);
 				this.task = res.data.task;
+
+				if (this.$route.query.fiveminutes == "true"){
+					this.modal = true;
+				}
+				
 			}).catch(err => {
 				console.log(err);
 			});
