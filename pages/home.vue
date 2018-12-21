@@ -2,7 +2,7 @@
     <div>  
         <div class="modal-window">
             <button @click="openModal">タスクの追加</button>
-            <TaskNewModal :sendData= this.sendData @close="closeModal" v-if="modal"/>
+            <TaskNewModal :sendData= this.sendData :groups= this.groups @close="closeModal" @send="addTask" v-if="modal"/>
         </div>
         <div v-if="isAuthenticated">
             <TaskBoard :tasks= this.todo title="TODO"></TaskBoard>
@@ -33,9 +33,21 @@
                             }
                         }
                     }`
-    
-    // const createTaskQuery = gql`
-    // `
+
+    const createTaskMutation = gql`
+        mutation ($name: String!, $deadline: MomentInput!, $importance: Int!, $note: String!, $groupId: ID!) {
+            createTask(name: $name, deadline: $deadline, importance: $importance, note: $note, groupId: $groupId) {
+                task {
+                    name
+                    deadline
+                    importance
+                    note
+                    groupId
+                }
+                errors 
+            }
+        }
+    `
 
     export default {
         middleware: [
@@ -51,8 +63,7 @@
                 deadline_time: "",
                 importance: "",
                 note: "",
-                group_id: "",
-                status: 0
+                group_id: ""
             }
         }),
 
@@ -83,7 +94,54 @@
 
             closeModal() {
             this.modal = false
-            }
+            },
+
+            addTask(){
+                var datetime = moment(this.sendData.deadline_date + " " + this.sendData.deadline_time, "YYYY-MM-DD HH:mm")
+                
+                console.log(datetime);
+                console.log(datetime.year());
+                console.log(datetime.month());
+                console.log(datetime.date());
+                console.log(datetime.hour());
+                console.log(datetime.minute());
+                console.log(datetime.second());
+
+                this.$apollo.mutate({
+                    mutation: createTaskMutation,
+                    variables: {
+                        name: this.sendData.name,
+                        deadline: {
+                            year: datetime.year(),
+                            month: datetime.month() + 1,
+                            day: datetime.date(),
+                            hour: datetime.hour(), 
+                            minute: datetime.minute(), 
+                            second: datetime.second()
+                        },
+
+                        // deadlineのフォーマット ->  "2018-12-12 14:51:02",
+                        importance: Number(this.sendData.importance),
+                        note: this.sendData.note,
+                        groupId: Number(this.sendData.groupId)
+                        // status: Number(this.sendData.status),
+                    },
+                }).then(res => {
+                    console.log(res);
+                    // this.task.clap = res.data.createClap.task.clap;
+                    
+                    this.sendData.name =  "",
+                    this.sendData.deadline_date = "",
+                    this.sendData.deadline_time = "",
+                    this.sendData.importance =  1,
+                    this.sendData.note =  "",
+                    this.sendData.group_id =  ""
+                    
+                    // 親イベント発火
+                }).catch(err => {
+                    console.log(err);
+                });
+            },
         },
         computed: {
             userInfo () {
@@ -138,7 +196,18 @@
                     }
                 }
                 return todos
+            },
+
+            groups(){
+                const groups = []
+                for (var i in this.task.groups) {
+                    var group = {}
+                    group["id"] = this.task.groups[i].id;
+                    group["name"] = this.task.groups[i].name;
+                    groups.push(group);
+                }
+                return groups
             }
-        },
-    };
+        }
+    }
 </script>
