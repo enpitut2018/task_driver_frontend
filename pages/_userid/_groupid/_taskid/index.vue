@@ -20,6 +20,7 @@
 				</h1>
 				<div class="tags">
 					<TaskCardTag v-for="group in task.group.ancestorAndSelfGroups" :key="group.id" :group="group.name"/>
+					<button @click="deleteTask">タスクの削除</button>
 				</div>
 			</div>
 
@@ -134,7 +135,9 @@
 	import createClapMutation from '~/apollo/queries/create_clap_mutation.gql'
 	import startContributionMutation from '~/apollo/queries/start_contribution_mutation.gql'
 	import finishContributionMutation from '~/apollo/queries/finish_contribution_mutation.gql'
-  
+
+	import deleteTaskMutation from '~/apollo/queries/delete_task_mutation.gql'
+
 	export default {
 		data() {
 			return {
@@ -215,6 +218,20 @@
 					console.log(err);
 				})
 
+			},
+
+			deleteTask () {
+				let task = this.task;
+				this.$apollo.mutate({
+					mutation: deleteTaskMutation,
+					variables: {
+						taskId: this.$route.params.taskid,
+					},
+				}).then(res => {
+					console.log(res);
+				}).catch(err => {
+					console.log(err);
+				})
 			},
 		},
 
