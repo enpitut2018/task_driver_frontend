@@ -6,7 +6,7 @@
 </template>
 
 <script>
-
+import gql from 'graphql-tag'
 const sendTokenMutation = gql`
 mutation($oauth_token: String!, $oauth_verifier: String!){
   createOauthMutation(oauthToken: $oauth_token, oauthVerifier: $oauth_verifier){
@@ -16,9 +16,9 @@ mutation($oauth_token: String!, $oauth_verifier: String!){
 `
 
 export default {
-    middleware: [
-        'auth',
-    ],
+    // middleware: [
+    //     'auth',
+    // ],
 
     data: () => ({
         params: {}

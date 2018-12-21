@@ -14,19 +14,16 @@
       }`
 
     export default {
-        middleware: [
-            'auth',
-        ],
         data: () => ({
-            task: {}
+            params: {}
         }),
-
         mounted: function(){
           this.$apollo.mutate({
               mutation: getURLmutation
           }).then(res => {
-              // console.log(this.task);
-              window.location.href = this.data.createRedirecturlMutation.url
+              this.params = res.data;              
+              console.log(this.params);
+              window.location.href = this.params.createRedirecturlMutation.url
           }).catch(err => {
               console.log(err);
           });
