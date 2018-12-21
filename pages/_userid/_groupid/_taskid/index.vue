@@ -1,5 +1,8 @@
 <template>
 	<div>
+		<div class="five-minutes">
+           <FiveMinutesModal :taskname= task.name @close="closeModal" ref="minute" v-if="modal"/>
+        </div>
 		<div class="taskCard">
 			<div class="taskHead">
 				<h1>
@@ -15,155 +18,157 @@
 					</template>
 					<span class="star" v-for="n in task.importance" :key="n">★</span>
 				</h1>
-				<h2>{{task.groupId}}</h2>
-				<div class="taskBody">
-					<div class="crap_count" @click="clap_countup">
-						<i class="far fa-thumbs-up"></i> {{task.clap}}
-					</div>
+				<div class="tags">
+					<TaskCardTag v-for="group in task.group.ancestorAndSelfGroups" :key="group.id" :group="group"/>
+					<button @click="deleteTask">タスクの削除</button>
 				</div>
-				<button v-if="task.status==1" @click="start_contribution" class="">start</button>
 			</div>
-			<div class="contributions">
-				<ul>
-					<li v-for="cont in task.contributions" :key="cont.id">
-						{{ cont.userId }}
-						{{ cont.createdAt }}
-						{{ cont.status }}
-					</li>
-				</ul>
+
+			<div class="taskBody">
+				<div class="note">
+					{{task.note}}
+				</div>
+				<template v-if="task.status==1">
+					<button @click="start_contribution" class="start_btn">始める</button>
+				</template>
+				<template v-if="task.status==2">
+					<button @click="finish_contribution" class="finish_btn">やめる</button>
+				</template>
 			</div>
+
+			<div class="taskFooter">
+				<div class="clap_count" @click="clap_countup">
+					<i class="far fa-thumbs-up"></i> {{task.clap}}
+				</div>
+			</div>
+
+		</div>
+		<div class="contributions" v-if="task.contributions.length > 0">
+			<ContributionList :contributions="task.contributions"/>
 		</div>
 	</div>
 </template>
 
 <style lang="scss" scoped>
 .taskCard {
-	background-color: #fff;
-	width: 100%;
-	border-radius: 3px;
-	padding: 30px;
 	margin: 50px 0;
+	padding: 35px 70px 15px;
+	background-color: #fff;
+	border-radius: 5px;
+	border: 1px solid #ddd;
 	.taskHead {
-		margin: 10px;
-		.status {
-			font-size: 60%;
-			color: #fff;
-			padding: 2px 8px;
-			border-radius: 3px;
+		h1 {
+			display: inline-flex;
+			align-items: center;
+			.status {
+				font-size: 60%;
+				color: #fff;
+				padding: 2px 8px;
+				margin: 0 10px;
+				border-radius: 3px;
+				font-weight: 500;
+				&.todo {
+					background-color: #00bb00;
+				}
+				&.doing {
+					background-color: #ff8c00;
+				}
+				&.done {
+					background-color: red;
+				}
+			}
+			.star {
+				font-size: 12px;
+				margin-left: 1px;
+				color: #ffc100;
+			}
+		}
+		.tags {
+			margin: 5px 3px;
+		}
+	}
+	.taskBody {
+		.note {
+			margin: 15px 10px;
+		}
+		button {
 			font-weight: 500;
-			&.todo {
-				background-color: #00bb00;
+			font-size: 14px;
+			letter-spacing: .1em;
+			padding: 8px 20px;
+			width: 100%;
+			border-radius: 6px;
+			border: none;
+			width: 70%;
+			display: block;
+			margin: 15px auto;
+			&.start_btn {
+				@include buttonReflect($startButtonColor, $white);
 			}
-			&.doing {
-				background-color: #ff8c00;
-			}
-			&.done {
-				background-color: red;
+			&.finish_btn {
+				@include buttonReflect($finishButtonColor, $white);
 			}
 		}
-		.star {
-			font-size: 12px;
-			margin-left: 1px;
-			color: #ffc100;
+	}
+	.taskFooter {
+		.clap_count {
+			color: red;
+			border: red 1px solid;
+			border-radius: 50px;
+			display: inline-flex;
+			justify-content: space-between;
+			align-items: center;
+			width: 44px;
+			padding: 4px 12px;
 		}
-	}
-	.taskBody .crap_count {
-		color: red;
-		border: red 1px solid;
-		border-radius: 50px;
-		width: 50px;
-		padding: 10px;
-	}
-	button.start{
-		@include buttonReflect($startButtonColor, $white);
-	}
-	button {
-		font-weight: 500;
-		font-size: 14px;
-		letter-spacing: .1em;
-		padding: 8px 20px;
-		width: 100%;
-		border-radius: 6px;
-		border: none;
 	}
 }
 </style>
 
 <script>
 	import gql from 'graphql-tag'
-	import moment from '~/plugins/moment'
+	import ContributionList from '~/components/organisms/ContributionList.vue'
+	import TaskCardTag from '~/components/atoms/TaskCardTag.vue'
+	import FiveMinutesModal from '~/components/organisms/FiveMinutesModal.vue'
 
-	const createClapMutation = gql`
-	mutation ($taskId: ID!) {
-		createClap(taskId: $taskId) {
-			task {
-				id
-				status
-				clap
-			}
-			errors 
-		}
-	}
-	`
+	import getTaskQuery from '~/apollo/queries/get_task_query.gql'
+	import createClapMutation from '~/apollo/queries/create_clap_mutation.gql'
+	import startContributionMutation from '~/apollo/queries/start_contribution_mutation.gql'
+	import finishContributionMutation from '~/apollo/queries/finish_contribution_mutation.gql'
 
-	const getTaskQuery = gql`
-	query ($taskId: ID!) {
-		task(id: $taskId) {
-			clap
-			createdAt
-			deadline
-			finishTime
-			groupId
-			importance
-			name
-			note
-			priority
-			startTime
-			status
-			updatedAt
-			urgency
-			contributions {
-				createdAt
-				finality
-				finishedAt
-				id
-				status
-				userId
-			}
-		}
-	}
-	`
-
-	const start_contribution = gql`
-	mutation ($taskId: ID!) {
-		startContribution(taskId: $taskId) {
-			contribution {
-				id
-				status
-				userId
-				finishedAt
-				createdAt
-				finality
-			}
-			task {
-				id
-				status
-			}
-			errors
-		}
-	}
-	`
+	import deleteTaskMutation from '~/apollo/queries/delete_task_mutation.gql'
 
 	export default {
 		data() {
 			return {
+				modal: false,
 				userid: this.$route.params.userid,
 				groupid: this.$route.params.groupid,
 				taskid: this.$route.params.taskid,
-				task: {},
+				task: {
+					group: {
+						ancestorAndSelfGroups: [],
+					},
+					contributions: [],
+				},
+				finality: false,
 			}
 		},
+
+		components: {
+			ContributionList,
+			TaskCardTag,
+			FiveMinutesModal
+		},
+
 		methods: {
+			openModal() {
+                this.modal = true
+            },
+
+            closeModal() {
+                this.modal = false
+            },
 			clap_countup () {
 				this.$apollo.mutate({
 					mutation: createClapMutation,
@@ -179,23 +184,57 @@
 			},
 
 			start_contribution () {
+				let task = this.task;
 				this.$apollo.mutate({
-					mutation: start_contribution,
+					mutation: startContributionMutation,
 					variables: {
 						taskId: this.$route.params.taskid,
 					},
 				}).then(res => {
 					console.log(res);
-					this.task.contributions.push(res.data.contribution);
+					task.status = res.data.startContribution.task.status;
+
+					task.contributions.push(res.data.startContribution.contribution);
 				}).catch(err => {
 					console.log(err);
 				})
 			},
 
 			finish_contribution () {
+				let task = this.task;
+				this.$apollo.mutate({
+					mutation: finishContributionMutation,
+					variables: {
+						contributionId: task.contributions[task.contributions.length - 1].id,
+						finality: this.finality,
+					},
+				}).then(res => {
+					console.log(res);
+					task.status = res.data.finishContribution.task.status;
+					
+					task.contributions.pop();
+					task.contributions.push(res.data.finishContribution.contribution);
+				}).catch(err => {
+					console.log(err);
+				})
 
 			},
+
+			deleteTask () {
+				let task = this.task;
+				this.$apollo.mutate({
+					mutation: deleteTaskMutation,
+					variables: {
+						taskId: this.$route.params.taskid,
+					},
+				}).then(res => {
+					console.log(res);
+				}).catch(err => {
+					console.log(err);
+				})
+			},
 		},
+
 		mounted: function () {
 			console.log(this.$route.params.taskid);
 			this.$apollo.query({
@@ -206,6 +245,11 @@
 			}).then(res => {
 				console.log(res);
 				this.task = res.data.task;
+
+				if (this.$route.query.fiveminutes == "true"){
+					this.modal = true;
+				}
+				
 			}).catch(err => {
 				console.log(err);
 			});

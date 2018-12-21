@@ -3,7 +3,7 @@
 		<form v-on:submit.prevent="addTask">
 			<ul>
 				<div name="name">
-					<li><label>タスク名</label></li>
+					<li><label>作成グループ名</label></li>
 					<li><input type="text" name="" v-model="sendData.name"></li>
 				</div>
 
@@ -24,20 +24,22 @@
 						</select></li>
 				</div>
 
-				<div name="group">
-					<li><label>グループ</label></li>
-						<li><select v-model="sendData.groupId" >
+				<div name="parent_group">
+					<li><label>親グループ</label></li>
+						<li><select v-model="sendData.parentId" >
 							<option v-for= "group in groups" :key= "group.id" :value="group.id">{{group.name}}</option>
-						</select></li>
-					
+						</select></li>					
 				</div>
 
-				<div name="note">
-					<li><label>メモ</label></li>
-					<li><textarea v-model="sendData.note" value=""></textarea></li>
+
+				<div name="publicity">
+					<li><label>公開/非公開設定</label></li>
+						<li><select v-model="sendData.publicity">
+							<option value=true>公開</option>
+							<option value=false>非公開</option>
+						</select></li>			
 				</div>
 			</ul>
-
 		</form>
 	</div>
 </template>

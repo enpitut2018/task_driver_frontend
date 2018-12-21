@@ -1,5 +1,5 @@
 <template>
-	<span><a href="#" class="tag">{{group}}</a></span>
+	<span><nuxt-link :to="{ name: 'userid-groupid', params: { userid: group.userId, groupid: group.id }}" class="tag">{{group.name}}</nuxt-link></span>
 </template>
 
 <style lang="scss" scoped>
@@ -19,6 +19,11 @@
 
 <script>
 export default {
-	props: ['group']
+	props: ['group'],
+	compunted: {
+		groupUrl () {
+			return group.userId + '/' + group.id
+		}
+	}
 }
 </script>
