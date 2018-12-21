@@ -29,6 +29,13 @@
                                     name
                                     status
                                     userId
+                                    group {
+                                        ancestorAndSelfGroups {
+                                            id
+                                            name
+                                            userId
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -50,9 +57,6 @@
     `
 
     export default {
-        middleware: [
-            'auth',
-        ],
         data: () => ({
             task: {},
             modal: false,
