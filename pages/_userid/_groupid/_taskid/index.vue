@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="five-minutes">
-           <FiveMinutesModal :taskname= task.name @close="closeModal" v-if="modal"/>
+           <FiveMinutesModal :taskname= task.name @close="closeModal" ref="minute" v-if="modal"/>
         </div>
 		<div class="taskCard">
 			<div class="taskHead">

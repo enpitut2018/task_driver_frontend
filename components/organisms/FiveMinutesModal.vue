@@ -6,10 +6,9 @@
       <div class="time">
           <p>とりあえず5分、{{taskname}}をやっていこう！</p>
           {{ formatTime }}
-            
       </div>
-      <button v-on:click="start" v-if="!timerOn">Start</button>
-      <button v-on:click="stop" v-if="timerOn">Stop</button>
+      <button v-on:click="start" v-if="!timerOn">はじめる</button>
+      <button v-on:click="stop" v-if="timerOn">やめる</button>
     </div>
   </div>
   </ModalWindow>
@@ -27,7 +26,7 @@
             return {
                 min: 5,
                 sec: 0,
-                timerOn: true,
+                timerOn: false,
                 timerObj: null,
             }
         },
@@ -44,6 +43,7 @@
                 this.sec = 59;
             } else if(this.sec <= 0 && this.min <= 0) {
                 this.complete();
+                this.formatTime = "もうちょっと頑張ってみよう！"
             } else {
                 this.sec --;
             }
@@ -59,9 +59,8 @@
                 clearInterval(this.timerObj);
                 this.timerOn = false; //timerがOFFであることを状態として保持
             },
-
             complete: function() {
-            clearInterval(this.timerObj)
+                clearInterval(this.timerObj)
             }
         },
         computed: {
