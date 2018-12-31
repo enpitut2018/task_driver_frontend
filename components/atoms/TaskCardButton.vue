@@ -1,5 +1,5 @@
 <template>
-	<button class="start">Start</button>
+	<button class="start">始める</button>
 </template>
 
 <script>

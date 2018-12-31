@@ -4,10 +4,8 @@
 
 <style lang="scss" scoped>
 	.tag {
-		// @include buttonReflect($tagColor, $white);
 		color: $white;
 		background-color: $tagColor;
-		// @include HoverFlash(.7, 1);
 		margin: 2px;
 		padding: 2px 8px;
 		border-radius: 5px;
@@ -20,10 +18,5 @@
 <script>
 export default {
 	props: ['group'],
-	compunted: {
-		groupUrl () {
-			return group.userId + '/' + group.id
-		}
-	}
 }
 </script>

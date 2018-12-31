@@ -18,10 +18,10 @@
 <script>
 
 
-import TaskNewModal from '~/components/organisms/TaskNewModal.vue'
+import NewTaskModal from '~/components/organisms/NewTaskModal.vue'
 export default {
 
-  components: { TaskNewModal },
+  components: { NewTaskModal },
   data() {
     return {
       modal: false,

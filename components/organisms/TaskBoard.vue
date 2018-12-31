@@ -1,10 +1,10 @@
 <template>
 	<section class="board">
-		<!-- <h2 class="boardHead">TODO<span class="taskCount"></span></h2> -->
-		<h2 class="boardHead">{{title}}</h2>
-		<div class="cards" v-for= "task in tasks" :key= "task.id">
-			<TaskCard v-bind:task="task" ></TaskCard>
-		</div>
+		<h2 class="boardHead">
+			{{title}}
+			<span class="taskCount">{{tasks.length}}</span>
+		</h2>
+		<TaskCard v-for="task in tasks" :key="task.id" :task="task"/>
 	</section>
 </template>
 
@@ -43,6 +43,11 @@
 		components: {
 			TaskCard
 		},
-		props: ['tasks', 'title']
+		props: ['tasks', 'title'],
+		computed: {
+			taskList () {
+				return [tasks].flat();
+			},
+		},
 	}
 </script>

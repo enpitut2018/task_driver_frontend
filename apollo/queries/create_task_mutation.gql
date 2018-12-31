@@ -1,0 +1,21 @@
+mutation ($name: String!, $deadline: MomentInput!, $importance: Int!, $note: String, $groupId: ID!) {
+    createTask(name: $name, deadline: $deadline, importance: $importance, note: $note, groupId: $groupId) {
+        task {
+            id
+            name
+            status
+            userId
+            importance
+            group {
+                id
+                userId
+                ancestorAndSelfGroups {
+                    id
+                    name
+                    userId
+                }
+            }
+        }
+        errors 
+    }
+}

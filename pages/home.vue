@@ -1,92 +1,101 @@
 <template>
-    <div>  
+    <div>
+        <h1>ホーム</h1>
         <div class="modal-window">
-            <button @click="openModal">タスクの追加</button>
-            <TaskNewModal :sendData= this.sendData :groups= this.groups @close="closeModal" @send="addTask" v-if="modal"/>
+            <div class="icon_circle"  @click="openModal">
+                <div class="circle_inner">
+                    <i class="fas fa-plus"></i>
+                </div>
+            </div>
+            <NewTaskModal :newTask="newTask" :groups="groups" @close="closeModal" @send="addTask" v-if="modal"/>
         </div>
-        <div v-if="isAuthenticated">
-            <TaskBoard :tasks= this.todo title="TODO"></TaskBoard>
-            <TaskBoard :tasks= this.doing title="DOING"></TaskBoard>
+
+        <div class="boards">
+            <TaskBoard :tasks="tasks_todo" :title="'TODO'"></TaskBoard>
+            <TaskBoard :tasks="tasks_doing" :title="'DOING'"></TaskBoard>
         </div>
     </div>
 </template>
 
+<style lang="scss" scoped>
+h1 {
+    margin: 10px 0;
+}
+.boards {
+    display: flex;
+}    
+.icon_circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    vertical-align: top;
+    background-color: orange;
+    position: fixed;
+    bottom: 60px;
+    right: 60px;
+    width: 65px;
+    height: 65px;
+    box-shadow: 0 0 3px 0 #000;
+    .circle_inner {
+        font-size: 2.3em;
+        color: #fff;
+    }
+}
+</style>
+
 <script>
     import gql from 'graphql-tag'
     import moment from '~/plugins/moment'
+
     import TaskBoard from '~/components/organisms/TaskBoard.vue'
-    import TaskNewModal from '~/components/organisms/TaskNewModal.vue'
+    import NewTaskModal from '~/components/organisms/NewTaskModal.vue'
 
-    const getTasksQuery = gql`
-                    query($id: ID!){
-                        user(id: $id)
-                        {
-                            groups{
-                                id
-                                name
-                                tasks{
-                                    id
-                                    name
-                                    status
-                                    userId
-                                    group {
-                                        ancestorAndSelfGroups {
-                                            id
-                                            name
-                                            userId
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }`
-
-    const createTaskMutation = gql`
-        mutation ($name: String!, $deadline: MomentInput!, $importance: Int!, $note: String!, $groupId: ID!) {
-            createTask(name: $name, deadline: $deadline, importance: $importance, note: $note, groupId: $groupId) {
-                task {
-                    name
-                    deadline
-                    importance
-                    note
-                    groupId
-                }
-                errors 
-            }
-        }
-    `
+    import getUserTasksQuery from '~/apollo/queries/get_user_tasks_query.gql'
+    import createTaskMutation from '~/apollo/queries/create_task_mutation.gql'
 
     export default {
         data: () => ({
-            task: {},
+            tasks_todo: [],
+            tasks_doing: [],
+            groups: [],
             modal: false,
             message: '',
-            sendData: {
-                name: "",
-                deadline_date: "",
-                deadline_time: "",
-                importance: "",
-                note: "",
-                group_id: ""
-            }
+            newTask: {}
         }),
 
-        components: 
-        {
+        components: {
             TaskBoard,
-            TaskNewModal
+            NewTaskModal
         },
 
         mounted: function(){
             this.$apollo.query({
-                query: getTasksQuery,
+                query: getUserTasksQuery,
                 variables: {
                     id: this.$auth.user.id
                 },
             }).then(res => {
-				// console.log(res);
-                this.task = res.data.user,groups;
-                console.log(this.task);
+                let tasks = [];
+
+                for (let group of res.data.user.groups) {
+                    tasks.push(group.tasks);
+                    let group_data = {
+                        id: group.id,
+                        name: group.name,
+                        userId: group.userId
+                    }
+                    this.groups.push(group_data);
+                };
+
+                tasks = tasks.flat();
+                for (let task of tasks) {
+                    if (task.status == 1) {
+                        this.tasks_todo.push(task);
+                    } else if (task.status == 2) {
+                        this.tasks_doing.push(task);
+                    }
+                }
 			}).catch(err => {
 				console.log(err);
 			});
@@ -101,117 +110,39 @@
             },
 
             addTask(){
-                var datetime = moment(this.sendData.deadline_date + " " + this.sendData.deadline_time, "YYYY-MM-DD HH:mm")
-                
-                console.log(datetime);
-                console.log(datetime.year());
-                console.log(datetime.month());
-                console.log(datetime.date());
-                console.log(datetime.hour());
-                console.log(datetime.minute());
-                console.log(datetime.second());
+                let task = this.newTask;
+                let deadline = moment(task.deadline);
 
                 this.$apollo.mutate({
                     mutation: createTaskMutation,
                     variables: {
-                        name: this.sendData.name,
+                        name: task.name,
                         deadline: {
-                            year: datetime.year(),
-                            month: datetime.month() + 1,
-                            day: datetime.date(),
-                            hour: datetime.hour(), 
-                            minute: datetime.minute(), 
-                            second: datetime.second()
+                            year: deadline.year(),
+                            month: deadline.month() + 1,
+                            day: deadline.date(),
+                            hour: deadline.hour(), 
+                            minute: deadline.minute(), 
+                            second: deadline.second()
                         },
-
-                        // deadlineのフォーマット ->  "2018-12-12 14:51:02",
-                        importance: Number(this.sendData.importance),
-                        note: this.sendData.note,
-                        groupId: Number(this.sendData.groupId)
-                        // status: Number(this.sendData.status),
+                        importance: Number(task.importance),
+                        note: task.note,
+                        groupId: Number(task.groupId),
                     },
                 }).then(res => {
                     console.log(res);
-                    // this.task.clap = res.data.createClap.task.clap;
-                    
-                    this.sendData.name =  "",
-                    this.sendData.deadline_date = "",
-                    this.sendData.deadline_time = "",
-                    this.sendData.importance =  1,
-                    this.sendData.note =  "",
-                    this.sendData.group_id =  ""
-                    
-                    // 親イベント発火
+                    this.tasks_todo.push(res.data.createTask.task);
+                    this.newTask = {};
                 }).catch(err => {
                     console.log(err);
                 });
             },
+
         },
         computed: {
             userInfo () {
                 return this.$auth.user
             },
-            isAuthenticated () {
-                return this.$auth.loggedIn
-            },
-            joinedDate () {
-                let dateRes = this.user.user.created_at
-                return moment(dateRes, "YYYY-MM-DD HH:mm:ss Z").format("YYYY年M月D日H時m分")
-            },
-
-            todo(){
-                var toString = Object.prototype.toString
-                const todos = []
-                // todos.push(toString.call(this.task.groups));
-                // todos.push(this.task.groups.length);
-
-                for (var i in this.task.groups) {
-                    for (var n in this.task.groups[i].tasks){
-                        var todo = {}
-                        todo["group_id"] = this.task.groups[i].id;
-                        todo["group_name"] = this.task.groups[i].name;
-                        todo["name"] = this.task.groups[i].tasks[n].name;
-                        todo["id"] = this.task.groups[i].tasks[n].id;
-                        todo["userId"] = this.task.groups[i].tasks[n].userId;
-                        if (this.task.groups[i].tasks[n].status == 1){
-                            todos.push(todo);
-                        }
-                    }
-                }
-                return todos
-            },
-
-            doing(){
-                var toString = Object.prototype.toString
-                const todos = []
-                // todos.push(toString.call(this.task.groups));
-                // todos.push(this.task.groups.length);
-
-                for (var i in this.task.groups) {
-                    for (var n in this.task.groups[i].tasks){
-                        var todo = {}
-                        todo["group"] = this.task.groups[i].name;
-                        todo["name"] = this.task.groups[i].tasks[n].name;
-                        todo["id"] = this.task.groups[i].tasks[n].id;
-                        
-                        if (this.task.groups[i].tasks[n].status == 2){
-                            todos.push(todo);
-                        }
-                    }
-                }
-                return todos
-            },
-
-            groups(){
-                const groups = []
-                for (var i in this.task.groups) {
-                    var group = {}
-                    group["id"] = this.task.groups[i].id;
-                    group["name"] = this.task.groups[i].name;
-                    groups.push(group);
-                }
-                return groups
-            }
         }
     }
 </script>

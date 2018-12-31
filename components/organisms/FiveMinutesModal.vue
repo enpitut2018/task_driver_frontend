@@ -17,8 +17,8 @@
 
 <script>
   import ModalWindow from '~/components/organisms/ModalWindow.vue'
-  import TaskNewForm from '~/components/atoms/TaskNewForm.vue'
-  import TaskNewButton from '~/components/atoms/TaskNewButton.vue'
+  import NewTaskForm from '~/components/molecules/NewTaskForm.vue'
+  import NewTaskButton from '~/components/atoms/NewTaskButton.vue'
 
     export default {
         name: 'timer',
@@ -31,9 +31,9 @@
             }
         },
         components: {
-			ModalWindow,
-            TaskNewForm,
-            TaskNewButton
+          ModalWindow,
+          NewTaskForm,
+          NewTaskButton
         },
         props: ['sendData', 'taskname'],
         methods: {

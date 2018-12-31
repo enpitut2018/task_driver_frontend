@@ -1,16 +1,20 @@
 <template>
 	<div class="card">
-		<a v-bind:href="taskUrl">
-			<div class="cardHeader">
-				<h3>{{task.name}}</h3>
-				<!-- <h3>{{task.name}}<span class="stars">★</span></h3> -->
-			</div>
-		</a>
+		<div class="cardHeader">
+			<h3>
+				<nuxt-link :to="{ name: 'userid-groupid-taskid', params: { userid: task.group.userId, groupid: task.group.id, taskid: task.id }}" class="cardLink">
+					{{task.name}}
+				</nuxt-link>
+				<span class="stars" v-for="n in task.importance" :key="n">★</span>
+			</h3>
+		</div>
+
 		<div class="cardBody">
 			<div class="tags">
-				<Tag v-bind:group= "task.group_name" :groupUrl = this.groupUrl ></Tag>
+				<TaskCardTag v-for="group in task.group.ancestorAndSelfGroups" :key="group.id" :group="group"/>
 			</div>
 		</div>
+
 		<Button/>
 	</div>
 </template>
@@ -22,14 +26,13 @@
 		border-radius: 3px;
 		border: 1px solid $borderColor;
 		background-color: $cardBackgroundColor;
-		a {
-			color: $textColor;
-			text-decoration: none;
-		}
 		.cardHeader {
-			@include HoverLine();
 			font-size: 18px;
 			margin: 8px 0;
+			.cardLink {
+				color: $textColor;
+				@include HoverLine();
+			}
 			.stars {
 				font-size: 60%;
 				margin-left: 5px;
@@ -46,24 +49,15 @@
 </style>
 
 <script>
-	import Tag from '~/components/atoms/TaskCardTag.vue'
+	import TaskCardTag from '~/components/atoms/TaskCardTag.vue'
 	import Button from '~/components/atoms/TaskCardButton.vue'
 
 	export default {
 		
 		components: {
-			Tag,
+			TaskCardTag,
 			Button
 		},
-		props: ['task'],
-
-		computed: {
-            taskUrl () {
-                return "/" + this.task.userId + "/" + this.task.group_id + "/" + this.task.id
-			},
-			groupUrl(){
-				return "/" + this.task.userId + "/" + this.task.group_id
-			}
-		}
+		props: ['task']
 	}
 </script>
