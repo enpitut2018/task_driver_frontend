@@ -1,0 +1,14 @@
+query ($userId: ID!) {
+  activities(userId: $userId) {
+    date
+    contributions {
+      id
+      createdAt
+      finishedAt
+    }
+    tasks {
+      id
+      finishTime
+    }
+  }
+}

@@ -1,6 +1,9 @@
 <template>
     <div>
         <h1>{{user.username}}</h1>
+
+        <ActivityGraph :userid="Number(userid)" />
+
         <div v-for="group in user.groups" :key="group.id">
             <div class="card">
                 <h2>
@@ -8,7 +11,7 @@
                     <span class="star" v-for="n in group.importance" :key="n">★</span>
                 </h2>
                 <div class="tags">
-                    <TaskCardTag v-for="group_t in group.ancestorGroups" :key="group_t.id" :group="group_t"/>
+                    <TaskCardTag v-for="group_tag in group.ancestorGroups" :key="group_tag.id" :group="group_tag"/>
                 </div>
             </div>
         </div>
@@ -49,6 +52,9 @@ h1 {
     import moment from '~/plugins/moment'
     import UserInfo from '~/components/atoms/UserInfo.vue'
     import TaskCardTag from '~/components/atoms/TaskCardTag.vue'
+    import ActivityGraph from '~/components/molecules/ActivityGraph.vue'
+
+    import getActivitiesQuery from '~/apollo/queries/get_activities_query.gql'
 
     const getGroupsQuery = gql`
                     query($id: ID!){
@@ -74,7 +80,11 @@ h1 {
                 userid: this.$route.params.userid,
                 user: {
                     groups:[],
-                }
+                },
+                activities: [{
+                                    contributions: [],
+                                    tasks: [],
+                                }],
             }
         },
 
@@ -86,7 +96,6 @@ h1 {
                 },
             }).then(res => {
                 this.user = res.data.user;
-                console.log(this.group);
 			}).catch(err => {
 				console.log(err);
 			});
@@ -95,6 +104,7 @@ h1 {
         components: {
             UserInfo,
             TaskCardTag,
+            ActivityGraph,
         },
 
         methods: {
