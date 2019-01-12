@@ -70,35 +70,39 @@ h1 {
         },
 
         mounted: function(){
-            this.$apollo.query({
-                query: getUserTasksQuery,
-                variables: {
-                    id: this.$auth.user.id
-                },
-            }).then(res => {
-                let tasks = [];
+            if (this.$store.state.auth.user == null) {
+                // 未ログイン時にはルートに遷移
+                this.$router.push('/')
+            } else {
+                this.$apollo.query({
+                    query: getUserTasksQuery,
+                    variables: {
+                        id: this.$store.state.auth.user.id,
+                    },
+                }).then(res => {
+                    let tasks = [];
+                    for (let group of res.data.user.groups) {
+                        tasks.push(group.tasks);
+                        let group_data = {
+                            id: group.id,
+                            name: group.name,
+                            userId: group.userId,
+                        }
+                        this.groups.push(group_data);
+                    };
 
-                for (let group of res.data.user.groups) {
-                    tasks.push(group.tasks);
-                    let group_data = {
-                        id: group.id,
-                        name: group.name,
-                        userId: group.userId
+                    tasks = tasks.flat();
+                    for (let task of tasks) {
+                        if (task.status == 1) {
+                            this.tasks_todo.push(task);
+                        } else if (task.status == 2) {
+                            this.tasks_doing.push(task);
+                        }
                     }
-                    this.groups.push(group_data);
-                };
-
-                tasks = tasks.flat();
-                for (let task of tasks) {
-                    if (task.status == 1) {
-                        this.tasks_todo.push(task);
-                    } else if (task.status == 2) {
-                        this.tasks_doing.push(task);
-                    }
-                }
-			}).catch(err => {
-				console.log(err);
-			});
+                }).catch(err => {
+                    console.log(err);
+                });
+            }
         },
         methods: {
             openModal() {
@@ -137,12 +141,6 @@ h1 {
                     console.log(err);
                 });
             },
-
         },
-        computed: {
-            userInfo () {
-                return this.$auth.user
-            },
-        }
     }
 </script>
