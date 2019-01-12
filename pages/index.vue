@@ -18,14 +18,14 @@
 <script>
 
 
-import TaskNewModal from '~/components/organisms/TaskNewModal.vue'
+import NewTaskModal from '~/components/organisms/NewTaskModal.vue'
 export default {
   head: {
     script: [
       {src: 'sw.plugin.js'}
     ]
   },
-  components: { TaskNewModal },
+  components: { NewTaskModal },
   data() {
     return {
       modal: false,

@@ -1,7 +1,7 @@
 <template>
 	<div class="user">
 		<div class="user_avater"><i class="fas fa-user"></i></div>
-		<nuxt-link :to="{ name : 'userid', params : { userid: user.username }}" class="user_name">{{ user.username }}</nuxt-link>
+		<nuxt-link :to="{ name : 'userid', params : { userid: user.id }}" class="user_name">{{ user.username }}</nuxt-link>
 	</div>
 </template>
 
