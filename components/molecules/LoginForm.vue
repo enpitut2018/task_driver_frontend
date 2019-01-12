@@ -82,16 +82,20 @@
 
 <script>
 	export default {
-		methods: {
-			async authenticate () {
-				this.$auth.loginWith('local', { data: this.loginInfo })
-				.then(() => this.$apolloHelpers.onLogin(this.$auth.getToken('local')));
-			},
-		},
-
 		data: () => ({
 			user: { 'email': '', 'password': '' }
 		}),
+
+		methods: {
+			async authenticate () {
+				this.$store.dispatch('auth/login', this.user).then(() => {
+					if (this.$store.state.auth.isAuthenticated) {
+						this.$apolloHelpers.onLogin(this.$store.state.auth.token)
+						this.$router.push('/home')
+					}
+				});
+			},
+		},
 
 		computed: {
 			loginInfo () {
