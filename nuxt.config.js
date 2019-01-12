@@ -61,7 +61,6 @@ module.exports = {
     errorHandler (error) {
       console.log('%cError', 'background: red; color: white; padding: 2px 4px; border-radius: 3px; font-weight: bold;', error.message)
     },
-    authenticationType: '', // 'Bearer Bearer...' の形式になってしまうのを防ぐ
     clientConfigs: {
       default: {
         httpEndpoint: process.env.NODE_ENV == 'production' ? 'https://task-driver.sukiyaki.party/v1/' : 'http://localhost:3001/v1/',
