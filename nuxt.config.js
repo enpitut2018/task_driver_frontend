@@ -1,4 +1,9 @@
+const enviroment = process.env.NODE_ENV || 'development';
+const envSet = require(`env.${enviroment}.js`)
+
 module.exports = {
+  env: envSet,
+
   /*
   ** Headers of the page
   */
@@ -37,7 +42,22 @@ module.exports = {
     '@nuxtjs/auth',
     '@nuxtjs/dotenv',
     '@nuxtjs/apollo',
+    '@nuxtjs/pwa',
   ],
+
+  manifest: {
+    name: 'Folivora',
+    lang: 'ja',
+    short_name: 'Foli',
+    description: 'ナマケモノ',
+    start_url: '/'
+  },
+
+  workbox: {
+    skipwaiting: true,
+    clientsClaim: true,
+    dev: true
+  },
 
   axios: {
     baseURL:  process.env.NODE_ENV == 'production' ? 'https://task-driver.sukiyaki.party/v1' : 'http://localhost:3001/v1'

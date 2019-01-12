@@ -20,7 +20,11 @@
 
 import NewTaskModal from '~/components/organisms/NewTaskModal.vue'
 export default {
-
+  head: {
+    script: [
+      {src: 'sw.plugin.js'}
+    ]
+  },
   components: { NewTaskModal },
   data() {
     return {
