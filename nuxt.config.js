@@ -34,30 +34,12 @@ module.exports = {
       '@/assets/sass/global.scss',
     ]],
     '@nuxtjs/axios',
-    '@nuxtjs/auth',
     '@nuxtjs/dotenv',
     '@nuxtjs/apollo',
   ],
 
   axios: {
     baseURL:  process.env.NODE_ENV == 'production' ? 'https://task-driver.sukiyaki.party/v1' : 'http://localhost:3001/v1'
-  },
-
-  auth: {
-    strategies: {
-      local: {
-        endpoints: {
-          login: { url: '/sign_in', method: 'post' },
-          logout: { url: '/sign_out', method: 'delete' },
-          user: { url: '/user' },
-        },
-      },
-    },
-    redirect: {
-      home: '/home',
-      logout: '/unauthenticated',
-      // login: '/login'
-    },
   },
 
   apollo: {
@@ -72,7 +54,6 @@ module.exports = {
           fetchOptions: { mode: 'cors' },
         },
       },
-      // default: '~/apollo/client-configs/default.js',
     },
   },
 
