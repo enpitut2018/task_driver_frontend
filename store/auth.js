@@ -30,8 +30,8 @@ export const actions = {
 		let userInfo = {}
 		await this.$axios.$post('/sign_in', {
 			user: {
-				email: 'test@example.com',
-				password: 'password'
+				email: user.email,
+				password: user.password
 			}
 		}).then(res => {
 			token = res.token
@@ -58,6 +58,38 @@ export const actions = {
 			}
 		}).then(res => {
 			context.commit('logout')
+		}).catch(err => {
+			return false
+		})
+	},
+
+	async sign_up (context, user) {
+		let token = ''
+		let userInfo = {}
+		
+		await this.$axios.$post('/sign_up', {
+			user: {
+				email: user.email,
+				password: user.password
+			}
+		}).then(res => {
+
+		}).catch(err => {
+			return false
+		})
+	},
+
+	async confirm (context, confirmation) {
+		let token = ''
+		let userInfo = {}
+		
+		await this.$axios.$post('/confirm', {
+			confirmation: {
+				confirmation_token: confirmation.confirmation_token,
+				username: confirmation.username
+			}
+		}).then(res => {
+			
 		}).catch(err => {
 			return false
 		})
