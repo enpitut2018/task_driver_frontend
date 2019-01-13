@@ -91,9 +91,9 @@
 			async authenticate () {
                 this.confirmation.confirmation_token = this.$route.query.confirmation_token;
 				this.$store.dispatch('auth/confirm', this.confirmation).then(() => {
-				}).catch(() =>{
-					console.log("bad");
-					this.message = "アカウントを登録することができません。"
+				// }).catch(() =>{
+				// 	console.log("bad");
+				// 	this.message = "アカウントを登録することができません。"
 				});
 			},
 		},
