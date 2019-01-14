@@ -3,6 +3,11 @@
 		<div class="five-minutes">
            <FiveMinutesModal :taskname= task.name @close="closeModal" ref="minute" v-if="modal"/>
         </div>
+		
+		<div class="update-task">
+			<NewTaskModal :newTask="newTask" :groups="groups" :title="'タスクの更新'" :button="'更新'" @close="closeformModal" @send="updateTask" v-if="formModal"/>
+		</div>
+
 		<div class="taskCard">
 			<div class="taskHead">
 				<h1>
@@ -21,6 +26,7 @@
 				<div class="tags">
 					<TaskCardTag v-for="group in task.group.ancestorAndSelfGroups" :key="group.id" :group="group"/>
 					<button @click="deleteTask">タスクの削除</button>
+					<button @click="openformModal">タスクの更新</button>
 				</div>
 			</div>
 
@@ -41,11 +47,12 @@
 					<i class="far fa-thumbs-up"></i> {{task.clap}}
 				</div>
 			</div>
-
 		</div>
+
 		<div class="contributions" v-if="task.contributions.length > 0">
 			<ContributionList :contributions="task.contributions"/>
 		</div>
+
 	</div>
 </template>
 
@@ -127,21 +134,29 @@
 
 <script>
 	import gql from 'graphql-tag'
+	import moment from '~/plugins/moment'
+
 	import ContributionList from '~/components/organisms/ContributionList.vue'
 	import TaskCardTag from '~/components/atoms/TaskCardTag.vue'
+
+	import NewTaskModal from '~/components/organisms/NewTaskModal.vue'
 	import FiveMinutesModal from '~/components/organisms/FiveMinutesModal.vue'
 
 	import getTaskQuery from '~/apollo/queries/get_task_query.gql'
+	import getUserGroupsQuery from '~/apollo/queries/get_user_groups_query.gql'
+
 	import createClapMutation from '~/apollo/queries/create_clap_mutation.gql'
 	import startContributionMutation from '~/apollo/queries/start_contribution_mutation.gql'
 	import finishContributionMutation from '~/apollo/queries/finish_contribution_mutation.gql'
 
+    import updateTaskMutation from '~/apollo/queries/update_task_mutation.gql'
 	import deleteTaskMutation from '~/apollo/queries/delete_task_mutation.gql'
 
 	export default {
 		data() {
 			return {
 				modal: false,
+				formModal: false,
 				userid: this.$route.params.userid,
 				groupid: this.$route.params.groupid,
 				taskid: this.$route.params.taskid,
@@ -151,6 +166,8 @@
 					},
 					contributions: [],
 				},
+				groups: [],
+				newTask: {},
 				finality: false,
 			}
 		},
@@ -158,7 +175,8 @@
 		components: {
 			ContributionList,
 			TaskCardTag,
-			FiveMinutesModal
+			FiveMinutesModal,
+			NewTaskModal
 		},
 
 		methods: {
@@ -168,6 +186,46 @@
 
             closeModal() {
                 this.modal = false
+			},
+			
+			openformModal() {
+                this.formModal = true
+			},
+			
+            closeformModal() {
+            	this.formModal = false
+			},
+			
+            updateTask(){
+                let task = this.newTask;
+				let deadline = moment(task.deadline);
+
+				console.log(task);
+
+                this.$apollo.mutate({
+                    mutation: updateTaskMutation,
+                    variables: {
+						taskId: this.$route.params.taskid,
+                        name: task.name,
+                        deadline: {
+                            year: deadline.year(),
+                            month: deadline.month() + 1,
+                            day: deadline.date(),
+                            hour: deadline.hour(), 
+                            minute: deadline.minute(), 
+                            second: deadline.second()
+                        },
+                        importance: Number(task.importance),
+                        note: task.note,
+                        groupId: Number(task.groupId),
+                    },
+                }).then(res => {
+                    console.log(res);
+                    // this.tasks_todo.push(res.data.updateTask.task);
+					this.task = res.data.updateTask.task;
+                }).catch(err => {
+                    console.log(err);
+                });
             },
 			clap_countup () {
 				this.$apollo.mutate({
@@ -217,7 +275,6 @@
 				}).catch(err => {
 					console.log(err);
 				})
-
 			},
 
 			deleteTask () {
@@ -229,6 +286,7 @@
 					},
 				}).then(res => {
 					console.log(res);
+					this.$router.push('/home')
 				}).catch(err => {
 					console.log(err);
 				})
@@ -245,11 +303,32 @@
 			}).then(res => {
 				console.log(res);
 				this.task = res.data.task;
+				this.newTask = Object.assign({}, res.data.task);
+				this.newTask.deadline = moment(this.newTask.deadline).toISOString();
 
 				if (this.$route.query.fiveminutes == "true"){
 					this.modal = true;
 				}
 				
+			}).catch(err => {
+				console.log(err);
+			});
+			
+			this.$apollo.query({
+				query: getUserGroupsQuery,
+				variables: {
+                        id: this.$store.state.auth.user.id,
+                },
+			}).then(res => {
+				console.log(res);
+				for (let group of res.data.user.groups) {
+                        let group_data = {
+                            id: group.id,
+                            name: group.name,
+                            userId: group.userId,
+                        }
+                        this.groups.push(group_data);
+                };
 			}).catch(err => {
 				console.log(err);
 			});
