@@ -93,5 +93,34 @@ export const actions = {
 		}).catch(err => {
 			return false
 		})
+	},
+	async sendresetmail (context, user) {
+		let token = ''
+		let userInfo = {}
+
+		await this.$axios.$post('/password', {
+			user: {
+				email: user.email,
+			}
+		}).then(res => {
+
+		}).catch(err => {
+			return false
+		})
+	},
+	async reset (context, user) {
+		let token = ''
+		let userInfo = {}
+
+		await this.$axios.$post('/reset', {
+			user: {
+				password: user.password,
+				reset_password_token: user.reset_password_token
+			}
+		}).then(res => {
+
+		}).catch(err => {
+			return false
+		})
 	}
 }
