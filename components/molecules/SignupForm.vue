@@ -12,7 +12,7 @@
 			</div>
 			<button class="loginButton" type="submit">ユーザー登録</button>
 		</form>
-		{{message}}
+		<p>{{message}}</p>
 	</div>
 </template>
 
@@ -87,13 +87,10 @@
 		
 		methods: {
 			async authenticate () {
+				this.message = "登録しています。\nしばらくお待ち下さい...";
 				this.$store.dispatch('auth/sign_up', this.user).then(() => {
+					this.message = "登録されたメールアドレスにメールを送信しました。\nメールから認証を行ってください。"
 					//登録されたことを示さなければならない。
-					// this.$router.push('/login');
-					// if (this.$store.state.auth.isAuthenticated) {
-					// 	this.$apolloHelpers.onLogin(this.$store.state.auth.token)
-					// 	this.$router.push('/home')
-					// }
 				// }).catch(() =>{
 				// 	console.log("bad");
 				// 	this.message = "アカウントを登録することができません。"

@@ -1,6 +1,7 @@
 <template>
 	<div class="card">
 		<h1>ログイン</h1>
+		
 		<form @submit.prevent="authenticate">
 			<div class="formContent">
 				<span>メールアドレス</span>
@@ -12,8 +13,9 @@
 			</div>
 			<button class="loginButton" type="submit">ログイン</button>
 		</form>
+		{{message}}
 		<div class="passwordResetLink">
-			<a href="#">パスワードをお忘れの方はこちら &gt;</a>
+			<a href="/resetpassword">パスワードをお忘れの方はこちら &gt;</a>
 		</div>
 	</div>
 </template>
@@ -83,15 +85,19 @@
 <script>
 	export default {
 		data: () => ({
-			user: { 'email': '', 'password': '' }
+			user: { 'email': '', 'password': '' },
+			message: ""
 		}),
 
 		methods: {
 			async authenticate () {
 				this.$store.dispatch('auth/login', this.user).then(() => {
-					if (this.$store.state.auth.isAuthenticated) {
+					if (this.$store.state.auth.isAuthenticated == true) {
 						this.$apolloHelpers.onLogin(this.$store.state.auth.token)
 						this.$router.push('/home')
+					}
+					else{
+						this.message = "<br><p>入力されたメールアドレスやパスワードが正しくありません。<br>確認してからやりなおしてください</p>"
 					}
 				});
 			},

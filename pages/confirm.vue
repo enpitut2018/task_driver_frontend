@@ -2,14 +2,14 @@
 	<div class="card">
 		<h1>メールアドレスの認証</h1>
 		<p>ようこそ、Folivoraへ<br>まずは、あなたのユーザー名を設定しましょう！</p>
-		{{message}}
 		<form @submit.prevent="authenticate">
 			<div class="formContent">
 				<span>ユーザー名</span>
 				<input type="text" v-model="confirmation.username"/>
 			</div>
 			<button class="loginButton" type="submit">認証する</button>
-		</form> 
+		</form>
+		<p>{{message}}</p>
 	</div>
 </template>
 
@@ -89,8 +89,10 @@
         
 		methods: {
 			async authenticate () {
+				this.message = "メールアドレスの認証を行っています。\nしばらくお待ち下さい..."
                 this.confirmation.confirmation_token = this.$route.query.confirmation_token;
 				this.$store.dispatch('auth/confirm', this.confirmation).then(() => {
+					this.message = "メールアドレスが認証されました。\nログインすることができます。"
 				// }).catch(() =>{
 				// 	console.log("bad");
 				// 	this.message = "アカウントを登録することができません。"
