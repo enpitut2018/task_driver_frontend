@@ -1,5 +1,5 @@
 <template>
-	<button class="start" @click="$emit('send')" >作成</button>
+	<button class="start" @click="$emit('send')" >{{button}}</button>
 </template>
 
 <style lang="scss" scoped>
@@ -16,3 +16,9 @@
 		border: none;
 	}
 </style>
+
+<script>
+	export default {
+		props: ['tasks', 'button'],
+	}
+</script>

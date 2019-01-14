@@ -1,6 +1,6 @@
 <template>
 	<div class="taskCreateform" id="task">
-		<h1>新規タスク追加</h1>
+		<h1>{{title}}</h1>
 		<form v-on:submit.prevent="addTask">
 			<div class="formContent">
 				<span>タスク名</span>
@@ -80,7 +80,7 @@ import { Datetime } from 'vue-datetime'
 import 'vue-datetime/dist/vue-datetime.css'
 
 export default {
-	props: ["newTask", "groups"],
+	props: ["newTask", "groups", "title"],
 	components: {
 		datetime: Datetime,
 	}
