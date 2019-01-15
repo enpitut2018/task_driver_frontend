@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
         <h1>{{user.username}}</h1>
 
         <ActivityGraph :userid="Number(userid)" />
@@ -19,30 +19,34 @@
 </template>
 
 <style lang="scss" scoped>
-h1 {
-    margin: 25px 0;
-}
-.card {
-    position: relative;
-    background-color: #fff;
-    margin: 13px 20px;
-    padding: 12px 35px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    h2 {
-        a {
-            color: #000;
-            text-decoration: none;
-            font-size: 20px;
-        }
-        .star {
-            font-size: 12px;
-            margin-left: 1px;
-            color: #ffc100;
-        }
+.container {
+    width: 1000px;
+    margin: auto;
+    h1 {
+        margin: 25px 0;
     }
-    .tags {
-        margin: 8px 0;
+    .card {
+        position: relative;
+        background-color: #fff;
+        margin: 13px 20px;
+        padding: 12px 35px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        h2 {
+            a {
+                color: #000;
+                text-decoration: none;
+                font-size: 20px;
+            }
+            .star {
+                font-size: 12px;
+                margin-left: 1px;
+                color: #ffc100;
+            }
+        }
+        .tags {
+            margin: 8px 0;
+        }
     }
 }
 </style>

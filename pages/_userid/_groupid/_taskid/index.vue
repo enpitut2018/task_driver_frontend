@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="container">
 		<div class="five-minutes">
            <FiveMinutesModal :taskname= task.name @close="closeModal" ref="minute" v-if="modal"/>
         </div>
@@ -50,76 +50,80 @@
 </template>
 
 <style lang="scss" scoped>
-.taskCard {
-	margin: 50px 0;
-	padding: 35px 70px 15px;
-	background-color: #fff;
-	border-radius: 5px;
-	border: 1px solid #ddd;
-	.taskHead {
-		h1 {
-			display: inline-flex;
-			align-items: center;
-			.status {
-				font-size: 60%;
-				color: #fff;
-				padding: 2px 8px;
-				margin: 0 10px;
-				border-radius: 3px;
+.container {
+	width: 1000px;
+	margin: auto;
+	.taskCard {
+		margin: 50px 0;
+		padding: 35px 70px 15px;
+		background-color: #fff;
+		border-radius: 5px;
+		border: 1px solid #ddd;
+		.taskHead {
+			h1 {
+				display: inline-flex;
+				align-items: center;
+				.status {
+					font-size: 60%;
+					color: #fff;
+					padding: 2px 8px;
+					margin: 0 10px;
+					border-radius: 3px;
+					font-weight: 500;
+					&.todo {
+						background-color: #00bb00;
+					}
+					&.doing {
+						background-color: #ff8c00;
+					}
+					&.done {
+						background-color: red;
+					}
+				}
+				.star {
+					font-size: 12px;
+					margin-left: 1px;
+					color: #ffc100;
+				}
+			}
+			.tags {
+				margin: 5px 3px;
+			}
+		}
+		.taskBody {
+			.note {
+				margin: 15px 10px;
+			}
+			button {
 				font-weight: 500;
-				&.todo {
-					background-color: #00bb00;
+				font-size: 14px;
+				letter-spacing: .1em;
+				padding: 8px 20px;
+				width: 100%;
+				border-radius: 6px;
+				border: none;
+				width: 70%;
+				display: block;
+				margin: 15px auto;
+				&.start_btn {
+					@include buttonReflect($startButtonColor, $white);
 				}
-				&.doing {
-					background-color: #ff8c00;
-				}
-				&.done {
-					background-color: red;
+				&.finish_btn {
+					@include buttonReflect($finishButtonColor, $white);
 				}
 			}
-			.star {
-				font-size: 12px;
-				margin-left: 1px;
-				color: #ffc100;
+		}
+		.taskFooter {
+			.clap_count {
+				color: red;
+				border: red 1px solid;
+				border-radius: 50px;
+				display: inline-flex;
+				justify-content: space-between;
+				align-items: center;
+				width: 44px;
+				padding: 4px 12px;
 			}
-		}
-		.tags {
-			margin: 5px 3px;
-		}
-	}
-	.taskBody {
-		.note {
-			margin: 15px 10px;
-		}
-		button {
-			font-weight: 500;
-			font-size: 14px;
-			letter-spacing: .1em;
-			padding: 8px 20px;
-			width: 100%;
-			border-radius: 6px;
-			border: none;
-			width: 70%;
-			display: block;
-			margin: 15px auto;
-			&.start_btn {
-				@include buttonReflect($startButtonColor, $white);
-			}
-			&.finish_btn {
-				@include buttonReflect($finishButtonColor, $white);
-			}
-		}
-	}
-	.taskFooter {
-		.clap_count {
-			color: red;
-			border: red 1px solid;
-			border-radius: 50px;
-			display: inline-flex;
-			justify-content: space-between;
-			align-items: center;
-			width: 44px;
-			padding: 4px 12px;
 		}
 	}
 }

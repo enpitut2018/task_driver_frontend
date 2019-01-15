@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
         <h1>ホーム</h1>
         <div class="modal-window">
             <div class="icon_circle"  @click="openModal">
@@ -18,28 +18,32 @@
 </template>
 
 <style lang="scss" scoped>
-h1 {
-    margin: 10px 0;
-}
-.boards {
-    display: flex;
-}    
-.icon_circle {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    vertical-align: top;
-    background-color: orange;
-    position: fixed;
-    bottom: 60px;
-    right: 60px;
-    width: 65px;
-    height: 65px;
-    box-shadow: 0 0 3px 0 #000;
-    .circle_inner {
-        font-size: 2.3em;
-        color: #fff;
+.container {
+    width: 1000px;
+    margin: auto;
+    h1 {
+        margin: 10px 0;
+    }
+    .boards {
+        display: flex;
+    }    
+    .icon_circle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        vertical-align: top;
+        background-color: orange;
+        position: fixed;
+        bottom: 60px;
+        right: 60px;
+        width: 65px;
+        height: 65px;
+        box-shadow: 0 0 3px 0 #000;
+        .circle_inner {
+            font-size: 2.3em;
+            color: #fff;
+        }
     }
 }
 </style>

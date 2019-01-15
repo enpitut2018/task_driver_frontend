@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="container">
 		<h1 class="groupName">{{groupid}}</h1>
 		<div class="boards">
 			<TaskBoard/>
@@ -8,6 +8,9 @@
 </template>
 
 <style lang="scss" scoped>
+.container {
+	width: 1000px;
+	margin: auto;
 	.groupName {
 		font-size: 35px;
 		font-weight: 700;
@@ -17,6 +20,7 @@
 		width: 100%;
 		display: flex;
 	}
+}
 </style>
 
 <script>
