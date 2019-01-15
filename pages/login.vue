@@ -12,6 +12,6 @@
       LoginForm
     },
 
-    layout: 'unauthenticated',
+    layout: 'login',
   };
 </script>
