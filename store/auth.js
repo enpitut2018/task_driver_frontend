@@ -2,11 +2,13 @@ export const state = () => ({
 	isAuthenticated: false,
 	token: null,
 	user: null,
+	url: null,
 })
 
 export const getters = {
 	isAuthenticated: (state) => state.isAuthenticated,
 	user: (state) => state.user,
+	url: (state) => state.url,
 }
 
 export const mutations = {
@@ -16,6 +18,9 @@ export const mutations = {
 	setUser (state, user) {
 		state.user = user
 		state.isAuthenticated = true
+	},
+	setURL (state, url) {
+		state.url = url
 	},
 	logout (state) {
 		state.token = null
@@ -103,7 +108,6 @@ export const actions = {
 				email: user.email,
 			}
 		}).then(res => {
-
 		}).catch(err => {
 			return false
 		})
@@ -119,6 +123,43 @@ export const actions = {
 			}
 		}).then(res => {
 
+		}).catch(err => {
+			return false
+		})
+	},
+	async redirecttwitter (context, user) {
+		let redirecturl = ''
+		await this.$axios.$post('/redirect', {
+		}).then(res => {
+			redirecturl = res.url
+			context.commit('setURL', redirecturl)
+		}).catch(err => {
+			return false
+		})
+	},
+
+	async loginwithtwitter (context, user) {
+		let token = ''
+		let userInfo = {}
+		await this.$axios.$post('/callbacklogin', {
+			user: {
+				oauth_token: user.oauth_token,
+				oauth_verifier: user.oauth_verifier
+			}
+		}).then(res => {
+			console.log(res);
+			token = res.token
+			context.commit('setToken', token)
+		}).catch(err => {
+			return false
+		})
+		await this.$axios.$get('/user', {
+			headers: {
+				'Authorization': 'Bearer ' + token 
+			}
+		}).then(res => {
+			userInfo = res.user
+			context.commit('setUser', userInfo)
 		}).catch(err => {
 			return false
 		})

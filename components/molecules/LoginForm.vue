@@ -13,6 +13,9 @@
 			</div>
 			<button class="loginButton" type="submit">ログイン</button>
 		</form>
+		<form @submit.prevent="loginwithtwitter">
+			<button class="loginButton" type="submit">Twitterでログイン</button>
+		</form>
 		{{message}}
 		<div class="passwordResetLink">
 			<a href="/resetpassword">パスワードをお忘れの方はこちら &gt;</a>
@@ -97,10 +100,16 @@
 						this.$router.push('/home')
 					}
 					else{
-						this.message = "<br><p>入力されたメールアドレスやパスワードが正しくありません。<br>確認してからやりなおしてください</p>"
+						this.message = "入力されたメールアドレスやパスワードが正しくありません。\n確認してからやりなおしてください。"
 					}
 				});
 			},
+			async loginwithtwitter () {
+				this.$store.dispatch('auth/redirecttwitter', this.user).then(() => {
+					console.log("ま:" + this.$store.state.auth.url);
+					window.location.href = this.$store.state.auth.url
+				});
+			}
 		},
 
 		computed: {
