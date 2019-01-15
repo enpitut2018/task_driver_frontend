@@ -1,16 +1,10 @@
 <template>
-    <!-- <div>
-        <p class="card">
-            <br>
-        </p>
-    </div> -->
     <div class="card">
         <div class="cardHeader">
             <h3>
                 <nuxt-link :to="{ name: 'userid-groupid', params: { userid: group.userId, groupid: group.id }}" class="cardLink">{{group.name}}</nuxt-link>
             </h3>
         </div>
-
         <div class="cardBody">
             <p>{{group.note}}</p>
         </div>
@@ -22,14 +16,12 @@ body {
   background: #efefef;
 }
 .input-balloon {
-//   position: relative;
   position: absolute;
   padding: 20px;
   background: #fff;
   z-index: 99;
   width: 20vw;
 }
-
 .backdrop {
   opacity: 0;
   position: fixed;
@@ -39,7 +31,6 @@ body {
   bottom: 0;
   z-index: 1;
 }
-
 .card {
     position: absolute;
     margin: 16px 12px;
