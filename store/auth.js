@@ -23,9 +23,9 @@ export const mutations = {
 		state.url = url
 	},
 	logout (state) {
+		state.isAuthenticated = false
 		state.token = null
 		state.user = null
-		state.isAuthenticated = false
 	}
 }
 
@@ -57,9 +57,9 @@ export const actions = {
 	},
 
 	async logout (context) {
-		await this.$axois.$delete('sign_out', {
+		await this.$axios.$delete('sign_out', {
 			headers: {
-				'Authorization': 'Bearer ' + token.token
+				'Authorization': 'Bearer ' + context.state.token
 			}
 		}).then(res => {
 			context.commit('logout')

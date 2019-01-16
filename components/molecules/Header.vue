@@ -63,11 +63,9 @@
 export default {
   methods: {
     async logout() {
-      try {
-        await this.$auth.logout();
-      } catch (e) {
-        this.error = true;
-      }
+    	this.$store.dispatch('auth/logout').then(() => {
+    		this.$router.push('/')
+    	})
     },
   }
 };
