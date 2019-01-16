@@ -42,7 +42,7 @@
 
                 <div v-show="isActive === '2'">
                     <p>こんな感じ</p>
-                    <!-- <div v-for="pgroup in publicgroup" :key="pgroup.users.id">
+                    <div v-for="pgroup in publicgroup" :key="pgroup.users.id">
                         <div class="card">
                             <h2>
                                 <nuxt-link :to="{ name: 'userid-groupid', params: { userid: pgroup.users.id, groupid: pgroup.groups.id }}">{{pgroup.groups.name}}</nuxt-link>
@@ -54,7 +54,7 @@
                             </div>
                             <button @click="fork">このグループをフォークする</button>
                         </div>
-                    </div> -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -191,6 +191,7 @@ $white: #fff;
     
 
     import createGroupMutation from '~/apollo/queries/create_group_mutation.gql'
+    import forkGroupMutation from '~/apollo/queries/fork_group_mutation.gql'
 
     import NewGroupModal from '~/components/organisms/NewGroupModal.vue'
 
@@ -286,8 +287,21 @@ $white: #fff;
             },
 
             fork(){
+                this.$apollo.query({
+                    query: forkGroupMutation,
+                    variables: {
+                        groupId: 1
+                        // id: this.$store.state.auth.user.id,
+                    },
+                }).then(res => {
+                    this.groups = this.groups.concat(res.data.forkGroup.groups);
+                    this.publicgroup = res.data.publicgroup;
 
+                }).catch(err => {
+                    console.log(err);
+                });
             },
+
             addGroup(){
                 console.log(this.newGroup);
                 let group = this.newGroup;
