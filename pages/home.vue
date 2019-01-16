@@ -59,6 +59,11 @@
     import createTaskMutation from '~/apollo/queries/create_task_mutation.gql'
 
     export default {
+        head: {
+            script: [
+                {src: 'sw.plugin.js'}
+            ]
+  	    },
         data: () => ({
             tasks_todo: [],
             tasks_doing: [],
