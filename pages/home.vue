@@ -75,7 +75,7 @@
         },
 
         mounted: function(){
-            if (this.$store.state.auth.user === null) {
+            if (!this.$store.getters['auth/isAuthenticated']) {
                 // 未ログイン時にはログインページに遷移
                 this.$router.push('/login')
             } else {
@@ -149,6 +149,6 @@
                     console.log(err);
                 });
             },
-        },
+        }
     }
 </script>

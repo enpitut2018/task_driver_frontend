@@ -107,9 +107,9 @@
 <script>
     export default {
         mounted: function(){
-            if (this.$store.state.auth.isAuthenticated) {
-                // this.$router.push('/home')
+            if (this.$store.getters['auth/isAuthenticated']) {
+                this.$router.push('/home')
             }
-        }
+        },
     }
 </script>

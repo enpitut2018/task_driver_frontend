@@ -1,14 +1,13 @@
 import createPersistedState from "vuex-persistedstate"
 
 export const state = () => ({
-	isAuthenticated: false,
 	token: null,
 	user: null,
 	url: null,
 })
 
 export const getters = {
-	isAuthenticated: (state) => state.isAuthenticated,
+	isAuthenticated: (state) => state.user !== null ? true : false,
 	user: (state) => state.user,
 	url: (state) => state.url,
 }
