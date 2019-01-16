@@ -13,7 +13,7 @@ self.addEventListener('push', function(evt){
                     title: "やる気がでません"
                 }],
                 data: {
-                    target_url: json.body.target_url + json.body.id + "?timer=1"
+                    target_url: json.body.target_url + json.body.uid + "/" + json.body.gid + "/" + json.body.id + "?fiveminutes=true"
                 },
                 vibrate: [200, 100, 200, 100, 200, 100, 200]
             }
