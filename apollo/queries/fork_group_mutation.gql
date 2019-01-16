@@ -1,4 +1,4 @@
-mutation($groupId){
+mutation($groupId: ID!){
   forkGroup(groupId: $groupId){
     groups{
     	id
