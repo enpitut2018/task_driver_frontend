@@ -2,7 +2,7 @@
 	<header v-if="isAuthenticated">
 		<div class="container">
 			<div class="headerLogo">
-				<a href="/" class="homeLink">Folivora</a>
+				<a href="/home" class="homeLink">Folivora</a>
 			</div>
 			<nav class="headerNav">
 				<ul>

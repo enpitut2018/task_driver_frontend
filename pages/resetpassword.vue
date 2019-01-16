@@ -1,25 +1,17 @@
 <template>
 	<div class="card">
-		<h1>ログイン</h1>
+		<h1>パスワードのリセット</h1>
+		<p>パスワードのリセットを行うためのリンクをメールで送信します。</p>
+		<br>
+		<p>{{message}}</p>
 		
 		<form @submit.prevent="authenticate">
 			<div class="formContent">
 				<span>メールアドレス</span>
 				<input type="text" v-model="user.email"/>
 			</div>
-			<div class="formContent">
-				<span>パスワード</span>
-				<input type="password" v-model="user.password"/>
-			</div>
-			<button class="loginButton" type="submit">ログイン</button>
-		</form>
-		<form @submit.prevent="loginwithtwitter">
-			<button class="loginButton" type="submit">Twitterでログイン</button>
-		</form>
-		{{message}}
-		<div class="passwordResetLink">
-			<a href="/resetpassword">パスワードをお忘れの方はこちら &gt;</a>
-		</div>
+			<button class="loginButton" type="submit">メールアドレスへ送信</button>
+		</form> 
 	</div>
 </template>
 
@@ -35,6 +27,11 @@
 			width: 100%;
 			letter-spacing: .1em;
 			text-align: center;
+		}
+		p {
+			width: 100%;
+			letter-spacing: .1em;
+			text-align: left;
 		}
 		form {
 			padding: 15px 0 45px 0;
@@ -88,34 +85,22 @@
 <script>
 	export default {
 		data: () => ({
-			user: { 'email': '', 'password': '' },
+			user: { 'email': ''},
 			message: ""
-		}),
-
+        }),
+        
 		methods: {
 			async authenticate () {
-				this.$store.dispatch('auth/login', this.user).then(() => {
-					if (this.$store.state.auth.isAuthenticated == true) {
-						this.$apolloHelpers.onLogin(this.$store.state.auth.token)
-						this.$router.push('/home')
-					}
-					else{
-						this.message = "入力されたメールアドレスやパスワードが正しくありません。\n確認してからやりなおしてください。"
-					}
+				this.message = "しばらくお待ち下さい...";
+
+				this.$store.dispatch('auth/sendresetmail', this.user).then(() => {
+                    this.message = "メールを送信しました。"
+				// }).catch(() =>{
+				// 	console.log("bad");
+				// 	this.message = "アカウントを登録することができません。"
 				});
 			},
-			async loginwithtwitter () {
-				this.$store.dispatch('auth/redirecttwitter', this.user).then(() => {
-					console.log("ま:" + this.$store.state.auth.url);
-					window.location.href = this.$store.state.auth.url
-				});
-			}
 		},
-
-		computed: {
-			loginInfo () {
-				return { 'user': this.user }
-			}
-		},
+		layout: 'unauthenticated',
 	}
 </script>

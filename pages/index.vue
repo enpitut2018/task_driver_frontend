@@ -14,7 +14,7 @@
                     </nuxt-link>
                 </li>
                 <li>
-                    <nuxt-link :to="{ name: 'login' }">
+                    <nuxt-link :to="{ name: 'signup' }">
                         <button>
                             ユーザ登録
                         </button>
@@ -103,8 +103,3 @@
         }
 	}
 </style>
-
-<script>
-export default {
-}
-</script>

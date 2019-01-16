@@ -7,7 +7,7 @@
                     <i class="fas fa-plus"></i>
                 </div>
             </div>
-            <NewTaskModal :newTask="newTask" :groups="groups" @close="closeModal" @send="addTask" v-if="modal"/>
+            <NewTaskModal :newTask="newTask" :groups="groups" :title="'新規タスクの追加'" :button="'追加'" @close="closeModal" @send="addTask" v-if="modal"/>
         </div>
 
         <div class="boards">
@@ -118,6 +118,8 @@
             },
 
             addTask(){
+                console.log(this.newTask);
+                
                 let task = this.newTask;
                 let deadline = moment(task.deadline);
 
