@@ -13,7 +13,7 @@
 					</li>
 					<li>
 						<div class="projectsLink">
-							<a href="/groups">グループ</a>
+							<a href="/projects">プロジェクト</a>
 						</div>
 					</li>
 					<li>
@@ -21,6 +21,7 @@
 							<a href="/settings">設定</a>
 						</div>
 					</li>
+
 	                <li>
 	                	<button class="logoutButton" @click="logout">ログアウト</button>
 	                </li>

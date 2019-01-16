@@ -6,20 +6,20 @@
                     <i class="fas fa-plus"></i>
                 </div>
             </div>
-            <NewGroupModal :newGroup="newGroup" :groups="user.groups" :title="'新規グループの追加'" :button="'追加'" @close="closeModal" @send="addGroup" v-if="modal"/>
+            <NewGroupModal :newGroup="newGroup" :groups="user.groups" :title="'新規プロジェクトの追加'" :button="'追加'" @close="closeModal" @send="addGroup" v-if="modal"/>
         </div>
 
         <div id="tab">
             <ul class="tabMenu">
                 <li @click="isSelect('1')" v-bind:class="{'active': isActive === '1'}" >
                     <h2>
-                        自分のグループ
+                        自分のプロジェクト
 		        	    <span class="taskCount">{{user.groups.length}}</span>
 		            </h2>
                 </li>
                 <li @click="isSelect('2')" v-bind:class="{'active': isActive === '2'}" >
                     <h2>
-                        みんなのグループ
+                        みんなのプロジェクト
 		        	    <span class="taskCount">{{publicgroup.length}}</span>
 		            </h2>
                 </li>
@@ -52,6 +52,7 @@
                                 <TaskCardTag v-for="group_tag in pgroup.groups.ancestorGroups" :key="group_tag.id" :group="group_tag"/>
                             </div>
                             <button @click="fork(pgroup.groups.id)">このグループをフォークする</button>
+
                         </div>
                     </div>
                 </div>
@@ -233,8 +234,7 @@ $white: #fff;
             this.$apollo.query({
                 query: getGroupsQuery,
                 variables: {
-                    id: 1
-                    // id: this.$store.state.auth.user.id,
+                    id: this.$store.state.auth.user.id
                 },
             }).then(res => {
                 this.user = res.data.user;
@@ -269,7 +269,9 @@ $white: #fff;
                     query: forkGroupMutation,
                     variables: {
                         groupId: group_id
+
                     },
+                    
                 }).then(res => {
                     this.groups = this.groups.concat(res.data.forkGroup.groups);
                     this.publicgroup = res.data.publicgroup;
