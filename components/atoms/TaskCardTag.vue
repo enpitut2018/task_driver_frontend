@@ -1,5 +1,8 @@
 <template>
-	<span><nuxt-link :to="{ name: 'userid-groupid', params: { userid: group.userId, groupid: group.id }}" class="tag">{{group.name}}</nuxt-link></span>
+	<span @focus="openBalloon" v-on:mouseover="openBalloon" v-on:mouseleave="trigger" >
+		<Ballon :group=group v-show="isFocused" />
+		<nuxt-link :to="{ name: 'userid-groupid', params: { userid: group.userId, groupid: group.id }}" class="tag">{{group.name}}</nuxt-link>
+	</span>
 </template>
 
 <style lang="scss" scoped>
@@ -16,7 +19,26 @@
 </style>
 
 <script>
+import Ballon from '~/components/atoms/Ballon.vue'
 export default {
+	data: () => ({
+        isFocused : false
+    }),
+	
+	methods: {
+		openBalloon () {
+			this.isFocused  = true
+		},
+		closeBalloon () {
+			this.isFocused = false
+		},
+		trigger() {
+			setTimeout(() => { this.isFocused = false }, 50)
+		}
+	},
+	components: {
+     	Ballon
+    },
 	props: ['group'],
 }
 </script>

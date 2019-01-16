@@ -10,6 +10,7 @@
 		</div>
 
 		<div class="cardBody">
+			{{deadline}}まで
 			<div class="tags">
 				<TaskCardTag v-for="group in task.group.ancestorAndSelfGroups" :key="group.id" :group="group"/>
 			</div>
@@ -51,8 +52,15 @@
 <script>
 	import TaskCardTag from '~/components/atoms/TaskCardTag.vue'
 	import Button from '~/components/atoms/TaskCardButton.vue'
+	import moment from '~/plugins/moment'
 
 	export default {
+
+		computed: {
+			deadline () {
+				return moment(this.task.deadline).format("YY/MM/DD hh:mm:ss");
+			},			
+		},
 		
 		components: {
 			TaskCardTag,

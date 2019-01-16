@@ -1,0 +1,18 @@
+query{
+  publicgroup{
+    groups{
+      id
+      name
+      importance
+      ancestorGroups {
+        id
+        name
+        userId
+      }
+    }
+    users{
+      id
+      username
+    }
+  }
+}

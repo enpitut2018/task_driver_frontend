@@ -6,6 +6,9 @@
 			</div>
 			<nav class="headerNav">
 				<ul>
+					<li>
+						<a href="/projects">プロジェクト</a>
+
 	                <li>
 	                	<button class="logoutButton" @click="logout">ログアウト</button>
 	                </li>
@@ -95,7 +98,7 @@
 <script>
 export default {
 	methods: {
-		async authenticate () {
+		async logout () {
 			this.$store.dispatch('auth/logout').then(() => {
 				if (!this.$store.state.auth.isAuthenticated) {
 					this.$router.push('/')

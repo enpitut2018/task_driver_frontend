@@ -1,0 +1,16 @@
+mutation ($name: String!, $deadline: MomentInput!, $importance: Int!, $parentId: ID!, $publicity: Boolean!) {
+    createGroup(name: $name, deadline: $deadline, importance: $importance, parentId: $parentId, publicity: $publicity) {
+        group {
+            id
+            name
+            importance
+          	public
+            ancestorGroups {
+                id
+                name
+                userId
+            }
+        }
+        errors 
+    }
+}
