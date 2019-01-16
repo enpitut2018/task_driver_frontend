@@ -81,7 +81,7 @@
         mounted: function(){
             if (this.$store.state.auth.user == null) {
                 // 未ログイン時にはルートに遷移
-                this.$router.push('/')
+                // this.$router.push('/')
             } else {
                 this.$apollo.query({
                     query: getUserTasksQuery,
