@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function(){
                       //未登録の場合
                       console.log("subscription is OK!"); 
                       //   console.log(process.env.apiBaseUrl);                           
-                      fetch('http://task-driver.sukiyaki.party/endpoints/getVapidPublicKey', {method: 'GET', mode: 'cors', credentials: 'include'}).then(function(responce){
+                      fetch('https://task-driver.sukiyaki.party/endpoints/getVapidPublicKey', {method: 'GET', mode: 'cors', credentials: 'include'}).then(function(responce){
                           console.log("good");
                           return responce.json(); //VAPID(サーバ側で生成したもの)を取得
                       }).then(function(keyJson){
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function(){
               //以上の4つのパラメーターをDBに登録しておく
 
               //fetch APIを使用してサーバに送信
-              fetch('http://task-driver.sukiyaki.party/endpoints/register', {
+              fetch('https://task-driver.sukiyaki.party/endpoints/register', {
                   credentials: 'include',
                   method: 'POST',
                   headers: {'Content-Type': 'application/json'},
