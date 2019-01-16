@@ -1,0 +1,8 @@
+mutation ($groupId: ID!) {
+	deleteGroup(groupId: $groupId) {
+		group {
+			id
+		}
+		errors 
+	}
+}
