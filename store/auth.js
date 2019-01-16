@@ -1,3 +1,5 @@
+import createPersistedState from "vuex-persistedstate"
+
 export const state = () => ({
 	isAuthenticated: false,
 	token: null,
@@ -30,6 +32,12 @@ export const mutations = {
 }
 
 export const actions = {
+	nuxtClientInit ({ commit, state, dispatch }, { req }) {
+		createPersistedState({
+			key: 'Folivora',
+			paths: ['auth'],
+		})(this)
+	},
 	async login (context, user) {
 		let token = ''
 		let userInfo = {}

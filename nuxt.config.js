@@ -24,6 +24,10 @@ module.exports = {
   */
   loading: { color: '#3B8070' },
 
+  plugins: [
+    { src: "~/plugins/nuxt-client-init.js", ssr: false }
+  ],
+
   /*
   **
   */
@@ -36,7 +40,6 @@ module.exports = {
     '@nuxtjs/axios',
     '@nuxtjs/dotenv',
     '@nuxtjs/apollo',
-    '@nuxtjs/pwa',
   ],
 
   manifest: {
@@ -45,12 +48,6 @@ module.exports = {
     short_name: 'Foli',
     description: 'ナマケモノ',
     start_url: '/'
-  },
-
-  workbox: {
-    skipwaiting: true,
-    clientsClaim: true,
-    dev: true
   },
 
   axios: {
