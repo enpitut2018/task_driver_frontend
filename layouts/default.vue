@@ -27,7 +27,6 @@
             Header,
             Footer
         },
-
         head: {
             script: [
                 {src: 'sw.plugin.js'}
