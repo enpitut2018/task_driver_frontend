@@ -51,6 +51,7 @@
 <script>
     import gql from 'graphql-tag'
     import moment from '~/plugins/moment'
+    import serviceworker from '~/plugins/serviceworker'
 
     import TaskBoard from '~/components/organisms/TaskBoard.vue'
     import NewTaskModal from '~/components/organisms/NewTaskModal.vue'
@@ -59,11 +60,11 @@
     import createTaskMutation from '~/apollo/queries/create_task_mutation.gql'
 
     export default {
-        head: {
-            script: [
-                {src: 'sw.plugin.js'}
-            ]
-  	    },
+       //  head: {
+       //      script: [
+       //          {src: 'sw.plugin.js'}
+       //      ]
+  	    // },
         data: () => ({
             tasks_todo: [],
             tasks_doing: [],
@@ -79,7 +80,9 @@
         },
 
         mounted: function(){
-            if (this.$store.state.auth.user == null) {
+            console.log(this.$store.state.auth.user.id)
+            serviceworker(this.$store.state.auth.user.id);
+            if (this.$store.state.auth.isAunthenticated) {
                 // 未ログイン時にはルートに遷移
                 // this.$router.push('/')
             } else {
