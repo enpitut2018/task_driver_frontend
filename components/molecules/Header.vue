@@ -95,7 +95,7 @@
 <script>
 export default {
 	methods: {
-		async authenticate () {
+		async logout () {
 			this.$store.dispatch('auth/logout').then(() => {
 				if (!this.$store.state.auth.isAuthenticated) {
 					this.$router.push('/')
