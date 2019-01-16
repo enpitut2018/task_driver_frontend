@@ -1,0 +1,18 @@
+query($id: ID!){
+    user(id: $id){
+        username
+        id
+        groups {
+            id
+            name
+            importance
+            deadline
+            public
+            ancestorGroups {
+                id
+                name
+                userId
+            }
+        }
+    }
+}

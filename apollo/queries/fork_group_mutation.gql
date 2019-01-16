@@ -3,5 +3,6 @@
     groups{
       id
       name
+      importance
 	}
 }

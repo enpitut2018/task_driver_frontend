@@ -41,7 +41,6 @@
                 </div>
 
                 <div v-show="isActive === '2'">
-                    <p>こんな感じ</p>
                     <div v-for="pgroup in publicgroup" :key="pgroup.users.id">
                         <div class="card">
                             <h2>
@@ -185,36 +184,15 @@ $white: #fff;
     import UserInfo from '~/components/atoms/UserInfo.vue'
     import TaskCardTag from '~/components/atoms/TaskCardTag.vue'
     import ActivityGraph from '~/components/molecules/ActivityGraph.vue'
+    import NewGroupModal from '~/components/organisms/NewGroupModal.vue'
 
     import getActivitiesQuery from '~/apollo/queries/get_activities_query.gql'
     import getPublicGroupQuery from '~/apollo/queries/get_public_groups_query.gql'
     
-
+    import getGroupsQuery from '~/apollo/queries/get_groups_query.gql'
     import createGroupMutation from '~/apollo/queries/create_group_mutation.gql'
+    
     import forkGroupMutation from '~/apollo/queries/fork_group_mutation.gql'
-
-    import NewGroupModal from '~/components/organisms/NewGroupModal.vue'
-
-    const getGroupsQuery = gql`
-                    query($id: ID!){
-                        user(id: $id){
-                            username
-                            id
-                            groups {
-                                id
-                                name
-                                importance
-                                deadline
-                                public
-                                ancestorGroups {
-                                    id
-                                    name
-                                    userId
-                                }
-                            }
-                        }
-                    }`
-
 
     export default {
         data() {
