@@ -108,7 +108,7 @@
     export default {
         mounted: function(){
             if (this.$store.state.auth.isAuthenticated) {
-                this.$router.push('/home')
+                // this.$router.push('/home')
             }
         }
     }
