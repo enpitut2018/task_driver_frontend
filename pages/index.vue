@@ -6,8 +6,20 @@
 				<h2>続かない人のためのTODOアプリ</h2>
 			</div>
 			<ul>
-				<li><a href="login"><button>ログイン</button></a></li>
-				<li><a href="signup"><button>ユーザー登録</button></a></li>
+                <li>
+                    <nuxt-link :to="{ name: 'login' }">
+                        <button>
+                            ログイン
+                        </button>
+                    </nuxt-link>
+                </li>
+                <li>
+                    <nuxt-link :to="{ name: 'signup' }">
+                        <button>
+                            ユーザ登録
+                        </button>
+                    </nuxt-link>
+                </li>
 			</ul>
 		</div>
 	</section>
@@ -91,9 +103,3 @@
         }
 	}
 </style>
-
-<script>
-export default {
-    layout: 'unauthenticated'
-}
-</script>

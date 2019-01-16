@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="container">
 		<h1 class="groupName">{{groupname}}</h1>
 		<div class="boards">
 			<TaskBoard :tasks="tasks_todo" :title="'TODO'"></TaskBoard>
@@ -18,6 +18,9 @@
 </template>
 
 <style lang="scss" scoped>
+.container {
+	width: 1000px;
+	margin: auto;
 	.groupName {
 		font-size: 35px;
 		font-weight: 700;
