@@ -33,8 +33,8 @@
 			<div name="formContent">
 				<span>公開/非公開設定</span>
 					<select v-model="newGroup.publicity">
-						<option value=true>公開</option>
-						<option value=false>非公開</option>
+						<option value=1>公開</option>
+						<option value=0>非公開</option>
 					</select>
 			</div>
 		</form>
