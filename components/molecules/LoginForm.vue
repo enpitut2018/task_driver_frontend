@@ -13,9 +13,9 @@
 			</div>
 			<button class="loginButton" type="submit">ログイン</button>
 		</form>
-		<form @submit.prevent="loginwithtwitter">
+		<!-- <form @submit.prevent="loginwithtwitter">
 			<button class="loginButton" type="submit">Twitterでログイン</button>
-		</form>
+		</form> -->
 		{{message}}
 		<div class="passwordResetLink">
 			<a href="/resetpassword">パスワードをお忘れの方はこちら &gt;</a>
