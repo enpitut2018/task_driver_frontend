@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
                       //未登録の場合
                       console.log("subscription is OK!"); 
-                      console.log(process.env.apiBaseUrl);                           
+                      //   console.log(process.env.apiBaseUrl);                           
                       fetch('http://localhost:3001/endpoints/getVapidPublicKey', {method: 'GET', mode: 'cors', credentials: 'include'}).then(function(responce){
                           console.log("good");
                           return responce.json(); //VAPID(サーバ側で生成したもの)を取得
@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function(){
                           const convertedVapidKey = urlBase64ToUint8Array(keyJson.vapidPublicKey); //unit8に変換
                           return convertedVapidKey;
                       }).then(function(convertedVapidKey){
+                          console.log("fantastic");
                           return registration.pushManager.subscribe({
                               userVisibleOnly: true,
                               applicationServerKey: convertedVapidKey //VAPIDで使用するサーバ公開鍵
@@ -39,6 +40,7 @@ document.addEventListener('DOMContentLoaded', function(){
       ).then(
           //以下は購読成功時の処理
           function(subscription){
+              console.log("great");
               const endpoint = subscription.endpoint; //エンドポイントURL
               console.log("pushManager RegistrationID:", endpoint.split("/").slice(-1).join());
               publicKey = encodeBase64URL(subscription.getKey('p256dh')); //クライアント公開鍵
