@@ -1,9 +1,16 @@
-mutation($groupId: ID!){
+mutation ($groupId: ID!){
   forkGroup(groupId: $groupId){
     groups{
-    	id
+      id
       name
+      importance
       userId
+      public
+      ancestorGroups {
+        id
+        name
+        userId
+      }
     }
   }
 }
