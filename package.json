@@ -28,6 +28,7 @@
     "moment": "^2.22.2",
     "nuxt": "^2.0.0",
     "vue-datetime": "^1.0.0-beta.8",
+    "vuex-persistedstate": "^2.5.4",
     "weekstart": "^1.0.0"
   },
   "devDependencies": {
