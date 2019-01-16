@@ -3,7 +3,7 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: 'task_driver',
+    title: 'folivora',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -34,37 +34,33 @@ module.exports = {
       '@/assets/sass/global.scss',
     ]],
     '@nuxtjs/axios',
-    '@nuxtjs/auth',
     '@nuxtjs/dotenv',
     '@nuxtjs/apollo',
+    '@nuxtjs/pwa',
   ],
+
+  manifest: {
+    name: 'Folivora',
+    lang: 'ja',
+    short_name: 'Foli',
+    description: 'ナマケモノ',
+    start_url: '/'
+  },
+
+  workbox: {
+    skipwaiting: true,
+    clientsClaim: true,
+    dev: true
+  },
 
   axios: {
     baseURL:  process.env.NODE_ENV == 'production' ? 'https://task-driver.sukiyaki.party/v1' : 'http://localhost:3001/v1'
-  },
-
-  auth: {
-    strategies: {
-      local: {
-        endpoints: {
-          login: { url: '/sign_in', method: 'post' },
-          logout: { url: '/sign_out', method: 'delete' },
-          user: { url: '/user' },
-        },
-      },
-    },
-    redirect: {
-      home: '/home',
-      logout: '/unauthenticated',
-      // login: '/login'
-    },
   },
 
   apollo: {
     errorHandler (error) {
       console.log('%cError', 'background: red; color: white; padding: 2px 4px; border-radius: 3px; font-weight: bold;', error.message)
     },
-    authenticationType: '', // 'Bearer Bearer...' の形式になってしまうのを防ぐ
     clientConfigs: {
       default: {
         httpEndpoint: process.env.NODE_ENV == 'production' ? 'https://task-driver.sukiyaki.party/v1/' : 'http://localhost:3001/v1/',
@@ -72,7 +68,6 @@ module.exports = {
           fetchOptions: { mode: 'cors' },
         },
       },
-      // default: '~/apollo/client-configs/default.js',
     },
   },
 

@@ -1,12 +1,39 @@
 <template>
-	<header>
+	<header v-if="isAuthenticated">
+		<div class="container">
+			<div class="headerLogo">
+				<a href="/home" class="homeLink">Folivora</a>
+			</div>
+			<nav class="headerNav">
+				<ul>
+	                <li>
+	                	<button class="logoutButton" @click="logout">ログアウト</button>
+	                </li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+	<header v-else>
 		<div class="container">
 			<div class="headerLogo">
 				<a href="/" class="homeLink">Folivora</a>
 			</div>
 			<nav class="headerNav">
 				<ul>
-	                <li><button class="logoutButton" @click="logout">ログアウト</button></li>
+	                <li>
+	                	<nuxt-link :to="{ name: 'login' }">
+	                		<button class="loginButton">
+	                			ログイン
+	                		</button>
+	                	</nuxt-link>
+	                </li>
+	                <li>
+	                	<nuxt-link :to="{ name: 'signup' }">
+	                		<button class="registerButton">
+	                			ユーザ登録
+	                		</button>
+	                	</nuxt-link>
+	                </li>
 				</ul>
 			</nav>
 		</div>
@@ -51,6 +78,12 @@
 							&.logoutButton {
 								@include buttonReflectWithBorder($red, $white);
 							}
+							&.loginButton {
+								@include buttonReflectWithBorder($red, $white);
+							}
+							&.registerButton {
+								@include buttonReflectWithBorder($startButtonColor, $white);
+							}
 						}
 					}
 				}
@@ -61,14 +94,19 @@
 
 <script>
 export default {
-  methods: {
-    async logout() {
-      try {
-        await this.$auth.logout();
-      } catch (e) {
-        this.error = true;
-      }
-    },
-  }
+	methods: {
+		async authenticate () {
+			this.$store.dispatch('auth/logout').then(() => {
+				if (!this.$store.state.auth.isAuthenticated) {
+					this.$router.push('/')
+				}
+			});
+		},
+	},
+	computed: {
+		isAuthenticated() {
+			return this.$store.state.auth.isAuthenticated
+		}
+	}
 };
 </script>

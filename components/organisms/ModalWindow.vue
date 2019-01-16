@@ -5,18 +5,13 @@
         <div class="modal-content">
           <slot/>
         </div>
-        <footer class="modal-footer">
-          <slot name="footer">
-            <button @click="$emit('onClickOverlay')">Close</button>
-          </slot>
-        </footer>
       </div>
     </div>
   </transition>
 </template>
 
 <style lang="scss" scoped>
-    .modal {
+.modal {
     &.modal-overlay {
         display: flex;
         align-items: center;
@@ -37,7 +32,8 @@
     }
 
     &-content {
-        padding: 10px 20px;
+        margin: 30px 50px;
+        width: 40vw;
     }
 
     &-footer {
@@ -45,29 +41,28 @@
         padding: 10px;
         text-align: right;
     }
-    }
+}
 
-    // オーバーレイのトランジション
-    .modal-enter-active, .modal-leave-active {
+// オーバーレイのトランジション
+.modal-enter-active, .modal-leave-active {
     transition: opacity 0.4s;
 
     // オーバーレイに包含されているモーダルウィンドウのトランジション
     .modal-window {
         transition: opacity 0.4s, transform 0.4s;
     }
-    }
+}
 
-    // ディレイを付けるとモーダルウィンドウが消えた後にオーバーレイが消える
-    .modal-leave-active {
+// ディレイを付けるとモーダルウィンドウが消えた後にオーバーレイが消える
+.modal-leave-active {
     transition: opacity 0.6s ease 0.4s;
-    }
+}
 
-    .modal-enter, .modal-leave-to {
+.modal-enter, .modal-leave-to {
     opacity: 0;
 
     .modal-window {
         opacity: 0;
-        transform: translateY(-20px);
     }
-    }
+}
 </style>
