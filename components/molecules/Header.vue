@@ -7,8 +7,20 @@
 			<nav class="headerNav">
 				<ul>
 					<li>
-						<a href="/groups">グループ</a>
-
+						<!-- <div class="projectsLink">
+							<nuxt-link :to="{ name: 'userid', params: { userid: user.id }}">{{username}}</nuxt-link>
+						</div> -->
+					</li>
+					<li>
+						<div class="projectsLink">
+							<a href="/groups">グループ</a>
+						</div>
+					</li>
+					<li>
+						<div class="projectsLink">
+							<a href="/settings">設定</a>
+						</div>
+					</li>
 	                <li>
 	                	<button class="logoutButton" @click="logout">ログアウト</button>
 	                </li>
@@ -16,6 +28,7 @@
 			</nav>
 		</div>
 	</header>
+
 	<header v-else>
 		<div class="container">
 			<div class="headerLogo">
@@ -57,6 +70,13 @@
 				color: $white;
 				font-weight: 500;
 				font-size: 35px;
+				text-decoration: none;
+			}
+			.projectsLink {
+				color: $white;
+				margin: 3px;
+				// font-weight: 00;
+				font-size: 20px;
 				text-decoration: none;
 			}
 			.headerNav {
