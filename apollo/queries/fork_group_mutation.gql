@@ -1,8 +1,9 @@
- mutation($groupId: ID!){
-  forkGroup(group_id: $groupId){
+mutation($groupId){
+  forkGroup(groupId: $groupId){
     groups{
-      id
+    	id
       name
-      importance
-	}
+      userId
+    }
+  }
 }
