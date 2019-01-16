@@ -60,11 +60,6 @@
     import createTaskMutation from '~/apollo/queries/create_task_mutation.gql'
 
     export default {
-       //  head: {
-       //      script: [
-       //          {src: 'sw.plugin.js'}
-       //      ]
-  	    // },
         data: () => ({
             tasks_todo: [],
             tasks_doing: [],
@@ -80,12 +75,11 @@
         },
 
         mounted: function(){
-            console.log(this.$store.state.auth.user.id)
-            serviceworker(this.$store.state.auth.user.id);
-            if (this.$store.state.auth.isAunthenticated) {
-                // 未ログイン時にはルートに遷移
-                // this.$router.push('/')
+            if (this.$store.state.auth.user === null) {
+                // 未ログイン時にはログインページに遷移
+                this.$router.push('/login')
             } else {
+                serviceworker(this.$store.state.auth.user.id);
                 this.$apollo.query({
                     query: getUserTasksQuery,
                     variables: {

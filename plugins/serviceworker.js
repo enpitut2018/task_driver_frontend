@@ -1,8 +1,6 @@
 function serviceworker (user_id) {
-	console.log("user_id: ", user_id);
 	if ('serviceWorker' in navigator) {
 		navigator.serviceWorker.register('/sw.js').then(registration => {
-			console.log('ServiceWorker registration successful with scope: ', registration.scope);
 			navigator.serviceWorker.ready.then( () => {
 				afterReady(registration).then(subscription => {
 					afterSubscribed({subscription, user_id});
@@ -15,23 +13,21 @@ function serviceworker (user_id) {
 }
 
 function afterReady (registration) {
-	console.log('service worker is ready');
 	return registration.pushManager.getSubscription().then(subscription => {
 		if (subscription) {
 			// 登録済みの場合
-			console.log('successfully got subscription');
-			console.log(subscription);
 			return subscription;
 		} else {
 			// 未登録の場合
-			console.log('subscribing...');
-			return subscribe(registration);
+			return subscribe(registration).then(subscription => {
+				return subscription;
+			})
 		}
 	})
 }
 
 function subscribe (registration) {
-	fetch('http://localhost:3001/endpoints/getVapidPublicKey', {
+	return fetch('http://localhost:3001/endpoints/getVapidPublicKey', {
 		method: 'GET',
 		mode: 'cors',
 		credeintials: 'include'
@@ -42,17 +38,16 @@ function subscribe (registration) {
 		return registration.pushManager.subscribe({
 			userVisibleOnly: true,
 			applicationServerKey: convertedVapIDKey,
-		});
-	})
+		})
+	}).then(subscription => {
+		return subscription;
+	});
 }
 
 function afterSubscribed ({subscription, user_id}) {
 	const endpoint = subscription.endpoint; //エンドポイントURL
-	console.log("pushManager RegistrationID:", endpoint.split("/").slice(-1).join());
 	const publicKey = encodeBase64URL(subscription.getKey('p256dh')); //クライアント公開鍵
-	console.log("publicKey:", publicKey);
 	const authSecret = encodeBase64URL(subscription.getKey('auth')); //auth secret
-	console.log("authSecret:", authSecret);
 	let contentEncoding; //プッシュ通知のときに使用するContent-Encoding
 	if ('supportedContentEncodings' in PushManager) {
 	  contentEncoding = PushManager.supportedContentEncodings.includes('aes128gcm') ? 'aes128gcm' : 'aesgcm';
