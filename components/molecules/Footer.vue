@@ -7,8 +7,8 @@
 				</div>
 				<nav class="footerNav">
 					<ul>
-						<li><a href="#">プライバシーポリシー</a></li>
-						<li><a href="#">利用規約</a></li>
+						<li><a href="/privacy">プライバシーポリシー</a></li>
+						<li><a href="/terms">利用規約</a></li>
 					</ul>
 				</nav>
 			</section>

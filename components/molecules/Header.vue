@@ -2,11 +2,11 @@
 	<header>
 		<div class="container">
 			<div class="headerLogo">
-				<a href="/" class="homeLink">Folivora</a>
+				<a href="/home" class="homeLink">Folivora</a>
 			</div>
 			<nav class="headerNav">
 				<ul>
-	                <li><button class="logoutButton" @click="logout">ログアウト</button></li>
+	        <li><button class="logoutButton" @click="logout">ログアウト</button></li>
 				</ul>
 			</nav>
 		</div>

@@ -1,25 +1,15 @@
 <template>
 	<div class="card">
-		<h1>ログイン</h1>
-		
+		<h1>メールアドレスの認証</h1>
+		<p>ようこそ、Folivoraへ<br>まずは、あなたのユーザー名を設定しましょう！</p>
 		<form @submit.prevent="authenticate">
 			<div class="formContent">
-				<span>メールアドレス</span>
-				<input type="text" v-model="user.email"/>
+				<span>ユーザー名</span>
+				<input type="text" v-model="confirmation.username"/>
 			</div>
-			<div class="formContent">
-				<span>パスワード</span>
-				<input type="password" v-model="user.password"/>
-			</div>
-			<button class="loginButton" type="submit">ログイン</button>
+			<button class="loginButton" type="submit">認証する</button>
 		</form>
-		<form @submit.prevent="loginwithtwitter">
-			<button class="loginButton" type="submit">Twitterでログイン</button>
-		</form>
-		{{message}}
-		<div class="passwordResetLink">
-			<a href="/resetpassword">パスワードをお忘れの方はこちら &gt;</a>
-		</div>
+		<p>{{message}}</p>
 	</div>
 </template>
 
@@ -35,6 +25,11 @@
 			width: 100%;
 			letter-spacing: .1em;
 			text-align: center;
+		}
+		p {
+			width: 100%;
+			letter-spacing: .1em;
+			text-align: left;
 		}
 		form {
 			padding: 15px 0 45px 0;
@@ -88,34 +83,22 @@
 <script>
 	export default {
 		data: () => ({
-			user: { 'email': '', 'password': '' },
+			confirmation: { 'confirmation_token': '', 'username': ''},
 			message: ""
-		}),
-
+        }),
+        
 		methods: {
 			async authenticate () {
-				this.$store.dispatch('auth/login', this.user).then(() => {
-					if (this.$store.state.auth.isAuthenticated == true) {
-						this.$apolloHelpers.onLogin(this.$store.state.auth.token)
-						this.$router.push('/home')
-					}
-					else{
-						this.message = "入力されたメールアドレスやパスワードが正しくありません。\n確認してからやりなおしてください。"
-					}
+				this.message = "メールアドレスの認証を行っています。\nしばらくお待ち下さい..."
+                this.confirmation.confirmation_token = this.$route.query.confirmation_token;
+				this.$store.dispatch('auth/confirm', this.confirmation).then(() => {
+					this.message = "メールアドレスが認証されました。\nログインすることができます。"
+				// }).catch(() =>{
+				// 	console.log("bad");
+				// 	this.message = "アカウントを登録することができません。"
 				});
 			},
-			async loginwithtwitter () {
-				this.$store.dispatch('auth/redirecttwitter', this.user).then(() => {
-					console.log("ま:" + this.$store.state.auth.url);
-					window.location.href = this.$store.state.auth.url
-				});
-			}
 		},
-
-		computed: {
-			loginInfo () {
-				return { 'user': this.user }
-			}
-		},
+		layout: 'unauthenticated',
 	}
 </script>

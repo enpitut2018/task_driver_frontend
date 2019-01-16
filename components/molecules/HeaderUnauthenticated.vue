@@ -7,7 +7,7 @@
 			<nav class="headerNav">
 				<ul>
 	                <li><a href="/login"><button class="loginButton">ログイン</button></a></li>
-	                <li><a href="#"><button class="registerButton">ユーザ登録</button></a></li>
+	                <li><a href="/signup"><button class="registerButton">ユーザ登録</button></a></li>
 				</ul>
 			</nav>
 		</div>
