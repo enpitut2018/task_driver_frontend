@@ -119,7 +119,7 @@
             },
 
             closeModal() {
-            this.modal = false
+                this.modal = false
             },
 
             addTask(){

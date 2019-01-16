@@ -6,6 +6,9 @@
 			</div>
 			<nav class="headerNav">
 				<ul>
+					<li>
+						<a href="/groups">グループ</a>
+
 	                <li>
 	                	<button class="logoutButton" @click="logout">ログアウト</button>
 	                </li>
