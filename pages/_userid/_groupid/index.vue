@@ -1,7 +1,8 @@
 <template>
 	<div class="container">
 		<h1 class="groupName">{{groupname}}</h1>
-
+        <p>{{publicity}}</p>
+        <span class="star" v-for="n in importance" :key="n">★</span>
         <button @click="openGroupModal">グループの更新</button>
         <button @click="deleteGroup">グループの削除</button>
 
@@ -53,6 +54,11 @@
 			color: #fff;
 		}
 	}
+    .star{
+        font-size: 12px;
+        margin-left: 1px;
+        color: #ffc100;
+    }
 }
 </style>
 
@@ -82,7 +88,9 @@
 			userid: '',
 			groupid: '',
             groupname: '',
-            group_modal: false
+            group_modal: false,
+            publicity: '',
+            importance: 1
         }),
 
         components: {
@@ -105,8 +113,18 @@
                     let tasks = [];
                     for (let group of res.data.user.groups) {
 						if (group.id == this.$route.params.groupid){
-							tasks.push(group.tasks);
-							this.groupname = group.name
+                            tasks.push(group.tasks);
+
+                            if (group.public == true){
+                                this.publicity = "公開"
+                            }
+                            else{
+                                this.publicity = "非公開"
+                            }
+                            this.importance = group.importance
+                            this.groupname = group.name
+                            this.newGroup = Object.assign({}, group);
+				            this.newGroup.deadline = moment(this.newGroup.deadline).toISOString();
 						}
 						let group_data = {
 							id: group.id,
