@@ -7,7 +7,7 @@
 			<nav class="headerNav">
 				<ul>
 					<li>
-						<a href="/groups">グループ</a>
+						<a href="/projects">プロジェクト</a>
 
 	                <li>
 	                	<button class="logoutButton" @click="logout">ログアウト</button>

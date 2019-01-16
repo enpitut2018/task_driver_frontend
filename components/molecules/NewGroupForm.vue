@@ -3,7 +3,7 @@
 		<h1>{{title}}</h1>
 		<form v-on:submit.prevent="addGroup">
 			<div class="formContent">
-				<span>グループ名</span>
+				<span>プロジェクト名</span>
 				<input type="text" name="name" v-model="newGroup.name"/>
 			</div>
 
@@ -24,7 +24,7 @@
 			</div>
 
 			<div class="formContent">
-				<span>グループ</span>
+				<span>プロジェクト</span>
 				<select v-model="newGroup.parentId">
 					<option v-for="group in groups" :key="group.id" :value="group.id">{{group.name}}</option>
 				</select>
