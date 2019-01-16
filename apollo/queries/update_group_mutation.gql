@@ -1,0 +1,11 @@
+mutation ($groupId: ID!, $name: String!, $deadline: MomentInput!, $importance: Int!, $parentId: ID!, $publicity: Boolean!) {
+    updateGroup(groupId: $groupId, name: $name, deadline: $deadline, importance: $importance, parentId: $parentId, publicity: $publicity)
+    {
+        group{
+            id
+            name
+            userId
+        }
+        errors
+    }
+}

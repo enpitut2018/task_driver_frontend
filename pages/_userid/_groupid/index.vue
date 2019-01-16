@@ -1,6 +1,11 @@
 <template>
 	<div class="container">
 		<h1 class="groupName">{{groupname}}</h1>
+        <p>{{publicity}}</p>
+        <span class="star" v-for="n in importance" :key="n">★</span>
+        <button @click="openGroupModal">グループの更新</button>
+        <button @click="deleteGroup">グループの削除</button>
+
 		<div class="boards">
 			<TaskBoard :tasks="tasks_todo" :title="'TODO'"></TaskBoard>
             <TaskBoard :tasks="tasks_doing" :title="'DOING'"></TaskBoard>
@@ -13,6 +18,7 @@
                 </div>
             </div>
             <NewTaskModal :newTask="newTask" :groups="groups" :title="'新規タスクの追加'" :button="'追加'" @close="closeModal" @send="addTask" v-if="modal"/>
+            <NewGroupModal :newGroup="newGroup" :groups="groups" :title="'グループの編集'" :button="'編集'" @close="closeGroupModal" @send="updateGroup" v-if="group_modal"/>
         </div>
 	</div>
 </template>
@@ -48,6 +54,11 @@
 			color: #fff;
 		}
 	}
+    .star{
+        font-size: 12px;
+        margin-left: 1px;
+        color: #ffc100;
+    }
 }
 </style>
 
@@ -60,6 +71,10 @@
 
     import getUserTasksQuery from '~/apollo/queries/get_user_tasks_query.gql'
     import createTaskMutation from '~/apollo/queries/create_task_mutation.gql'
+    import updateGroupMutation from '~/apollo/queries/update_group_mutation.gql'
+    import deleteGroupMutation from  '~/apollo/queries/delete_group_mutation.gql'
+    
+    import NewGroupModal from '~/components/organisms/NewGroupModal.vue'
 
     export default {
         data: () => ({
@@ -68,15 +83,20 @@
             groups: [],
             modal: false,
             message: '',
-			newTask: {},
+            newTask: {},
+            newGroup: {},
 			userid: '',
 			groupid: '',
-			groupname: ''
+            groupname: '',
+            group_modal: false,
+            publicity: '',
+            importance: 1
         }),
 
         components: {
             TaskBoard,
-            NewTaskModal
+            NewTaskModal,
+            NewGroupModal
 		},
 		
         mounted: function(){
@@ -93,8 +113,18 @@
                     let tasks = [];
                     for (let group of res.data.user.groups) {
 						if (group.id == this.$route.params.groupid){
-							tasks.push(group.tasks);
-							this.groupname = group.name
+                            tasks.push(group.tasks);
+
+                            if (group.public == true){
+                                this.publicity = "公開"
+                            }
+                            else{
+                                this.publicity = "非公開"
+                            }
+                            this.importance = group.importance
+                            this.groupname = group.name
+                            this.newGroup = Object.assign({}, group);
+				            this.newGroup.deadline = moment(this.newGroup.deadline).toISOString();
 						}
 						let group_data = {
 							id: group.id,
@@ -122,7 +152,15 @@
             },
 
             closeModal() {
-            this.modal = false
+                this.modal = false
+            },
+
+            openGroupModal() {
+                this.group_modal = true
+            },
+
+            closeGroupModal() {
+                this.group_modal = false
             },
 
             addTask(){
@@ -155,6 +193,51 @@
                     console.log(err);
                 });
             },
+            
+            updateGroup(){
+                let group = this.newGroup;
+				let deadline = moment(group.deadline);
+
+                this.$apollo.mutate({
+                    mutation: updateGroupMutation,
+                    variables: {
+						groupId: this.$route.params.groupid,
+                        name: group.name,
+                        deadline: {
+                            year: deadline.year(),
+                            month: deadline.month() + 1,
+                            day: deadline.date(),
+                            hour: deadline.hour(), 
+                            minute: deadline.minute(), 
+                            second: deadline.second()
+                        },
+                        importance: Number(group.importance),
+                        parentId: Number(group.parentId),
+                        publicity: group.publicity
+                    },
+                }).then(res => {
+                    console.log(res);
+                    // this.tasks_todo.push(res.data.updateTask.task);
+					this.group = res.data.updateGroup.group;
+                }).catch(err => {
+                    console.log(err);
+                });
+            },
+            
+            deleteGroup () {
+				let group = this.group;
+				this.$apollo.mutate({
+					mutation: deleteGroupMutation,
+					variables: {
+						groupId: this.$route.params.groupid,
+					},
+				}).then(res => {
+					console.log(res);
+					this.$router.push('/home')
+				}).catch(err => {
+					console.log(err);
+				})
+			},
         },
     }
 </script>
