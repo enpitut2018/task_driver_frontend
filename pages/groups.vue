@@ -284,6 +284,7 @@ $white: #fff;
                 console.log(this.newGroup);
                 let group = this.newGroup;
                 let deadline = moment(group.deadline);
+                let publicity = Number(group.publicity) ? true : false;
 
                 this.$apollo.mutate({
                     mutation: createGroupMutation,
@@ -299,7 +300,7 @@ $white: #fff;
                         },
                         importance: Number(group.importance),
                         parentId: Number(group.parentId),
-                        publicity: group.publicity
+                        publicity: publicity
                     },
                 }).then(res => {
                     console.log(res);
