@@ -51,7 +51,7 @@
                             <div class="tags">
                                 <TaskCardTag v-for="group_tag in pgroup.groups.ancestorGroups" :key="group_tag.id" :group="group_tag"/>
                             </div>
-                            <button @click="fork">このグループをフォークする</button>
+                            <button @click="fork(pgroup.groups.id)">このグループをフォークする</button>
                         </div>
                     </div>
                 </div>
@@ -264,12 +264,11 @@ $white: #fff;
                 this.modal = false
             },
 
-            fork(){
+            fork(group_id){
                 this.$apollo.query({
                     query: forkGroupMutation,
                     variables: {
-                        groupId: 1
-                        // id: this.$store.state.auth.user.id,
+                        groupId: group_id
                     },
                 }).then(res => {
                     this.groups = this.groups.concat(res.data.forkGroup.groups);
