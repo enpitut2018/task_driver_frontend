@@ -29,7 +29,7 @@ digraph graph_name {
   // after logged in
   home [label = "{/home|ログイン後ホーム|{cmp|{}}|{templ|default}}"];
   user [label = "{/_userid|ユーザー詳細ページ|{cmp|{}}|{templ|default}}"];
-  groups [label = "{/_userid/groups|ユーザーのグループリスト|{cmp|{}}|{templ|default}}"];
+  groups [label = "{/_userid/groups|ユーザーのプロジェクトリスト|{cmp|{}}|{templ|default}}"];
   tasks [label = "{/_userid/_groupid|タスクボード|{cmp|{}}|{templ|default}}"];
   group_setting [label = "{/_userid/_groupid/settings|ボード設定ページ|{cmp|{}}|{templ|default}}"];
   task_setting [label = "{/_userid/_groupid/_taskid/settings|タスク設定ページ|{cmp|{}}|{templ|default}}"];

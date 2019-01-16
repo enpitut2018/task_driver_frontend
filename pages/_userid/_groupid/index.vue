@@ -3,8 +3,8 @@
 		<h1 class="groupName">{{groupname}}</h1>
         <p>{{publicity}}</p>
         <span class="star" v-for="n in importance" :key="n">★</span>
-        <button @click="openGroupModal">グループの更新</button>
-        <button @click="deleteGroup">グループの削除</button>
+        <button @click="openGroupModal">プロジェクトの更新</button>
+        <button @click="deleteGroup">プロジェクトの削除</button>
 
 		<div class="boards">
 			<TaskBoard :tasks="tasks_todo" :title="'TODO'"></TaskBoard>
@@ -18,7 +18,7 @@
                 </div>
             </div>
             <NewTaskModal :newTask="newTask" :groups="groups" :title="'新規タスクの追加'" :button="'追加'" @close="closeModal" @send="addTask" v-if="modal"/>
-            <NewGroupModal :newGroup="newGroup" :groups="groups" :title="'グループの編集'" :button="'編集'" @close="closeGroupModal" @send="updateGroup" v-if="group_modal"/>
+            <NewGroupModal :newGroup="newGroup" :groups="groups" :title="'プロジェクトの編集'" :button="'編集'" @close="closeGroupModal" @send="updateGroup" v-if="group_modal"/>
         </div>
 	</div>
 </template>
