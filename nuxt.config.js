@@ -28,6 +28,10 @@ module.exports = {
     { src: "~/plugins/nuxt-client-init.js", ssr: false }
   ],
 
+  env: {
+    baseUrl: baseUrl: process.env.BASE_URL || 'http://localhost:3001',
+  }
+
   /*
   **
   */
