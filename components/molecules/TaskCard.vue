@@ -10,7 +10,7 @@
 		</div>
 
 		<div class="cardBody">
-			{{deadline}}まで
+			{{deadline(task.deadline)}}まで
 			<div class="tags">
 				<TaskCardTag v-for="group in task.group.ancestorAndSelfGroups" :key="group.id" :group="group"/>
 			</div>
@@ -56,9 +56,9 @@
 
 	export default {
 
-		computed: {
-			deadline () {
-				return moment(this.task.deadline).format("YY/MM/DD hh:mm:ss");
+		methods: {
+			deadline (deadline) {
+				return moment(deadline).format("YY/MM/DD hh:mm:ss");
 			},			
 		},
 		

@@ -6,6 +6,7 @@ mutation ($name: String!, $deadline: MomentInput!, $importance: Int!, $note: Str
             status
             userId
             importance
+            deadline
             group {
                 id
                 userId
