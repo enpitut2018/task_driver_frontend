@@ -315,7 +315,6 @@
 		},
 
 		mounted: function () {
-			console.log(this.$route.params.taskid);
 			this.$apollo.query({
 				query: getTaskQuery,
 				variables: {
@@ -357,10 +356,10 @@
 
 		computed: {
 			isMine () {
-				if (this.$store.state.auth.user === null) {
+				if (this.$store.state.auth.user == null) {
 					return false
 				} else {
-					return this.$store.state.auth.user.id === this.userid ? true : false
+					return this.$store.state.auth.user.id == this.userid ? true : false
 				}
 			}
 		},
