@@ -88,7 +88,9 @@
     import createTaskMutation from '~/apollo/queries/create_task_mutation.gql'
     import updateGroupMutation from '~/apollo/queries/update_group_mutation.gql'
     import deleteGroupMutation from  '~/apollo/queries/delete_group_mutation.gql'
-    
+    import getUserGroupsQuery from '~/apollo/queries/get_user_groups_query.gql'
+    import getGroupsQuery from '~/apollo/queries/get_group_query.gql'
+
     import NewGroupModal from '~/components/organisms/NewGroupModal.vue'
 
     export default {
@@ -115,21 +117,18 @@
 		},
 		
         mounted: function(){
-            if (!this.$store.getters['auth/isAuthenticated']) {
-                // 未ログイン時にはログインページに遷移
-                this.$router.push('/login')
-            } else {
                 this.$apollo.query({
-                    query: getUserTasksQuery,
+                    query: getUserGroupsQuery,
                     variables: {
-						id: this.$store.state.auth.user.id,
+						id: this.$route.params.userid,
 					},		
                 }).then(res => {
                     let tasks = [];
+                    console.log(res);
                     for (let group of res.data.user.groups) {
+                        console.log(group);
 						if (group.id == this.$route.params.groupid){
                             tasks.push(group.tasks);
-
                             if (group.public == true){
                                 this.publicity = "公開"
                             }
@@ -159,7 +158,20 @@
                 }).catch(err => {
                     console.log(err);
                 });
-            }
+               
+                if(this.publicity == "公開") {
+                    console.log("good");
+                }
+                else{
+                    if (!this.$store.getters['auth/isAuthenticated']) {
+                        // 未ログイン時にはログインページに遷移
+                        this.$router.push('/login')
+                    }
+                    else{
+                        if(!this.$route.params.userid == this.$store.state.auth.user.id)
+                            this.$router.push('/login')
+                    }
+                }
         },
         methods: {
             openModal() {
