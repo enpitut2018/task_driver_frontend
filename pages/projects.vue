@@ -49,8 +49,8 @@
                             <div class="tags">
                                 <TaskCardTag v-for="ancestor in group.ancestorGroups" :key="ancestor.id" :group="ancestor"/>
                             </div>
-                            <button @click="fork(group.id)">このグループをフォークする</button>
-                        </div>
+                             <button class="anybutton" @click="fork(group.id)">このグループをフォークする</button>
+                        </div>                
                     </div>
                 </div>
             </div>
@@ -65,6 +65,19 @@
     h1 {
         margin: 25px 0;
     }
+    .anybutton{
+		font-size: 14px;
+		letter-spacing: .1em;
+		padding: 8px 20px;
+		border-radius: 6px;
+		border: 1px solid #ddd;
+		margin: 2px;
+		padding: 2px 8px;
+		border-radius: 5px;
+		font-size: 75%;
+		font-weight: 400;
+		@include HoverLine(underline, none);
+	}
     .card {
         position: relative;
         background-color: #fff;
