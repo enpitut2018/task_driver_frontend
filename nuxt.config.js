@@ -29,7 +29,7 @@ module.exports = {
   ],
 
   env: {
-    baseUrl: baseUrl: process.env.BASE_URL || 'http://localhost:3001',
+    baseUrl: process.env.BASE_URL || 'http://localhost:3001',
   }
 
   /*
