@@ -7,7 +7,7 @@
 		<div class="update-task">
 			<NewTaskModal :newTask="newTask" :groups="groups" :title="'タスクの更新'" :button="'更新'" @close="closeformModal" @send="updateTask" v-if="formModal"/>
 		</div>
-
+		
 		<div class="taskCard">
 			<div class="taskHead">
 				<h1>
@@ -26,8 +26,8 @@
 				<div class="tags">
 					<TaskCardTag v-for="group in task.group.ancestorAndSelfGroups" :key="group.id" :group="group"/>
 					<template v-if="isMine">
-						<button @click="deleteTask">タスクの削除</button>
-						<button @click="openformModal">タスクの更新</button>
+						<button class="anybutton" @click="deleteTask">タスクの削除</button>
+						<button class="anybutton" @click="openformModal">タスクの更新</button>
 					</template>
 				</div>
 			</div>
@@ -64,6 +64,19 @@
 .container {
 	width: 1000px;
 	margin: auto;
+	.anybutton{
+		font-size: 14px;
+		letter-spacing: .1em;
+		padding: 8px 20px;
+		border-radius: 6px;
+		border: 1px solid #ddd;
+		margin: 2px;
+		padding: 2px 8px;
+		border-radius: 5px;
+		font-size: 75%;
+		font-weight: 400;
+		@include HoverLine(underline, none);
+	}
 	.taskCard {
 		margin: 50px 0;
 		padding: 35px 70px 15px;
