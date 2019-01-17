@@ -30,7 +30,7 @@
                     <div v-for="group in groups" :key="group.id">
                         <div class="card">
                             <h2>
-                                <nuxt-link :to="{ name: 'userid-groupid', params: { userid: user.id, groupid: group.id }}">{{group.name}}</nuxt-link>
+                                <nuxt-link :to="{ name: 'userid-groupid', params: { userid: group.userId, groupid: group.id }}">{{group.name}}</nuxt-link>
                                 <span class="star" v-for="n in group.importance" :key="n">★</span>
                             </h2>
                             <div class="tags">
@@ -50,7 +50,7 @@
                             <div class="tags">
                                 <TaskCardTag v-for="group_tag in group.ancestorGroups" :key="group_tag.id" :group="group_tag"/>
                             </div>
-                             <button @click="fork(group.id)">このグループをフォークする</button>
+                             <button class="anybutton" @click="fork(group.id)">このグループをフォークする</button>
                         </div>                  
                        
                     </div>
@@ -64,6 +64,20 @@
 .container {
     width: 1000px;
     margin: auto;
+
+    .anybutton{
+		font-size: 14px;
+		letter-spacing: .1em;
+		padding: 8px 20px;
+		border-radius: 6px;
+		border: 1px solid #ddd;
+		margin: 2px;
+		padding: 2px 8px;
+		border-radius: 5px;
+		font-size: 75%;
+		font-weight: 400;
+		@include HoverLine(underline, none);
+	}
     h1 {
         margin: 25px 0;
     }

@@ -3,8 +3,8 @@
 		<h1 class="groupName">{{groupname}}</h1>
         <p>{{publicity}}</p>
         <span class="star" v-for="n in importance" :key="n">★</span>
-        <button @click="openGroupModal">プロジェクトの更新</button>
-        <button @click="deleteGroup">プロジェクトの削除</button>
+        <button class="anybutton" @click="openGroupModal">プロジェクトの更新</button>
+        <button class="anybutton" @click="deleteGroup">プロジェクトの削除</button>
 
 		<div class="boards">
 			<TaskBoard :tasks="tasks_todo" :title="'TODO'"></TaskBoard>
@@ -27,6 +27,21 @@
 .container {
 	width: 1000px;
 	margin: auto;
+    
+    .anybutton{
+		font-size: 14px;
+		letter-spacing: .1em;
+		padding: 8px 20px;
+		border-radius: 6px;
+		border: 1px solid #ddd;
+		margin: 2px;
+		padding: 2px 8px;
+		border-radius: 5px;
+		font-size: 75%;
+		font-weight: 400;
+		@include HoverLine(underline, none);
+	}
+    
 	.groupName {
 		font-size: 35px;
 		font-weight: 700;
@@ -100,9 +115,9 @@
 		},
 		
         mounted: function(){
-            if (this.$store.state.auth.user == null) {
-                // 未ログイン時にはルートに遷移
-                this.$router.push('/')
+            if (!this.$store.getters['auth/isAuthenticated']) {
+                // 未ログイン時にはログインページに遷移
+                this.$router.push('/login')
             } else {
                 this.$apollo.query({
                     query: getUserTasksQuery,

@@ -76,7 +76,6 @@
 
         mounted: function(){
             if (!this.$store.getters['auth/isAuthenticated']) {
-                // 未ログイン時にはログインページに遷移
                 this.$router.push('/login')
             } else {
                 serviceworker(this.$store.state.auth.user.id);
