@@ -36,17 +36,18 @@
           NewTaskButton
         },
         props: ['sendData', 'taskname'],
+
         methods: {
             count: function() {
-            if (this.sec <= 0 && this.min >= 1) {
-                this.min --;
-                this.sec = 59;
-            } else if(this.sec <= 0 && this.min <= 0) {
-                this.complete();
-                this.formatTime = "もうちょっと頑張ってみよう！"
-            } else {
-                this.sec --;
-            }
+                if (this.sec <= 0 && this.min >= 1) {
+                    this.min --;
+                    this.sec = 59;
+                } else if(this.sec <= 0 && this.min <= 0) {
+                    this.complete();
+                    this.formatTime = "もうちょっと頑張ってみよう！"
+                } else {
+                    this.sec --;
+                }
             },
 
             start: function() {
@@ -63,6 +64,13 @@
                 clearInterval(this.timerObj)
             }
         },
+        mounted: {
+            fire(){
+                start();
+                console.log("start");
+            }
+        },
+        
         computed: {
             formatTime: function() {
             let timeStrings = [
@@ -92,5 +100,6 @@ p{
 }
 .time {
   font-size: 100px;
+  text-align: center;
 }
 </style>
