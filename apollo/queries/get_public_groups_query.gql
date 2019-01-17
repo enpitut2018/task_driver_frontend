@@ -4,15 +4,13 @@ query{
       id
       name
       importance
+      userId
+      public
       ancestorGroups {
         id
         name
         userId
       }
-    }
-    users{
-      id
-      username
     }
   }
 }
