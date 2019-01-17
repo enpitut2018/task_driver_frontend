@@ -1,4 +1,4 @@
-<template v-if="render">
+<template>
     <div class="container">
         <div class="modal-window">
             <div class="icon_circle"  @click="openModal">
@@ -14,23 +14,23 @@
                 <li @click="isSelect('1')" v-bind:class="{'active': isActive === '1'}" >
                     <h2>
                         自分のプロジェクト
-		        	    <span class="taskCount">{{groups.length}}</span>
+		        	    <span class="taskCount">{{user.groups.length}}</span>
 		            </h2>
                 </li>
                 <li @click="isSelect('2')" v-bind:class="{'active': isActive === '2'}" >
                     <h2>
                         みんなのプロジェクト
-		        	    <span class="taskCount">{{pubGroup.length}}</span>
+		        	    <span class="taskCount">{{public_groups.length}}</span>
 		            </h2>
                 </li>
             </ul>
 
             <div class="tabContents">
                 <div v-show="isActive === '1'">
-                    <div v-for="group in groups" :key="group.id">
+                    <div v-for="group in user.groups" :key="group.id">
                         <div class="card">
                             <h2>
-                                <nuxt-link :to="{ name: 'userid-groupid', params: { userid: group.userId, groupid: group.id }}">{{group.name}}</nuxt-link>
+                                <nuxt-link :to="{ name: 'userid-groupid', params: { userid: userid, groupid: group.id }}">{{group.name}}</nuxt-link>
                                 <span class="star" v-for="n in group.importance" :key="n">★</span>
                             </h2>
                             <div class="tags">
@@ -39,20 +39,18 @@
                         </div>
                     </div>   
                 </div>
-
                 <div v-show="isActive === '2'">
-                    <div v-for="group in pubGroup" :key="group.id">
+                    <div v-for="group in public_groups" :key="group.id">
                         <div class="card">
                             <h2>
-                                <nuxt-link :to="{ name: 'userid-groupid', params: { userid: group.userId, groupid: group.id }}">{{group.name}}</nuxt-link>
+                                <nuxt-link :to="{ name: 'userid-groupid', params: { userid: group.user.id, groupid: group.id }}">{{group.name}}</nuxt-link>
                                 <span class="star" v-for="n in group.importance" :key="n">★</span>
                             </h2>
                             <div class="tags">
-                                <TaskCardTag v-for="group_tag in group.ancestorGroups" :key="group_tag.id" :group="group_tag"/>
+                                <TaskCardTag v-for="ancestor in group.ancestorGroups" :key="ancestor.id" :group="ancestor"/>
                             </div>
-                             <button @click="fork(group.id)">このグループをフォークする</button>
-                        </div>                  
-                       
+                            <button @click="fork(group.id)">このグループをフォークする</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -197,14 +195,11 @@ $white: #fff;
     export default {
         data() {
             return {
+                user_: this.$store.getters['auth/user'],
                 user: {
                     groups:[],
-                    
                 },
-                publicgroup: {
-                    groups: [],
-                    users: []
-                },
+                public_groups: [],
                 activities: [{
                     contributions: [],
                     tasks: [],
@@ -212,9 +207,7 @@ $white: #fff;
                 isActive: '1',
                 newGroup: {},
                 modal: false,
-                groups: [],
-                render: false,
-                pubGroup: []
+                groups: []
             }
         },
 
@@ -222,27 +215,25 @@ $white: #fff;
             this.$apollo.query({
                 query: getPublicGroupQuery,
                 variables: {
-                    id: 1
-                    // id: this.$store.state.auth.user.id,
-                },
+                    userid: this.$store.state.auth.user.id,
+                }
                 }).then(res => {
-                    this.publicgroup = res.data.publicgroup.concat();
-                    console.log(this.publicgroup);
-                    for (let group of this.publicgroup) {
-                        // tasks.push(group.tasks);
-                        console.log(group);
-                        if (group.groups.userId == this.$store.state.auth.user.id){
-                            this.groups.push(group.groups);
-                        }
-                        else{
-                            if (group.groups.public == true){
-                                this.pubGroup.push(group.groups)
-                            }
-                        }
-                    }
+                    this.public_groups = res.data.publicGroups;
                 }).catch(err => {
                     console.log(err);
                 });
+
+            this.$apollo.query({
+                query: getGroupsQuery,
+                variables: {
+                    id: this.$store.state.auth.user.id
+                },
+            }).then(res => {
+                this.user = res.data.user;
+
+			}).catch(err => {
+				console.log(err);
+            });
         },
 
         components: {
@@ -266,17 +257,17 @@ $white: #fff;
             },
 
             fork(group_id){
-                console.log("おもい:" + group_id);
-
-                this.$apollo.mutate({
-                    mutation: forkGroupMutation,
+                this.$apollo.query({
+                    query: forkGroupMutation,
                     variables: {
                         groupId: group_id
 
                     },
+                    
                 }).then(res => {
                     this.groups = this.groups.concat(res.data.forkGroup.groups);
-                    this.publicgroup = res.data.publicgroup;
+                    this.public_groups = res.data.publicGroups;
+
                 }).catch(err => {
                     console.log(err);
                 });
@@ -314,8 +305,5 @@ $white: #fff;
                 });
             }
         },
-        computed: {
-
-        }
     }
 </script>
