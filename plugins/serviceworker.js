@@ -1,6 +1,7 @@
 const baseURL = process.env.NODE_ENV == 'production' ? 'https://task-driver.sukiyaki.party' : 'http://localhost:3001';
 
 function serviceworker (user_id) {
+	console.log('user_id',user_id);
 	if ('serviceWorker' in navigator) {
 		navigator.serviceWorker.register('/sw.js').then(registration => {
 			navigator.serviceWorker.ready.then( () => {
@@ -37,6 +38,7 @@ function subscribe (registration) {
 		return res.json();
 	}).then(json => {
 		const convertedVapIDKey = urlBase64ToUint8Array(json.vapidPublicKey);
+		console.log('convertedVapIDKey', convertedVapIDKey);
 		return registration.pushManager.subscribe({
 			userVisibleOnly: true,
 			applicationServerKey: convertedVapIDKey,
@@ -51,6 +53,7 @@ function afterSubscribed ({subscription, user_id}) {
 	const publicKey = encodeBase64URL(subscription.getKey('p256dh')); //クライアント公開鍵
 	const authSecret = encodeBase64URL(subscription.getKey('auth')); //auth secret
 	let contentEncoding; //プッシュ通知のときに使用するContent-Encoding
+	console.log('endpoint', endpoint);
 	if ('supportedContentEncodings' in PushManager) {
 	  contentEncoding = PushManager.supportedContentEncodings.includes('aes128gcm') ? 'aes128gcm' : 'aesgcm';
 	} else {

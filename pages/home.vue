@@ -79,6 +79,7 @@
                 // 未ログイン時にはログインページに遷移
                 this.$router.push('/login')
             } else {
+                console.log(this.$store.state.auth.user.id);
                 serviceworker(this.$store.state.auth.user.id);
                 this.$apollo.query({
                     query: getUserTasksQuery,
