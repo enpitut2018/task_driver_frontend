@@ -1,3 +1,5 @@
+const baseURL = process.env.baseUrl;
+
 function serviceworker (user_id) {
 	if ('serviceWorker' in navigator) {
 		navigator.serviceWorker.register('/sw.js').then(registration => {
@@ -27,7 +29,7 @@ function afterReady (registration) {
 }
 
 function subscribe (registration) {
-	return fetch('http://localhost:3001/endpoints/getVapidPublicKey', {
+	return fetch(baseURL + '/endpoints/getVapidPublicKey', {
 		method: 'GET',
 		mode: 'cors',
 		credeintials: 'include'
