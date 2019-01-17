@@ -1,17 +1,6 @@
 <template>
-	<button class="start">始める</button>
+	<button v-on:click="startTask();" class="start">始める</button>
 </template>
-
-<script>
-export default {
-	methods: {
-		addTask(){
-			$this.emit();
-		}
-	}
-}
-</script>
-
 
 <style lang="scss" scoped>
 	button.start{
@@ -27,3 +16,15 @@ export default {
 		border: none;
 	}
 </style>
+
+<script>
+export default {
+	methods: {
+		startTask(){
+			this.url = "/" + this.task.group.userId + "/" + this.task.group.id + "/" + this.task.id + "?fiveminutes=true"
+			this.$router.push(this.url)
+		}
+	},
+	props: ['task']
+}
+</script>
