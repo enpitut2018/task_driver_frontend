@@ -16,7 +16,7 @@
 			</div>
 		</div>
 
-		<Button/>
+		<Button :task="task" />
 	</div>
 </template>
 
@@ -59,7 +59,12 @@
 		methods: {
 			deadline (deadline) {
 				return moment(deadline).format("YY/MM/DD hh:mm:ss");
-			},			
+			},
+			
+			start (){
+				console.log("start");
+
+			}
 		},
 		
 		components: {
