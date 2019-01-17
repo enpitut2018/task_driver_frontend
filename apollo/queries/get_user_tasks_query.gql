@@ -10,6 +10,7 @@ query($id: ID!){
                 status
                 userId
                 importance
+                deadline
                 group {
                     id
                     userId
