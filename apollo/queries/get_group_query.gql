@@ -1,0 +1,11 @@
+query($id: ID!){
+  group(id: $id){
+    id
+    name
+    tasks{
+      id
+      name
+      importance
+    }
+  }
+}

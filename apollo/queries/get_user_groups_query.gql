@@ -4,6 +4,12 @@ query($id: ID!){
         groups{
             id
             name
+            public
+            tasks{
+                id
+                name
+                importance
+            }
         }
     }
 }
