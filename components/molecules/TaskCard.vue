@@ -1,8 +1,9 @@
 <template>
 	<div class="card">
 		<div class="cardHeader">
-			<h3>
-				<nuxt-link :to="{ name: 'userid-groupid-taskid', params: { userid: task.group.userId, groupid: task.group.id, taskid: task.id }}" class="cardLink">
+			<h3 @focus="openBalloon" v-on:mouseover="openBalloon" v-on:mouseleave="trigger" >
+				<!-- <Ballon :task=task v-show="isFocused" /> -->
+				<nuxt-link :to="{ name: 'userid-groupid-taskid', params: { userid: task.userId, groupid: task.group.id, taskid: task.id }}" class="cardLink">
 					{{task.name}}
 				</nuxt-link>
 				<span class="stars" v-for="n in task.importance" :key="n">★</span>
@@ -53,8 +54,24 @@
 	import TaskCardTag from '~/components/atoms/TaskCardTag.vue'
 	import Button from '~/components/atoms/TaskCardButton.vue'
 	import moment from '~/plugins/moment'
+	import Ballon from '~/components/atoms/Ballon.vue'
 
 	export default {
+		data: () => ({
+        	isFocused : false
+			}),
+		methods: {
+			openBalloon () {
+				console.log(this.task);
+				this.isFocused  = true
+			},
+			closeBalloon () {
+				this.isFocused = false
+			},
+			trigger() {
+				setTimeout(() => { this.isFocused = false }, 50)
+			}
+		},
 
 		computed: {
 			deadline () {
@@ -64,7 +81,8 @@
 		
 		components: {
 			TaskCardTag,
-			Button
+			Button,
+     		Ballon
 		},
 		props: ['task']
 	}

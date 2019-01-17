@@ -2,11 +2,11 @@
     <div class="card">
         <div class="cardHeader">
             <h3>
-                <nuxt-link :to="{ name: 'userid-groupid', params: { userid: group.userId, groupid: group.id }}" class="cardLink">{{group.name}}</nuxt-link>
+                <nuxt-link :to="{ name: 'userid-groupid-taskid', params: { userid: task.userId, groupid: task.groupId, taskid: task.id }}" class="cardLink">{{task.name}}</nuxt-link>
             </h3>
         </div>
         <div class="cardBody">
-            <p>{{group.note}}</p>
+            <p>{{task.note}}</p>
         </div>
     </div>
 </template>
@@ -62,6 +62,6 @@ body {
 
 <script>
     export default {
-        props:['group']
+        props:['task']
     }
 </script>

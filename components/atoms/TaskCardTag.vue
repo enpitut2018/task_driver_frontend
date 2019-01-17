@@ -1,6 +1,5 @@
 <template>
-	<span @focus="openBalloon" v-on:mouseover="openBalloon" v-on:mouseleave="trigger" >
-		<Ballon :group=group v-show="isFocused" />
+	<span>
 		<nuxt-link :to="{ name: 'userid-groupid', params: { userid: group.userId, groupid: group.id }}" class="tag">{{group.name}}</nuxt-link>
 	</span>
 </template>
