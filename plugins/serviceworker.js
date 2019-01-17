@@ -1,4 +1,4 @@
-const baseURL = process.env.baseUrl;
+const baseURL = process.env.NODE_ENV == 'production' ? 'https://task-driver.sukiyaki.party' : 'http://localhost:3001';
 
 function serviceworker (user_id) {
 	if ('serviceWorker' in navigator) {
@@ -57,7 +57,7 @@ function afterSubscribed ({subscription, user_id}) {
 	  contentEncoding = 'aesgcm';
 	}
 	//fetch APIを使用してサーバに送信
-	fetch('http://localhost:3001/endpoints/register', {
+	fetch(baseURL + '/endpoints/register', {
 		credentials: 'include',
 		method: 'POST',
 		headers: {
