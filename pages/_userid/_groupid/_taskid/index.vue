@@ -25,8 +25,10 @@
 				</h1>
 				<div class="tags">
 					<TaskCardTag v-for="group in task.group.ancestorAndSelfGroups" :key="group.id" :group="group"/>
-					<button @click="deleteTask">タスクの削除</button>
-					<button @click="openformModal">タスクの更新</button>
+					<template v-if="isMine">
+						<button @click="deleteTask">タスクの削除</button>
+						<button @click="openformModal">タスクの更新</button>
+					</template>
 				</div>
 			</div>
 
@@ -34,11 +36,13 @@
 				<div class="note">
 					{{task.note}}
 				</div>
-				<template v-if="task.status==1">
-					<button @click="start_contribution" class="start_btn">始める</button>
-				</template>
-				<template v-if="task.status==2">
-					<button @click="finish_contribution" class="finish_btn">やめる</button>
+				<template v-if="isMine">
+					<template v-if="task.status==1">
+						<button @click="start_contribution" class="start_btn">始める</button>
+					</template>
+					<template v-if="task.status==2">
+						<button @click="finish_contribution" class="finish_btn">やめる</button>
+					</template>
 				</template>
 			</div>
 
@@ -336,6 +340,16 @@
 			}).catch(err => {
 				console.log(err);
 			});
+		},
+
+		computed: {
+			isMine () {
+				if (this.$store.state.auth.user === null) {
+					return false
+				} else {
+					return this.$store.state.auth.user.id === this.userid ? true : false
+				}
+			}
 		},
 	}
 </script>
