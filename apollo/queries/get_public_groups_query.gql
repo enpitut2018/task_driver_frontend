@@ -1,16 +1,15 @@
-query{
-  publicgroup{
-    groups{
-      id
+query publicGroups($userid: ID!) {
+  publicGroups(userId: $userid) {
+    id
+    name
+    importance
+    ancestorGroups {
       name
-      importance
+      id
       userId
-      public
-      ancestorGroups {
-        id
-        name
-        userId
-      }
+    }
+    user {
+      id
     }
   }
 }
