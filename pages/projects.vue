@@ -30,7 +30,7 @@
                     <div v-for="group in groups" :key="group.id">
                         <div class="card">
                             <h2>
-                                <nuxt-link :to="{ name: 'userid-groupid', params: { userid: user.id, groupid: group.id }}">{{group.name}}</nuxt-link>
+                                <nuxt-link :to="{ name: 'userid-groupid', params: { userid: group.userId, groupid: group.id }}">{{group.name}}</nuxt-link>
                                 <span class="star" v-for="n in group.importance" :key="n">★</span>
                             </h2>
                             <div class="tags">
